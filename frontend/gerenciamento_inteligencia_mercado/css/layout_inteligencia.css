@@ -1,0 +1,81 @@
+.container-conteudo {
+    padding: 20px;
+}
+
+.botao-voltar {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: #E4F8FF;
+    font-weight: 600;
+    margin-bottom: 20px;
+    padding: 8px 16px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    transition: background-color 0.3s ease;
+}
+.botao-voltar:hover { background-color: rgba(255, 255, 255, 0.2); }
+.botao-voltar img { height: 16px; }
+
+.titulo-pagina { font-family: 'Montserrat', sans-serif; }
+
+/* --- ESTILO DO CONTAINER DE CARDS COM FLEXBOX --- */
+.container-cards {
+    display: flex; /* Ativa o Flexbox */
+    justify-content: center; /* Centraliza os cards horizontalmente */
+    flex-wrap: wrap; /* Permite que os cards quebrem para a próxima linha */
+    gap: 30px; /* Espaçamento entre os cards */
+    padding: 20px 0;
+}
+
+.card-link {
+    color: #E4F8FF;
+    text-decoration: none;
+    border-radius: 30px;
+    overflow: hidden;
+    position: relative;
+    height: 350px;
+    transition: transform 0.3s ease;
+
+    /* Define o tamanho dos cards */
+    flex-basis: 400px; /* Largura base de cada card */
+    max-width: 45%; /* Garante que no máximo 2 caibam por linha */
+    flex-grow: 1; /* Permite que o card cresça se houver espaço */
+}
+.card-link:hover { transform: translateY(-5px) scale(1.02); }
+
+.card-imagem-fundo {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+}
+
+.card-conteudo {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+    padding: 25px;
+    background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 60%);
+}
+
+.card-conteudo h3 {
+    font-size: 1.3rem;
+    margin: 0;
+}
+
+.sem-conteudo {
+    width: 100%;
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+/* Em telas menores, os cards ocuparão a largura toda */
+@media (max-width: 900px) {
+    .card-link { max-width: 100%; }
+}

@@ -1,0 +1,137 @@
+/* Define o layout de duas colunas para a página */
+.layout-inteligencia {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    gap: 30px;
+    align-items: stretch; /* Garante que ambas as colunas tenham a mesma altura */
+}
+
+/* Coluna principal da esquerda */
+.coluna-principal .painel-conteudo {
+    background-color: rgba(20, 74, 93, 0.3);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(228, 248, 255, 0.2);
+    border-radius: 40px;
+    padding: 30px;
+    height: 100%; /* Faz o painel ocupar toda a altura da coluna */
+    box-sizing: border-box; /* Garante que o padding não estoure a altura */
+}
+
+.coluna-principal .painel-conteudo hr {
+    border: none; /* Remove a borda padrão */
+    height: 1px; /* Define a espessura da linha */
+    background-color: rgba(228, 248, 255, 0.3); /* Cor branca semitransparente */
+    margin: 5px 0; /* Espaçamento acima e abaixo da linha */
+}
+
+/* Coluna lateral da direita */
+.coluna-lateral .navegacao-inteligencia {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: 100%; /* Faz a navegação ocupar toda a altura da coluna */
+}
+
+.nav-card-inteligencia {
+    /* --- MÁGICA DA ALTURA IGUAL --- */
+    flex-grow: 1; /* Faz com que todos os cards cresçam para preencher o espaço vertical igualmente */
+
+    display: flex; /* Alinha o conteúdo (ícone e texto) */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px; /* Espaço entre o ícone e o texto */
+    
+    border: 1px solid rgba(228, 248, 255, 0.5);
+    border-radius: 40px;
+    padding: 25px;
+    text-align: center;
+    text-decoration: none;
+    color: #E4F8FF;
+    font-weight: 700;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+}
+
+.nav-card-inteligencia img {
+    height: 40px; /* Tamanho do ícone */
+    transition: transform 0.3s ease;
+}
+
+.nav-card-inteligencia:hover img {
+    transform: scale(1.1);
+}
+
+/* --- ESTILOS ESPECÍFICOS DOS CARDS --- */
+
+/* Card "Dados Estruturais" */
+.card-dados {
+    background-color: #E4F8FF;
+    color: #144A5D;
+}
+.card-dados:hover { background-color: #c0e0eb; }
+
+/* Card "Análises e Artigos" */
+.card-analises {
+    background-color: #144A5D;
+    color: #E4F8FF;
+}
+.card-analises:hover { background-color: #0d2f3b; }
+
+/* Card "Glossário" (Efeito Vidro) */
+.card-glossario {
+    background-color: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+}
+.card-glossario:hover { background-color: rgba(255, 255, 255, 0.15); }
+
+/* Arquivo: pagina_inicial.css */
+/* ... (estilos existentes) ... */
+
+
+/* NOVO: Estilo para o container interno de duas colunas */
+.conteudo-dividido {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    margin-top: 20px; /* Espaço após a linha <hr> */
+}
+
+.texto-apresentacao {
+    flex-basis: 50%; /* Ocupa 45% do espaço */
+    color: #E4F8FF;
+}
+
+.texto-apresentacao h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.5rem;
+    line-height: 1.5;
+    font-weight: 600;
+}
+
+.grafico-apresentacao {
+    flex-basis: 55%; /* Ocupa 55% do espaço */
+    height: 300px; /* Altura do container do gráfico */
+}
+
+
+/* --- Responsividade --- */
+@media (max-width: 900px) {
+    /* ... (regra existente para .layout-inteligencia) ... */
+
+    /* NOVO: Empilha as colunas internas em telas menores */
+    .conteudo-dividido {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+/* --- Responsividade --- */
+@media (max-width: 900px) {
+    .layout-inteligencia {
+        grid-template-columns: 1fr;
+    }
+    .coluna-principal .painel-conteudo {
+        min-height: auto; /* Remove a altura mínima em telas pequenas */
+    }
+}

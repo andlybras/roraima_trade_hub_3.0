@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}{{ categoria_verbose }} | Inteligência de Mercado{% endblock %}
+
+{% block css_pagina %}
+    <link rel="stylesheet" href="{% static 'gerenciamento_inteligencia_mercado/css/layout_inteligencia.css' %}">
+{% endblock %}
+
+{% block conteudo %}
+<div class="container-conteudo">
+    <a href="{% url 'inteligencia:pagina_inicial' %}" class="botao-voltar">
+        <img src="{% static 'gerenciamento_inteligencia_mercado/icons/icone-voltar.svg' %}" alt="Ícone de seta">
+        <span>Voltar</span>
+    </a>
+
+    <h1 class="titulo-pagina">{{ categoria_verbose }}</h1>
+
+    <div class="container-cards">
+        {% for card in cards %}
+        <a href="{% url 'inteligencia:detalhe_conteudo' card.pk %}" class="card-link">
+            <div class="card-imagem-fundo" style="background-image: url('{{ card.imagem_card.url }}');"></div>
+            <div class="card-conteudo">
+                <h3>{{ card.titulo_card }}</h3>
+            </div>
+        </a>
+        {% empty %}
+        <p class="sem-conteudo">Ainda não há conteúdo disponível nesta categoria.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

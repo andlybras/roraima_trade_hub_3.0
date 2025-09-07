@@ -1,0 +1,95 @@
+(function() {
+    // --- CONFIGURAÇÃO INICIAL ---
+    const chartDomId = 'grafico-apresentacao-container';
+    const chartDom = document.getElementById(chartDomId);
+    if (!chartDom) { return; }
+
+    const colors = ['#80FFA5', '#00DDFF', '#37A2FF', '#FF0087', '#FFBF00'];
+    const chartInstance = echarts.init(chartDom);
+    
+    let barUpdateTimer, pieUpdateTimer, mainTransitionTimer;
+    const roraimaCoords = [-60.67, 2.82];
+    
+    // --- FUNÇÕES DOS GRÁFICOS (sem alterações) ---
+    function renderBarChart() {
+        if (pieUpdateTimer) clearInterval(pieUpdateTimer); if (barUpdateTimer) clearInterval(barUpdateTimer);
+        const initialData = [0, 1, 2, 3, 4].map(index => ({ value: Math.round(Math.random() * 70) + 30, itemStyle: { color: colors[index % colors.length] } }));
+        const option = { backgroundColor: 'transparent', tooltip: { show: false }, grid: { top: '5%', left: '5%', right: '5%', bottom: '10%' }, xAxis: [ { type: 'category', show: false }, { type: 'category', position: 'bottom', axisLine: { show: true, lineStyle: { color: 'rgba(255, 255, 255, 0.3)', width: 2 } } } ], yAxis: { type: 'value', show: false, min: 0, max: 100 }, series: [ { type: 'bar', silent: true, barWidth: '60%', barGap: '-100%', data: [100, 100, 100, 100, 100].map(val => ({ value: val, itemStyle: { color: 'rgba(255, 255, 255, 0.08)', borderRadius: [5, 5, 0, 0] } })), animation: false }, { id: 'series-dinamica', type: 'bar', data: initialData, barWidth: '60%', itemStyle: { borderRadius: [5, 5, 0, 0] }, animationDurationUpdate: 2500, animationEasingUpdate: 'cubicInOut' } ] };
+        chartInstance.setOption(option, true);
+        barUpdateTimer = setInterval(function() {
+            const dynamicData = [0, 1, 2, 3, 4].map(index => ({ value: Math.round(Math.random() * 70) + 30, itemStyle: { color: colors[index % colors.length] } }));
+            chartInstance.setOption({ series: [{ id: 'series-dinamica', data: dynamicData }] });
+        }, 2500);
+    }
+
+    function renderPieChart() {
+        if (pieUpdateTimer) clearInterval(pieUpdateTimer); if (barUpdateTimer) clearInterval(barUpdateTimer);
+        const pieOption = { backgroundColor: 'transparent', color: colors, tooltip: { show: false }, series: [{ id: 'pie-series', type: 'pie', radius: ['40%', '70%'], center: ['50%', '50%'], avoidLabelOverlap: false, padAngle: 5, itemStyle: { borderRadius: 10 }, label: { show: false }, emphasis: { scaleSize: 15 }, animationDurationUpdate: 1500, animationEasingUpdate: 'cubicInOut', data: [ { value: 100, name: 'A' }, { value: 100, name: 'B' }, { value: 100, name: 'C' }, { value: 100, name: 'D' }, { value: 100, name: 'E' } ] }] };
+        chartInstance.setOption(pieOption, true);
+        pieUpdateTimer = setInterval(function() {
+            const dynamicPieData = [ { value: Math.round(Math.random() * 1000), name: 'A' }, { value: Math.round(Math.random() * 1000), name: 'B' }, { value: Math.round(Math.random() * 1000), name: 'C' }, { value: Math.round(Math.random() * 1000), name: 'D' }, { value: Math.round(Math.random() * 1000), name: 'E' } ];
+            chartInstance.setOption({ series: [{ id: 'pie-series', data: dynamicPieData }] });
+        }, 2500);
+    }
+    
+    function renderGlobeChart() {
+        const destinationCoords = [ [104.19, 35.86], [10.45, 51.16], [-95.71, 37.09], [-63.61, -34.60], [-74.29, 4.57], [138.25, 36.20], [133.77, -25.27], [24.08, -29.00], [78.96, 20.59] ];
+        const linesData = destinationCoords.map((coords, index) => ({ coords: [roraimaCoords, coords], lineStyle: { color: colors[index % colors.length] } }));
+        const option = { backgroundColor: 'transparent', globe: { baseTexture: earthTextureUrl, shading: 'lambert', atmosphere: { show: true }, light: { ambient: { intensity: 0.4 }, main: { intensity: 1.0 } }, viewControl: { autoRotate: true, autoRotateSpeed: 5, targetCoord: roraimaCoords, minZoom: 1.2, zoom: 1.8 } }, series: [ { name: 'Roraima', type: 'scatter3D', coordinateSystem: 'globe', data: [{ value: roraimaCoords }], symbolSize: 10, itemStyle: { color: '#FFBF00' } }, { type: 'lines3D', coordinateSystem: 'globe', effect: { show: true, period: 4, trailLength: 0.3, symbol: 'arrow', symbolSize: 6 }, lineStyle: { width: 2, opacity: 0.6, curveness: 0.3 }, data: linesData } ] };
+        chartInstance.setOption(option, true);
+    }
+
+    // --- LÓGICA PRINCIPAL DE TRANSIÇÃO (ATUALIZADA) ---
+    const charts = [
+        { name: 'bar', renderFunc: renderBarChart, duration: 20000 },
+        { name: 'pie', renderFunc: renderPieChart, duration: 20000 },
+        { name: 'globe', renderFunc: renderGlobeChart, duration: 72000 } // Duração de 72 segundos
+    ];
+    let currentChartIndex = 0;
+    
+    function switchChart() {
+        // Limpa timers e o canvas
+        clearInterval(barUpdateTimer);
+        clearInterval(pieUpdateTimer);
+        chartInstance.clear();
+        
+        // Pega as informações do ato atual
+        const currentAct = charts[currentChartIndex];
+        
+        // Renderiza o gráfico do ato atual
+        currentAct.renderFunc();
+        
+        // Prepara para o próximo ato
+        currentChartIndex = (currentChartIndex + 1) % charts.length;
+        
+        // Agenda a PRÓXIMA transição com a duração do ato ATUAL
+        mainTransitionTimer = setTimeout(switchChart, currentAct.duration);
+    }
+
+    // --- INÍCIO DA EXECUÇÃO E PRÉ-CARREGAMENTO ---
+    let earthTextureUrl; // Variável para guardar a URL da imagem
+    
+    function initializeAnimation() {
+        // Pega a URL da textura do mapa diretamente do HTML
+        earthTextureUrl = chartDom.dataset.earthTextureUrl;
+        
+        if (!earthTextureUrl) {
+            console.error("URL da textura não encontrada. O globo não funcionará.");
+            charts.pop(); // Remove o globo da lista se a imagem não for encontrada
+        }
+        
+        // Inicia o ciclo
+        switchChart();
+    }
+
+    initializeAnimation();
+
+    window.addEventListener('resize', function () {
+        clearTimeout(mainTransitionTimer);
+        // Lógica para redesenhar o gráfico atual
+        const lastChartIndex = currentChartIndex === 0 ? charts.length - 1 : currentChartIndex - 1;
+        charts[lastChartIndex].renderFunc();
+        mainTransitionTimer = setTimeout(switchChart, charts[lastChartIndex].duration);
+        chartInstance.resize();
+    });
+})();

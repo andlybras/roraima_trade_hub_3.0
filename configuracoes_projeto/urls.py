@@ -6,6 +6,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('gerenciamento_home.urls')),
+    path('inteligencia-de-mercado/', include('gerenciamento_inteligencia_mercado.urls')),
 ]
 
 # Adiciona as URLs de mídia em modo de desenvolvimento
