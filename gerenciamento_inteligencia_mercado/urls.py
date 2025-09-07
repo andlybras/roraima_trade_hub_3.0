@@ -7,8 +7,13 @@ app_name = 'inteligencia'
 urlpatterns = [
     # Ex: /inteligencia-de-mercado/
     path('', views.pagina_inicial_inteligencia, name='pagina_inicial'),
-
-    # Ex: /inteligencia-de-mercado/dados-estruturais/
-    path('<str:categoria>/', views.lista_conteudo_por_categoria, name='lista_por_categoria'),
+    
+    # ROTA ESPECÍFICA VEM PRIMEIRO
+    path('glossario/', views.glossario_view, name='glossario'),
+    
+    # ROTA DO CONTEÚDO VEM DEPOIS DA DO GLOSSÁRIO
     path('conteudo/<int:pk>/', views.detalhe_conteudo, name='detalhe_conteudo'),
+
+    # ROTA GENÉRICA VEM POR ÚLTIMO
+    path('<str:categoria>/', views.lista_conteudo_por_categoria, name='lista_por_categoria'),
 ]

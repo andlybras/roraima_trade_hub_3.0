@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from .models import ConteudoInteligencia, Grafico # Adicione Grafico
+from .models import ConteudoInteligencia, Grafico, TermoGlossario # Adicione Grafico
 import re # Adicione o import para Expressões Regulares
 import json
 
@@ -70,3 +70,26 @@ def detalhe_conteudo(request, pk):
         'corpo_processado': corpo_processado,
     }
     return render(request, 'gerenciamento_inteligencia_mercado/html/detalhe_conteudo.html', context)
+
+# Arquivo: gerenciamento_inteligencia_mercado/views.py
+
+# ... (outras views como pagina_inicial_inteligencia, etc.) ...
+
+def glossario_view(request):
+    """
+    Busca todos os termos do glossário e os agrupa pela letra inicial.
+    """
+    termos_ordenados = TermoGlossario.objects.order_by('termo')
+    termos_agrupados = {}
+
+    for termo in termos_ordenados:
+        letra_inicial = termo.termo[0].upper()
+        if letra_inicial not in termos_agrupados:
+            termos_agrupados[letra_inicial] = []
+        termos_agrupados[letra_inicial].append(termo)
+
+    context = {
+        'termos_agrupados': termos_agrupados,
+        'titulo_pagina': 'Glossário de Termos' # CORREÇÃO: Adiciona o título ao contexto
+    }
+    return render(request, 'gerenciamento_inteligencia_mercado/html/glossario.html', context)
