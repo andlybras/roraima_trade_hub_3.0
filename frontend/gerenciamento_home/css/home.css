@@ -1,0 +1,143 @@
+/* Arquivo: home.css */
+
+/* --- Seção de Apresentação (Hero) --- */
+.secao-apresentacao {
+    display: flex;
+    align-items: center;
+    border: 1px solid rgba(228, 248, 255, 0.5);
+    border-radius: 50px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    background-color: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    margin-bottom: 20px;
+}
+
+.apresentacao-carrossel {
+    flex-shrink: 0;
+    width: 350px;
+    height: 250px;
+    position: relative;
+}
+
+.apresentacao-texto {
+    padding: 20px 40px;
+    width: 100%;
+}
+
+.apresentacao-texto h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 4.5rem;
+    line-height: 1;
+    margin: 0 0 10px 0;
+}
+
+.apresentacao-texto p {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.slide-hero {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+}
+
+.slide-hero.is-active { opacity: 1; }
+
+.slide-hero img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* --- Navegação Principal --- */
+.navegacao-principal {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.nav-card {
+    background-color: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(228, 248, 255, 0.5);
+    border-radius: 40px;
+    padding: 20px;
+    text-decoration: none;
+    color: #E4F8FF;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.1rem;
+    transition: background-color 0.3s, transform 0.3s;
+    min-height: 150px;
+}
+
+.nav-card img {
+    height: 50px;
+    margin-bottom: 15px;
+}
+
+.nav-card:hover {
+    background-color: #144A5D;
+    backdrop-filter: none;
+    transform: translateY(-5px);
+}
+
+/* --- MUDANÇAS NO GRID PARA COMPRAR/VENDER --- */
+/* Posiciona o card "Quero Comprar" na primeira linha e primeira coluna */
+.card-comprar {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2; /* ALTERAÇÃO: Agora ocupa apenas UMA linha */
+    background-color: #E4F8FF;
+    color: #144A5D;
+    backdrop-filter: none;
+}
+.card-comprar:hover { background-color: #c0e0eb; }
+
+/* Posiciona o card "Quero Vender" na segunda linha e primeira coluna */
+.card-vender {
+    grid-column: 1 / 2;
+    grid-row: 2 / 3; /* ALTERAÇÃO: Agora ocupa a linha seguinte */
+    background-color: #144A5D;
+    color: #E4F8FF;
+    backdrop-filter: none;
+}
+.card-vender:hover { background-color: #0d2f3b; }
+
+
+/* --- Responsividade --- */
+
+/* Tablets e telas menores */
+@media (max-width: 1024px) {
+    .secao-apresentacao {
+        flex-direction: column;
+        text-align: center;
+    }
+    .apresentacao-texto h1 { font-size: 3.5rem; }
+    .apresentacao-texto p { font-size: 1.3rem; }
+
+    .navegacao-principal { grid-template-columns: repeat(2, 1fr); }
+
+    .card-comprar, .card-vender {
+        grid-column: auto;
+        grid-row: auto;
+    }
+}
+
+/* Celulares */
+@media (max-width: 768px) {
+    .apresentacao-carrossel { display: none; }
+    .apresentacao-texto { padding: 40px 20px; }
+    .apresentacao-texto h1 { font-size: 2.5rem; }
+    .apresentacao-texto p { font-size: 1.1rem; }
+
+    .navegacao-principal { grid-template-columns: 1fr; }
+}

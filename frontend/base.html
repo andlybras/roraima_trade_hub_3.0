@@ -1,0 +1,72 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block titulo %}Roraima Trade Hub{% endblock %}</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@400;600;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="{% static 'gerenciamento_home/css/global.css' %}">
+    
+    {% block css_pagina %}{% endblock %}
+</head>
+<body {% if imagem_fundo %}style="background-image: url('{{ imagem_fundo.imagem.url }}');"{% endif %}>
+    <div class="container-geral">
+        <header class="cabecalho-principal">
+            <nav class="cabecalho-nav">
+                <a href="{% url 'gerenciamento_home:home' %}" aria-label="Acesso à página Home">
+                    <img src="{% static 'gerenciamento_home/icons/home.svg' %}" alt="Ícone para acesso a página Home">
+                </a>
+                <a href="#" aria-label="Acesso à conta do usuário">
+                    <img src="{% static 'gerenciamento_home/icons/user.svg' %}" alt="Ícone para acesso à conta do usuário">
+                </a>
+                <a href="/admin/" aria-label="Acesso ao painel administrativo" target="_blank">
+                    <img src="{% static 'gerenciamento_home/icons/admin.svg' %}" alt="Ícone para acesso ao painel administrativo">
+                </a>
+            </nav>
+            <div class="cabecalho-logos">
+                {% for logo in header_logos %}
+                <a href="{{ logo.link_url|default:'#' }}" target="_blank" rel="noopener noreferrer">
+                    <img src="{{ logo.imagem.url }}" alt="{{ logo.descricao }}">
+                </a>
+                {% endfor %}
+            </div>
+        </header>
+
+        <main>
+            {% block conteudo %}
+            {% endblock %}
+            <section class="secao-parceiros">
+                <div class="container-parceiros"> <h2>Nossos Parceiros</h2>
+                    <div class="carrossel-infinito" data-animacao="true">
+                        <div class="carrossel-infinito-faixa">
+                            {% for logo in partner_logos %}
+                            <a href="{{ logo.link_url|default:'#' }}" target="_blank" class="parceiro-logo">
+                                <img src="{{ logo.imagem.url }}" alt="{{ logo.nome_parceiro }}">
+                            </a>
+                            {% endfor %}
+                            
+                            </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer class="rodape-site">
+        <div class="rodape-creditos">
+            <p>&copy; {% now "Y" %} Governo de Roraima. Todos os direitos reservados.</p>
+            <p><strong>Roraima Trade Hub</strong></p>
+        </div>
+    </footer>
+    
+    <script src="{% static 'gerenciamento_home/js/scroller.js' %}"></script>
+    
+    <script src="{% static 'gerenciamento_home/js/header.js' %}"></script>
+    {% block js_pagina %}{% endblock %}
+</body>
+</html>

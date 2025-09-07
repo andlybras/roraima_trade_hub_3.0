@@ -1,0 +1,158 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Bai Jamjuree', sans-serif;
+    color: #E4F8FF;
+    
+    /* Propriedades da imagem de fundo */
+    background-color: #0d2f3b; /* Cor de fundo caso a imagem não carregue */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    position: relative;
+}
+
+/* Camada de cor transparente sobre a imagem de fundo */
+body::before {
+    content: ""; 
+    position: fixed; 
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(65, 162, 197, 0.5);
+    z-index: -1;
+}
+
+.container-geral {
+    width: 90%;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 20px 0;
+}
+
+/* Adicionaremos mais estilos globais aqui conforme o projeto cresce */
+
+/* Continuação do Arquivo: global.css */
+.cabecalho-principal {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 25px;
+    border: 1px solid rgba(228, 248, 255, 0.5);
+    border-radius: 50px;
+    margin-bottom: 20px;
+    background-color: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+
+    /* NOVAS PROPRIEDADES */
+    position: sticky; /* Fixa o header na tela */
+    top: 20px;       /* Distância do topo */
+    z-index: 1000;   /* Garante que ele fique sobre outros elementos */
+    transition: all 0.4s ease; /* Animação suave na mudança */
+}
+
+/* ESTADO DO CABEÇALHO QUANDO A PÁGINA É ROLADA */
+.cabecalho-principal.scrolled {
+    background-color: #144A5D; /* Cor sólida */
+    backdrop-filter: none;
+    border-radius: 0 0 50px 50px; /* Borda arredondada apenas embaixo */
+    border-top-width: 0;
+    top: 0; /* Cola no topo absoluto da tela */
+    margin-bottom: 40px; /* Ajusta a margem para compensar a mudança de layout */
+}
+.cabecalho-nav { display: flex; gap: 30px; }
+.cabecalho-nav img { height: 28px; width: 28px; }
+.cabecalho-logos { display: flex; align-items: center; gap: 15px; }
+.cabecalho-logos img { height: 40px; }
+
+/* Arquivo: global.css */
+/* ... (outros estilos) ... */
+
+/* --- RODAPÉ E SEÇÃO DE PARCEIROS --- */
+
+.secao-parceiros {
+    /* Distância entre o grid de navegação (acima) e o rodapé (abaixo) */
+    margin: 20px 0;
+}
+
+/* O container que cria o efeito de vidro */
+.container-parceiros {
+    background-color: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(228, 248, 255, 0.5);
+    border-radius: 40px;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.container-parceiros h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.carrossel-infinito {
+    overflow: hidden;
+    /* Adiciona um gradiente nas laterais para um fade suave */
+    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+.carrossel-infinito-faixa {
+    display: flex;
+    width: max-content;
+}
+
+/* Animação do carrossel */
+.carrossel-infinito[data-animacao="true"] .carrossel-infinito-faixa {
+    animation: scroll 40s linear infinite;
+}
+
+/* Pausa a animação quando o mouse está sobre o carrossel */
+.carrossel-infinito:hover .carrossel-infinito-faixa {
+    animation-play-state: paused;
+}
+
+@keyframes scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+}
+
+.parceiro-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease; /* Transição suave para todos os efeitos */
+}
+
+.parceiro-logo img {
+    height: 80px;
+    max-width: 180px;
+    margin: 0 40px;
+    object-fit: contain;
+}
+
+/* --- EFEITOS DE HOVER NO CARROSSEL --- */
+
+/* Quando o mouse está sobre QUALQUER logo, todas as outras ficam esmaecidas */
+.carrossel-infinito:hover .parceiro-logo {
+    opacity: 0.5;
+    filter: grayscale(80%);
+}
+
+/* A logo específica que está com o mouse em cima ganha destaque total e zoom */
+.carrossel-infinito .parceiro-logo:hover {
+    opacity: 1;
+    filter: none;
+    transform: scale(1.1);
+}
+
+
+.rodape-creditos {
+    background-color: #144A5D;
+    text-align: center;
+    padding: 20px 0;
+}
+.rodape-creditos p { margin: 5px 0; }

@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}Página Inicial | Roraima Trade Hub{% endblock %}
+
+{% block css_pagina %}
+    <link rel="stylesheet" href="{% static 'gerenciamento_home/css/home.css' %}">
+{% endblock %}
+
+{% block conteudo %}
+<section class="secao-apresentacao">
+    <div class="apresentacao-carrossel">
+        {% for hero in hero_images %}
+        <div class="slide-hero {% if forloop.first %}is-active{% endif %}">
+            <a href="{{ hero.link_url|default:'#' }}" target="_blank" rel="noopener noreferrer">
+                <img src="{{ hero.imagem.url }}" alt="{{ hero.descricao }}">
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="apresentacao-texto">
+        <h1>Roraima Trade Hub</h1>
+        <p>A vitrine do comércio de Roraima para o mundo</p>
+    </div>
+</section>
+
+<nav class="navegacao-principal">
+    <a href="#" class="nav-card card-comprar">
+        <img src="{% static 'gerenciamento_home/icons/cards/icone-comprar.svg' %}" alt="Ícone de um carrinho de compras">
+        <span>Quero Comprar</span>
+    </a>
+    <a href="#" class="nav-card card-vender">
+        <img src="{% static 'gerenciamento_home/icons/cards/icone-vender.svg' %}" alt="Ícone de uma etiqueta de preço">
+        <span>Quero Vender</span>
+    </a>
+    <a href="#" class="nav-card">
+        <img src="{% static 'gerenciamento_home/icons/cards/icone-inteligencia.svg' %}" alt="Ícone de um gráfico de pizza">
+        <span>Inteligência de Mercado</span>
+    </a>
+    <a href="#" class="nav-card">
+        <img src="{% static 'gerenciamento_home/icons/cards/icone-acordos.svg' %}" alt="Ícone de um aperto de mãos">
+        <span>Acordos e Regulamentos</span>
+    </a>
+    <a href="#" class="nav-card">
+        <img src="{% static 'gerenciamento_home/icons/cards/icone-oportunidades.svg' %}" alt="Ícone de uma lâmpada">
+        <span>Oportunidades</span>
+    </a>
+    <a href="#" class="nav-card">
+        <img src="{% static 'gerenciamento_home/icons/cards/icone-aprenda.svg' %}" alt="Ícone de um livro aberto">
+        <span>Aprenda Comex</span>
+    </a>
+    <a href="#" class="nav-card">
+        <img src="{% static 'gerenciamento_home/icons/cards/icone-destino.svg' %}" alt="Ícone de um mapa com um pino">
+        <span>Destino Roraima</span>
+    </a>
+    <a href="#" class="nav-card">
+        <img src="{% static 'gerenciamento_home/icons/cards/icone-noticias.svg' %}" alt="Ícone de um jornal">
+        <span>Notícias</span>
+    </a>
+</nav>
+{% endblock %}
+
+{% block js_pagina %}
+    <script src="{% static 'gerenciamento_home/js/home.js' %}"></script>
+{% endblock %}
