@@ -1,32 +1,68 @@
-.container-conteudo {
-    padding: 20px;
+/* Estilo geral para os containers das páginas de inteligência */
+.container-conteudo,
+.container-conteudo-detalhe {
+    padding: 20px 0;
 }
 
-.botao-voltar {
+/* --- ESTILOS PARA A PÁGINA DE LISTAGEM DE CARDS --- */
+
+.painel-listagem-cards {
+    background-color: rgba(20, 74, 93, 0.3);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(228, 248, 255, 0.2);
+    border-radius: 40px;
+    padding: 30px 40px;
+}
+
+.painel-cabecalho {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.botao-voltar-branco {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     text-decoration: none;
-    color: #E4F8FF;
-    font-weight: 600;
-    margin-bottom: 20px;
-    padding: 8px 16px;
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 20px;
-    transition: background-color 0.3s ease;
+    background-color: #E4F8FF;
+    color: #144A5D;
+    font-weight: 700;
+    padding: 10px 20px;
+    border-radius: 30px;
+    transition: all 0.3s ease;
 }
-.botao-voltar:hover { background-color: rgba(255, 255, 255, 0.2); }
-.botao-voltar img { height: 16px; }
+.botao-voltar-branco:hover {
+    background-color: #c0e0eb;
+    transform: translateY(-3px);
+}
+.botao-voltar-branco img {
+    height: 18px;
+}
 
-.titulo-pagina { font-family: 'Montserrat', sans-serif; }
+.titulo-pagina {
+    font-family: 'Montserrat', sans-serif;
+    color: #E4F8FF;
+    margin: 0;
+    flex-grow: 1;
+    text-align: right;
+}
 
-/* --- ESTILO DO CONTAINER DE CARDS COM FLEXBOX --- */
+.separador-titulo {
+    border: none;
+    height: 1px;
+    background-color: rgba(228, 248, 255, 0.3);
+    margin: 20px 0;
+}
+
 .container-cards {
-    display: flex; /* Ativa o Flexbox */
-    justify-content: center; /* Centraliza os cards horizontalmente */
-    flex-wrap: wrap; /* Permite que os cards quebrem para a próxima linha */
-    gap: 30px; /* Espaçamento entre os cards */
-    padding: 20px 0;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+    padding-top: 10px;
 }
 
 .card-link {
@@ -37,11 +73,9 @@
     position: relative;
     height: 350px;
     transition: transform 0.3s ease;
-
-    /* Define o tamanho dos cards */
-    flex-basis: 400px; /* Largura base de cada card */
-    max-width: 45%; /* Garante que no máximo 2 caibam por linha */
-    flex-grow: 1; /* Permite que o card cresça se houver espaço */
+    flex-basis: 400px;
+    max-width: 45%;
+    flex-grow: 1;
 }
 .card-link:hover { transform: translateY(-5px) scale(1.02); }
 
@@ -55,27 +89,144 @@
 }
 
 .card-conteudo {
-    position: relative;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 25px;
     z-index: 2;
-    height: 100%;
+    background-color: #E4F8FF;
+    border-top: 1px solid rgba(228, 248, 255, 0.5);
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    box-sizing: border-box;
     display: flex;
-    align-items: flex-end;
-    padding: 25px;
-    background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 60%);
+    align-items: center;
+    justify-content: center;
+    height: auto;
 }
 
-.card-conteudo h3 {
-    font-size: 1.3rem;
+.titulo-card-lista {
+    color: #144A5D;
+    font-size: 1.2rem;
+    font-weight: 700;
     margin: 0;
+    text-align: center;
 }
 
 .sem-conteudo {
     width: 100%;
     text-align: center;
     font-size: 1.1rem;
+    color: #E4F8FF;
 }
 
-/* Em telas menores, os cards ocuparão a largura toda */
+/* --- ESTILOS ESPECÍFICOS PARA A PÁGINA DE DETALHES --- */
+
+/* Container principal da página de detalhes (ajusta o espaçamento) */
+.container-conteudo-detalhe {
+    padding: 20px 0;
+}
+
+/* NOVO: Container apenas para o botão voltar na página de detalhes, alinhado à esquerda */
+.cabecalho-detalhe-topo {
+    padding: 0 40px; /* Alinha com o padding lateral do painel branco */
+    margin-bottom: 20px; /* Espaço entre o botão e o painel branco */
+    text-align: left; /* Alinha o botão à esquerda */
+}
+
+/* O botão voltar já tem estilo .botao-voltar-branco */
+.cabecalho-detalhe-topo .botao-voltar-branco {
+    margin-bottom: 0; /* Remove a margem inferior anterior do botão, se houver */
+}
+
+/* Painel de conteúdo com fundo branco para leitura */
+.painel-conteudo-detalhe-branco {
+    background-color: #E4F8FF; /* Fundo branco 100% sólido */
+    border-radius: 40px;
+    padding: 40px 50px; /* Padding interno generoso */
+    color: #144A5D; /* Cor do texto principal azul petróleo */
+    line-height: 1.8; /* Aumenta o espaçamento entre linhas para leitura */
+    font-size: 1.1rem; /* Tamanho da fonte para o corpo do texto */
+}
+
+/* NOVO: Estilo para o título DENTRO do card branco */
+.titulo-detalhe-card {
+    font-family: 'Montserrat', sans-serif;
+    color: #144A5D; /* Cor do texto azul petróleo */
+    font-size: 2.5rem; /* Tamanho maior para o título principal */
+    margin: 0 0 10px 0; /* Margem inferior para separar do subtítulo */
+    line-height: 1.2;
+    text-align: center; /* Centraliza o título */
+}
+
+/* NOVO: Estilo para o subtítulo DENTRO do card branco */
+.subtitulo-detalhe-card {
+    color: #4A6E7F; /* Um tom de azul mais escuro para o subtítulo */
+    font-size: 1.3rem;
+    margin-top: 0;
+    margin-bottom: 30px; /* Espaço abaixo do subtítulo */
+    max-width: 800px; /* Limita a largura do subtítulo para melhor leitura */
+    text-align: center; /* Centraliza o subtítulo */
+    margin-left: auto; /* Centraliza o bloco do subtítulo */
+    margin-right: auto;
+}
+
+/* NOVO: Separador dentro do card de detalhes */
+.separador-titulo-card-detalhe {
+    border: none;
+    height: 1px;
+    background-color: rgba(20, 74, 93, 0.1); /* Uma linha mais discreta em tom de azul */
+    margin: 30px 0 40px 0; /* Espaçamento ao redor do separador */
+}
+
+
+/* Estilos para o corpo do artigo dentro do painel branco */
+.corpo-artigo h1, .corpo-artigo h2, .corpo-artigo h3 {
+    color: #144A5D; /* Títulos do artigo em azul escuro */
+    margin-top: 30px;
+    margin-bottom: 15px;
+    line-height: 1.4;
+}
+.corpo-artigo p { margin-bottom: 15px; }
+.corpo-artigo ul, .corpo-artigo ol { margin-left: 20px; margin-bottom: 15px; }
+.corpo-artigo li { margin-bottom: 5px; }
+
+/* Estilo para gráficos dentro do corpo do artigo, se o ECharts for renderizado aqui */
+.corpo-artigo .echarts-container {
+    background-color: #f8fcfd;
+    border-radius: 20px;
+    padding: 15px;
+    margin: 30px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* --- RESPONSIVIDADE GERAL DO MÓDULO --- */
 @media (max-width: 900px) {
     .card-link { max-width: 100%; }
+    
+    .cabecalho-detalhe-topo { padding: 0 20px; } /* Ajusta padding do botão */
+    .titulo-detalhe-card { font-size: 2rem; }
+    .subtitulo-detalhe-card { font-size: 1.1rem; }
+    .painel-conteudo-detalhe-branco { padding: 30px; font-size: 1rem; }
+}
+
+@media (max-width: 600px) {
+    .painel-cabecalho {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .titulo-pagina {
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .cabecalho-detalhe-topo {
+        padding: 0 10px;
+        text-align: center; /* Centraliza o botão em telas muito pequenas */
+    }
+
+    .titulo-detalhe-card { font-size: 1.8rem; }
+    .subtitulo-detalhe-card { font-size: 1rem; }
+    .painel-conteudo-detalhe-branco { padding: 20px; }
 }

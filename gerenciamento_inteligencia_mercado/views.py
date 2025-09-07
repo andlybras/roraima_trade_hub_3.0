@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from .models import ConteudoInteligencia, Grafico # Adicione Grafico
 import re # Adicione o import para Expressões Regulares
+import json
 
 def pagina_inicial_inteligencia(request):
     """
@@ -34,25 +35,33 @@ def lista_conteudo_por_categoria(request, categoria):
 
 def detalhe_conteudo(request, pk):
     conteudo = get_object_or_404(ConteudoInteligencia, pk=pk)
-
-    # Lógica para substituir as tags de gráfico pelo código JS
+    
+    # LÓGICA REFEITA: Agora ela só cria a DIV com os dados
     def substituir_grafico(match):
         chave = match.group(1)
         try:
             grafico = Grafico.objects.get(chave=chave)
             container_id = f"grafico-container-{grafico.chave}"
-            script_grafico = f"""
-                <div id='{container_id}' style='width: 100%; height: 400px; margin: 20px 0;'></div>
-                <script type='text/javascript'>
-                    var chartDom = document.getElementById('{container_id}');
-                    var myChart = echarts.init(chartDom);
-                    var option = {grafico.codigo_js_echarts};
-                    myChart.setOption(option);
-                </script>
+            
+            # Converte o código do gráfico para uma string JSON segura para HTML
+            # Usamos json.dumps para garantir que aspas e outros caracteres sejam tratados
+            # O código no admin deve ser apenas o objeto {...}, sem 'option = '
+            chart_options_json = json.dumps(json.loads(grafico.codigo_js_echarts))
+
+            # Retorna apenas a DIV, com os dados do gráfico em um atributo 'data-options'
+            html_grafico = f"""
+                <div id='{container_id}' 
+                     class='echarts-container' 
+                     style='width: 100%; height: 400px; margin: 20px 0;'
+                     data-options='{chart_options_json}'>
+                </div>
             """
-            return script_grafico
+            return html_grafico
+            
         except Grafico.DoesNotExist:
             return f"<p style='color: red;'>[Gráfico com a chave '{chave}' não encontrado.]</p>"
+        except json.JSONDecodeError:
+            return f"<p style='color: red;'>[Erro de sintaxe no código do gráfico '{chave}'. Verifique o JSON no admin.]</p>"
 
     corpo_processado = re.sub(r'\[grafico:([\w-]+)\]', substituir_grafico, conteudo.corpo_conteudo)
 

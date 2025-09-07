@@ -29,19 +29,16 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
-    height: 100%; /* Faz a navegação ocupar toda a altura da coluna */
+    height: 100%;
 }
 
 .nav-card-inteligencia {
-    /* --- MÁGICA DA ALTURA IGUAL --- */
-    flex-grow: 1; /* Faz com que todos os cards cresçam para preencher o espaço vertical igualmente */
-
-    display: flex; /* Alinha o conteúdo (ícone e texto) */
+    flex-grow: 1;
+    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 15px; /* Espaço entre o ícone e o texto */
-    
+    gap: 15px;
     border: 1px solid rgba(228, 248, 255, 0.5);
     border-radius: 40px;
     padding: 25px;
@@ -54,13 +51,18 @@
 }
 
 .nav-card-inteligencia img {
-    height: 40px; /* Tamanho do ícone */
-    transition: transform 0.3s ease;
+    height: 40px;
+    /* REMOÇÃO: A transição foi movida para o card principal */
 }
 
-.nav-card-inteligencia:hover img {
-    transform: scale(1.1);
+/* REGRA CORRIGIDA E ADICIONADA */
+.nav-card-inteligencia:hover {
+    transform: translateY(-5px); /* Aplica o zoom ao CARD INTEIRO */
 }
+
+/* REGRA REMOVIDA (não precisamos mais dela) */
+/* .nav-card-inteligencia:hover img { ... } */
+
 
 /* --- ESTILOS ESPECÍFICOS DOS CARDS --- */
 
@@ -69,22 +71,27 @@
     background-color: #E4F8FF;
     color: #144A5D;
 }
-.card-dados:hover { background-color: #c0e0eb; }
+.card-dados:hover {
+    background-color: #c0e0eb;
+}
 
 /* Card "Análises e Artigos" */
 .card-analises {
     background-color: #144A5D;
     color: #E4F8FF;
 }
-.card-analises:hover { background-color: #0d2f3b; }
+.card-analises:hover {
+    background-color: #0d2f3b;
+}
 
 /* Card "Glossário" (Efeito Vidro) */
 .card-glossario {
     background-color: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(10px);
 }
-.card-glossario:hover { background-color: rgba(255, 255, 255, 0.15); }
-
+.card-glossario:hover {
+    background-color: #144A5D; /* CORREÇÃO: Mantém a mudança de cor */
+}
 /* Arquivo: pagina_inicial.css */
 /* ... (estilos existentes) ... */
 
