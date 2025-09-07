@@ -17,22 +17,26 @@ def pagina_inicial_inteligencia(request):
     return render(request, 'gerenciamento_inteligencia_mercado/html/pagina_inicial.html', context)
 
 
+# Arquivo: gerenciamento_inteligencia_mercado/views.py
+
 def lista_conteudo_por_categoria(request, categoria):
     """
     Filtra e exibe todos os conteúdos de uma categoria específica.
     """
-    # Pega o nome "bonito" da categoria (ex: "Dados Estruturais")
     categoria_verbose = dict(ConteudoInteligencia.CATEGORIAS).get(categoria)
 
-    # Busca os cards daquela categoria no banco de dados
-    cards = ConteudoInteligencia.objects.filter(categoria=categoria).order_by('titulo_card')
+    # ALTERAÇÃO: Adicionado o filtro 'publicado=True'
+    # Agora, a busca só retornará os cards marcados como "Visível para o público"
+    cards = ConteudoInteligencia.objects.filter(
+        categoria=categoria, 
+        publicado=True
+    ).order_by('titulo_card')
 
     context = {
         'categoria_verbose': categoria_verbose,
         'cards': cards,
     }
     return render(request, 'gerenciamento_inteligencia_mercado/html/lista_cards.html', context)
-
 def detalhe_conteudo(request, pk):
     conteudo = get_object_or_404(ConteudoInteligencia, pk=pk)
     
@@ -93,3 +97,10 @@ def glossario_view(request):
         'titulo_pagina': 'Glossário de Termos' # CORREÇÃO: Adiciona o título ao contexto
     }
     return render(request, 'gerenciamento_inteligencia_mercado/html/glossario.html', context)
+
+def grafico_preview_view(request, pk):
+    grafico = get_object_or_404(Grafico, pk=pk)
+    context = {
+        'grafico': grafico,
+    }
+    return render(request, 'gerenciamento_inteligencia_mercado/html/grafico_preview.html', context)

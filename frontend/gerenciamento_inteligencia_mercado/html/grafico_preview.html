@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preview: {{ grafico.titulo }}</title>
+    <style>
+        body { background-color: #E4F8FF; margin: 0; padding: 20px; box-sizing: border-box; }
+        h1 { color: #0d2f3b; font-family: sans-serif; text-align: center; }
+    </style>
+</head>
+<body>
+    <h1>Preview: {{ grafico.titulo }}</h1>
+    <div id="grafico-preview-container" style="width: 100%; height: 80vh;"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts-gl@2/dist/echarts-gl.min.js"></script>
+
+    {% if grafico.tipo_grafico == 'SCRIPT_COMPLETO' %}
+        <script type="text/javascript">
+            // Renomeia o ID do container para corresponder ao ID esperado pelo script
+            document.getElementById('grafico-preview-container').id = 'grafico-apresentacao-container';
+            {{ grafico.codigo_js_echarts|safe }}
+        </script>
+    {% elif grafico.tipo_grafico == 'OPTION_SIMPLE' %}
+        <script type="text/javascript">
+            const chartDom = document.getElementById('grafico-preview-container');
+            const myChart = echarts.init(chartDom);
+            const option = {{ grafico.codigo_js_echarts|safe }};
+            myChart.setOption(option);
+            window.addEventListener('resize', () => myChart.resize());
+        </script>
+    {% endif %}
+</body>
+</html>

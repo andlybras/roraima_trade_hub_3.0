@@ -16,4 +16,5 @@ urlpatterns = [
 
     # ROTA GENÉRICA VEM POR ÚLTIMO
     path('<str:categoria>/', views.lista_conteudo_por_categoria, name='lista_por_categoria'),
+    path('grafico/preview/<int:pk>/', views.grafico_preview_view, name='grafico_preview'),
 ]

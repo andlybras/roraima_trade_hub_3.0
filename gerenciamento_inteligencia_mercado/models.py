@@ -24,6 +24,11 @@ class ConteudoInteligencia(models.Model):
         verbose_name="Conteúdo Principal",
         help_text="O texto principal do artigo. Use a tag [grafico:sua-chave-aqui] para inserir um gráfico no texto."
     )
+    publicado = models.BooleanField(
+        default=False,
+        verbose_name="Visível para o público?",
+        help_text="Marque esta opção para que o conteúdo apareça no site para os usuários."
+    )
 
     def __str__(self):
         return self.titulo_card
