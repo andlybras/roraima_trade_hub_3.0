@@ -1,0 +1,95 @@
+/* Estilos para containers de formulários e mensagens */
+.container-formulario, .container-conteudo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+}
+
+.painel-formulario, .painel-mensagem {
+    width: 100%;
+    max-width: 600px;
+    background-color: rgba(20, 74, 93, 0.5);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(228, 248, 255, 0.3);
+    border-radius: 40px;
+    padding: 40px 50px;
+    text-align: center;
+}
+
+.painel-mensagem p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: #E4F8FF;
+}
+
+/* Estilos dos formulários */
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #E4F8FF;
+}
+
+.form-group input, .form-group select {
+    width: 100%;
+    padding: 12px 20px;
+    background-color: rgba(20, 74, 93, 0.7);
+    border: 1px solid #E4F8FF;
+    border-radius: 25px;
+    color: #E4F8FF;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.form-group input:focus, .form-group select:focus {
+    background-color: rgba(228, 248, 255, 0.9);
+    color: #144A5D;
+    outline: none;
+}
+
+.captcha-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.botao-acao {
+    background-color: #E4F8FF;
+    color: #144A5D;
+    font-weight: 700;
+    padding: 12px 30px;
+    border-radius: 25px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+}
+.botao-acao:hover {
+    background-color: #c0e0eb;
+    transform: translateY(-3px);
+}
+.botao-acao:disabled {
+    background-color: #5a6a70;
+    color: #aaaaaa;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.erro-campo, .erro-geral {
+    color: #ff9999;
+    font-size: 0.9rem;
+    margin-top: 5px;
+}
+
+.mensagem-validacao {
+    color: #ffc4c4;
+    margin-top: 15px;
+}

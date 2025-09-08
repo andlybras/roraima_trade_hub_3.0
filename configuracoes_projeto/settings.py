@@ -39,8 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'gerenciamento_home',
     'gerenciamento_inteligencia_mercado',
-    'tinymce',
     'gerenciamento_registros',
+    'tinymce',
+    'django_recaptcha',
 ]
 
 MIDDLEWARE = [
