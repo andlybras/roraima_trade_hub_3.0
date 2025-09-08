@@ -7,6 +7,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('gerenciamento_home.urls')),
     path('inteligencia-de-mercado/', include('gerenciamento_inteligencia_mercado.urls')),
+    path('contas/', include('gerenciamento_registros.urls')),
 ]
 
 # Adiciona as URLs de mídia em modo de desenvolvimento

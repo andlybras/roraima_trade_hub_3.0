@@ -1,0 +1,9 @@
+Olá, {{ user.username }}!
+
+Obrigado por se registrar no Roraima Trade Hub.
+Por favor, clique no link abaixo para ativar sua conta:
+
+http://{{ domain }}{% url 'gerenciamento_registros:ativar_conta' uidb64=uid token=token %}
+
+Atenciosamente,
+Equipe Roraima Trade Hub
