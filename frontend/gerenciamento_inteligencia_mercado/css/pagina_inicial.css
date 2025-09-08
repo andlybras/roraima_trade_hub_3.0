@@ -1,30 +1,27 @@
-/* Define o layout de duas colunas para a página */
 .layout-inteligencia {
     display: grid;
     grid-template-columns: 3fr 1fr;
     gap: 30px;
-    align-items: stretch; /* Garante que ambas as colunas tenham a mesma altura */
+    align-items: stretch;
 }
 
-/* Coluna principal da esquerda */
 .coluna-principal .painel-conteudo {
     background-color: rgba(20, 74, 93, 0.3);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(228, 248, 255, 0.2);
     border-radius: 40px;
     padding: 30px;
-    height: 100%; /* Faz o painel ocupar toda a altura da coluna */
-    box-sizing: border-box; /* Garante que o padding não estoure a altura */
+    height: 100%;
+    box-sizing: border-box;
 }
 
 .coluna-principal .painel-conteudo hr {
-    border: none; /* Remove a borda padrão */
-    height: 1px; /* Define a espessura da linha */
-    background-color: rgba(228, 248, 255, 0.3); /* Cor branca semitransparente */
-    margin: 5px 0; /* Espaçamento acima e abaixo da linha */
+    border: none; 
+    height: 1px;
+    background-color: rgba(228, 248, 255, 0.3);
+    margin: 5px 0;
 }
 
-/* Coluna lateral da direita */
 .coluna-lateral .navegacao-inteligencia {
     display: flex;
     flex-direction: column;
@@ -52,60 +49,48 @@
 
 .nav-card-inteligencia img {
     height: 40px;
-    /* REMOÇÃO: A transição foi movida para o card principal */
 }
 
-/* REGRA CORRIGIDA E ADICIONADA */
 .nav-card-inteligencia:hover {
-    transform: translateY(-5px); /* Aplica o zoom ao CARD INTEIRO */
+    transform: translateY(-5px);
 }
 
-/* REGRA REMOVIDA (não precisamos mais dela) */
-/* .nav-card-inteligencia:hover img { ... } */
-
-
-/* --- ESTILOS ESPECÍFICOS DOS CARDS --- */
-
-/* Card "Dados Estruturais" */
 .card-dados {
     background-color: #E4F8FF;
     color: #144A5D;
 }
+
 .card-dados:hover {
     background-color: #c0e0eb;
 }
 
-/* Card "Análises e Artigos" */
 .card-analises {
     background-color: #144A5D;
     color: #E4F8FF;
 }
+
 .card-analises:hover {
     background-color: #0d2f3b;
 }
 
-/* Card "Glossário" (Efeito Vidro) */
 .card-glossario {
     background-color: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(10px);
 }
+
 .card-glossario:hover {
-    background-color: #144A5D; /* CORREÇÃO: Mantém a mudança de cor */
+    background-color: #144A5D;
 }
-/* Arquivo: pagina_inicial.css */
-/* ... (estilos existentes) ... */
 
-
-/* NOVO: Estilo para o container interno de duas colunas */
 .conteudo-dividido {
     display: flex;
     gap: 30px;
     align-items: center;
-    margin-top: 20px; /* Espaço após a linha <hr> */
+    margin-top: 20px;
 }
 
 .texto-apresentacao {
-    flex-basis: 50%; /* Ocupa 45% do espaço */
+    flex-basis: 50%;
     color: #E4F8FF;
 }
 
@@ -117,28 +102,23 @@
 }
 
 .grafico-apresentacao {
-    flex-basis: 55%; /* Ocupa 55% do espaço */
-    height: 300px; /* Altura do container do gráfico */
+    flex-basis: 55%;
+    height: 300px;
 }
 
-
-/* --- Responsividade --- */
 @media (max-width: 900px) {
-    /* ... (regra existente para .layout-inteligencia) ... */
-
-    /* NOVO: Empilha as colunas internas em telas menores */
     .conteudo-dividido {
         flex-direction: column;
         text-align: center;
     }
 }
 
-/* --- Responsividade --- */
 @media (max-width: 900px) {
     .layout-inteligencia {
         grid-template-columns: 1fr;
     }
+    
     .coluna-principal .painel-conteudo {
-        min-height: auto; /* Remove a altura mínima em telas pequenas */
+        min-height: auto;
     }
 }

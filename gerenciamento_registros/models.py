@@ -1,20 +1,13 @@
-# Arquivo: gerenciamento_registros/models.py
-
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from tinymce.models import HTMLField
 
-# -----------------------------------------------------------------------------
-# MODEL PRINCIPAL DE USUÁRIO
-# Este será o model central para login, com um campo que diferencia os tipos.
-# -----------------------------------------------------------------------------
 class CustomUser(AbstractUser):
     TIPO_USUARIO_CHOICES = [
         ('PERMISSIONARIO', 'Permissionário (Equipe Interna)'),
         ('EMPRESA_EMPREENDEDOR', 'Empresa ou Empreendedor'),
         ('APRENDIZ', 'Aprendiz (Aprenda Comex)'),
     ]
-
     tipo_usuario = models.CharField(
         max_length=20,
         choices=TIPO_USUARIO_CHOICES,
@@ -26,10 +19,6 @@ class CustomUser(AbstractUser):
         verbose_name="E-mail verificado"
     )
 
-# -----------------------------------------------------------------------------
-# PERFIL MÍNIMO PARA PERMISSIONÁRIOS
-# Contém os dados extras necessários no momento do registro pelo superusuário.
-# -----------------------------------------------------------------------------
 class PermissionarioProfile(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key=True, related_name='permissionario_profile')
     orgao_lotacao = models.CharField(max_length=255, verbose_name="Órgão/Lotação")
@@ -41,17 +30,12 @@ class PermissionarioProfile(models.Model):
         verbose_name = "Perfil de Permissionário"
         verbose_name_plural = "Perfis de Permissionários"
 
-# -----------------------------------------------------------------------------
-# PERFIL MÍNIMO PARA APRENDIZES
-# Contém os dados extras necessários no momento do registro.
-# -----------------------------------------------------------------------------
 class AprendizProfile(models.Model):
     NIVEL_CONHECIMENTO_CHOICES = [
         ('INICIANTE', 'Iniciante (Nunca estudei/trabalhei com Comex)'),
         ('INTERMEDIARIO', 'Intermediário (Já tive algum contato ou estudei o básico)'),
         ('AVANCADO', 'Avançado (Trabalho ou tenho conhecimento sólido na área)'),
     ]
-
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key=True, related_name='aprendiz_profile')
     cpf = models.CharField(max_length=14, unique=True, verbose_name="CPF")
     data_nascimento = models.DateField(verbose_name="Data de Nascimento")
@@ -69,9 +53,6 @@ class AprendizProfile(models.Model):
         verbose_name = "Perfil de Aprendiz"
         verbose_name_plural = "Perfis de Aprendizes"
 
-# -----------------------------------------------------------------------------
-# MODEL PARA A CENTRAL DE COMUNICAÇÃO (TEMPLATES DE E-MAIL)
-# -----------------------------------------------------------------------------
 class ModeloEmail(models.Model):
     identificador = models.SlugField(
         max_length=100,

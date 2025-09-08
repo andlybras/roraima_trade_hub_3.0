@@ -1,58 +1,47 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block css_pagina %}
     <link rel="stylesheet" href="{% static 'gerenciamento_registros/css/formularios_registro.css' %}">
 {% endblock %}
-
 {% block conteudo %}
 <div class="container-formulario">
     <div class="painel-formulario">
         <h1 class="titulo-pagina">{% block titulo_formulario %}{% endblock %}</h1>
         <form method="post" id="registrationForm" novalidate>
             {% csrf_token %}
-
             {% for error in form.non_field_errors %}
                 <div class="erro-geral">{{ error }}</div>
             {% endfor %}
-
             <div class="form-group">
                 <label for="{{ form.username.id_for_label }}">Nome de usuário</label>
                 {{ form.username }}
                 <div class="erro-campo">{{ form.username.errors }}</div>
             </div>
-
             {% block campos_extras %}{% endblock %}
-
             <div class="form-group">
                 <label for="{{ form.email.id_for_label }}">E-mail</label>
                 {{ form.email }}
                 <div class="erro-campo">{{ form.email.errors }}</div>
             </div>
-
             <div class="form-group">
                 <label for="{{ form.email2.id_for_label }}">Confirme seu e-mail</label>
                 {{ form.email2 }}
                 <div class="erro-campo" id="email2-error"></div>
             </div>
-
             <div class="form-group">
                 <label for="{{ form.password.id_for_label }}">Senha</label>
                 {{ form.password }}
                 <div class="erro-campo">{{ form.password.errors }}</div>
             </div>
-
             <div class="form-group">
                 <label for="{{ form.password2.id_for_label }}">Confirme sua senha</label>
                 {{ form.password2 }}
                 <div class="erro-campo" id="password2-error"></div>
             </div>
-
             <div class="form-group captcha-container">
                 {{ form.captcha }}
                 <div class="erro-campo">{{ form.captcha.errors }}</div>
             </div>
-
             <button type="submit" class="botao-acao" id="submitButton" disabled>Criar Perfil</button>
             <div id="form-message" class="mensagem-validacao">
                 Por favor, preencha todos os campos corretamente.
@@ -61,9 +50,7 @@
     </div>
 </div>
 {% endblock %}
-
 {% block js_pagina %}
-    {# O reCAPTCHA precisa ser carregado via API do Google #}
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script src="{% static 'gerenciamento_registros/js/validacao_registro.js' %}"></script>
 {% endblock %}

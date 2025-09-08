@@ -10,7 +10,6 @@ urlpatterns = [
     path('contas/', include('gerenciamento_registros.urls')),
 ]
 
-# Adiciona as URLs de mídia em modo de desenvolvimento
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     

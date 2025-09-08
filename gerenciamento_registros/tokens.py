@@ -1,5 +1,3 @@
-# Arquivo: gerenciamento_registros/tokens.py
-
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 import six
 

@@ -1,5 +1,3 @@
-# Arquivo: gerenciamento_inteligencia_mercado/admin.py
-
 from django.contrib import admin
 from django.urls import reverse
 from django.utils.html import format_html
@@ -7,12 +5,10 @@ from .models import ConteudoInteligencia, Grafico, TermoGlossario
 
 @admin.register(ConteudoInteligencia)
 class ConteudoInteligenciaAdmin(admin.ModelAdmin):
-    # ADICIONADO: 'publicado' e 'imagem_thumbnail'
     list_display = ('titulo_card', 'categoria', 'publicado', 'imagem_thumbnail')
-    list_filter = ('categoria', 'publicado') # Adicionado filtro por status
+    list_filter = ('categoria', 'publicado')
     search_fields = ('titulo_card', 'titulo_pagina')
     
-    # Adiciona um campo de preview da imagem
     def imagem_thumbnail(self, obj):
         if obj.imagem_card:
             return format_html('<img src="{}" width="100" />', obj.imagem_card.url)
@@ -21,9 +17,8 @@ class ConteudoInteligenciaAdmin(admin.ModelAdmin):
 
 @admin.register(Grafico)
 class GraficoAdmin(admin.ModelAdmin):
-    # ADICIONADO: 'preview_link'
     list_display = ('titulo', 'tipo_grafico', 'tag_para_copiar', 'is_grafico_principal', 'preview_link')
-    list_filter = ('tipo_grafico', 'is_grafico_principal') # Adicionado filtros
+    list_filter = ('tipo_grafico', 'is_grafico_principal')
     search_fields = ('titulo',)
     readonly_fields = ('tag_para_copiar', 'preview_link')
 
@@ -33,7 +28,6 @@ class GraficoAdmin(admin.ModelAdmin):
         return "Salve o gráfico para gerar a chave."
     tag_para_copiar.short_description = "Tag para Copiar"
     
-    # Adiciona o link de preview
     def preview_link(self, obj):
         if obj.pk:
             url = reverse('inteligencia:grafico_preview', args=[obj.pk])

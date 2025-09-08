@@ -1,5 +1,3 @@
-# Arquivo: gerenciamento_registros/forms.py
-
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from .models import CustomUser, AprendizProfile
@@ -7,10 +5,6 @@ from django_recaptcha.fields import ReCaptchaField
 from django.core.exceptions import ValidationError
 
 class EmpresaEmpreendedorRegistrationForm(UserCreationForm):
-    """
-    Formulário para o registro de Empresas e Empreendedores.
-    Reaproveita a lógica do projeto antigo.
-    """
     email = forms.EmailField(required=True, help_text="O e-mail deve ser único.", label="E-mail")
     email2 = forms.EmailField(label="Confirme seu e-mail")
     captcha = ReCaptchaField()
@@ -34,9 +28,6 @@ class EmpresaEmpreendedorRegistrationForm(UserCreationForm):
         return user
 
 class AprendizRegistrationForm(UserCreationForm):
-    """
-    Novo formulário para o registro de Aprendizes.
-    """
     first_name = forms.CharField(required=True, label="Nome Completo")
     email = forms.EmailField(required=True, help_text="O e-mail deve ser único.", label="E-mail")
     email2 = forms.EmailField(label="Confirme seu e-mail")
@@ -64,10 +55,8 @@ class AprendizRegistrationForm(UserCreationForm):
         user = super().save(commit=False)
         user.first_name = self.cleaned_data.get('first_name')
         user.tipo_usuario = 'APRENDIZ'
-        
         if commit:
             user.save()
-            # Cria o perfil de aprendiz com os dados extras
             AprendizProfile.objects.create(
                 user=user,
                 cpf=self.cleaned_data.get('cpf'),

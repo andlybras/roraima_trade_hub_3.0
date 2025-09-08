@@ -1,12 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block titulo %}Página Inicial | Roraima Trade Hub{% endblock %}
-
 {% block css_pagina %}
     <link rel="stylesheet" href="{% static 'gerenciamento_home/css/home.css' %}">
 {% endblock %}
-
 {% block conteudo %}
 <section class="secao-apresentacao">
     <div class="apresentacao-carrossel">
@@ -23,7 +20,6 @@
         <p>A vitrine do comércio de Roraima para o mundo</p>
     </div>
 </section>
-
 <nav class="navegacao-principal">
     <a href="#" class="nav-card card-comprar">
         <img src="{% static 'gerenciamento_home/icons/cards/icone-comprar.svg' %}" alt="Ícone de um carrinho de compras">
@@ -59,7 +55,6 @@
     </a>
 </nav>
 {% endblock %}
-
 {% block js_pagina %}
     <script src="{% static 'gerenciamento_home/js/home.js' %}"></script>
 {% endblock %}

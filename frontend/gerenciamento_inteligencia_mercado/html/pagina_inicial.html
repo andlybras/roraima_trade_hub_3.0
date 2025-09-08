@@ -1,26 +1,20 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block titulo %}Inteligência de Mercado | Roraima Trade Hub{% endblock %}
-
 {% block css_pagina %}
     <link rel="stylesheet" href="{% static 'gerenciamento_inteligencia_mercado/css/layout_inteligencia.css' %}">
     <link rel="stylesheet" href="{% static 'gerenciamento_inteligencia_mercado/css/pagina_inicial.css' %}">
 {% endblock %}
-
 {% block conteudo %}
 <div class="container-conteudo layout-inteligencia">
     <div class="coluna-principal">
     <div class="painel-conteudo">
         <h1 class="titulo-pagina">Inteligência de Mercado</h1>
         <hr>
-        
         <div class="conteudo-dividido">
-            
             <div class="texto-apresentacao">
                 <h2>Explore os indicadores de desenvolvimento e conheça as potencialidades que Roraima oferece.</h2>
             </div>
-
             <div class="grafico-apresentacao">
                 {% if grafico_principal %}
                     <div id="grafico-apresentacao-container" 
@@ -31,11 +25,9 @@
                     <p>Nenhum gráfico principal foi configurado no painel de administração.</p>
                 {% endif %}
             </div>
-
         </div>
     </div>
 </div>
-
     <aside class="coluna-lateral">
         <nav class="navegacao-inteligencia">
             <a href="{% url 'inteligencia:lista_por_categoria' 'DADOS_ESTRUTURAIS' %}" class="nav-card-inteligencia card-dados">
@@ -54,12 +46,9 @@
     </aside>
 </div>
 {% endblock %}
-
 {% block js_pagina %}
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
-
     <script src="https://cdn.jsdelivr.net/npm/echarts-gl@2/dist/echarts-gl.min.js"></script>
-
     {% if grafico_principal %}
         {% if grafico_principal.tipo_grafico == 'SCRIPT_COMPLETO' %}
             <script type="text/javascript">

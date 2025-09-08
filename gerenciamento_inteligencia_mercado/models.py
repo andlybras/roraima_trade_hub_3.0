@@ -1,25 +1,17 @@
-# Arquivo: gerenciamento_inteligencia_mercado/models.py
-
 from django.db import models
 import uuid
-from tinymce.models import HTMLField # Importa o campo com editor de texto
+from tinymce.models import HTMLField
 
-# -----------------------------------------------------------------------------
-# MODEL PARA OS ARTIGOS E CONTEÚDOS DAS SEÇÕES
-# -----------------------------------------------------------------------------
 class ConteudoInteligencia(models.Model):
     CATEGORIAS = [
         ('DADOS_ESTRUTURAIS', 'Dados Estruturais'),
         ('ANALISES_E_ARTIGOS', 'Análises e Artigos'),
     ]
-
     categoria = models.CharField(max_length=50, choices=CATEGORIAS, verbose_name="Categoria do Conteúdo")
     titulo_card = models.CharField(max_length=100, verbose_name="Título no Card", help_text="Texto que aparece na listagem de cards da seção.")
     imagem_card = models.ImageField(upload_to='inteligencia_mercado/cards/', verbose_name="Imagem de Capa do Card", help_text="Imagem que aparece na listagem de cards.")
     titulo_pagina = models.CharField(max_length=200, verbose_name="Título Principal da Página", help_text="Título exibido no topo da página ao abrir o conteúdo.")
     subtitulo_pagina = models.CharField(max_length=300, blank=True, null=True, verbose_name="Subtítulo da Página", help_text="Texto curto opcional que aparece abaixo do título principal.")
-    
-    # Usa o editor de texto rico para o corpo do artigo
     corpo_conteudo = HTMLField(
         verbose_name="Conteúdo Principal",
         help_text="O texto principal do artigo. Use a tag [grafico:sua-chave-aqui] para inserir um gráfico no texto."
@@ -38,17 +30,11 @@ class ConteudoInteligencia(models.Model):
         verbose_name_plural = "1. Conteúdos de Inteligência"
         ordering = ['categoria', 'titulo_card']
 
-
-# -----------------------------------------------------------------------------
-# MODEL PARA OS GRÁFICOS (SIMPLES E ANIMADOS)
-# -----------------------------------------------------------------------------
 class Grafico(models.Model):
     TIPO_CHOICES = [
         ('OPTION_SIMPLE', 'Objeto Option Simples'),
         ('SCRIPT_COMPLETO', 'Script de Animação Completo'),
     ]
-
-    # CAMPO-CHAVE: Permite escolher o tipo de código que será colado
     tipo_grafico = models.CharField(
         max_length=20,
         choices=TIPO_CHOICES,
@@ -56,7 +42,6 @@ class Grafico(models.Model):
         verbose_name="Tipo de Gráfico",
         help_text="Escolha 'Objeto Option Simples' se você está colando apenas o JSON de configuração. Escolha 'Script de Animação Completo' para colar um script JavaScript auto-executável."
     )
-    
     titulo = models.CharField(max_length=200, unique=True, verbose_name="Título Interno do Gráfico", help_text="Um nome único para identificar o gráfico no painel.")
     chave = models.CharField(max_length=10, unique=True, blank=True, editable=False, verbose_name="Chave Única")
     codigo_js_echarts = models.TextField(verbose_name="Código JavaScript", help_text="Cole aqui o objeto 'option' ou o script completo, de acordo com o tipo selecionado acima.")
@@ -78,14 +63,8 @@ class Grafico(models.Model):
         verbose_name = "Gráfico"
         verbose_name_plural = "2. Gráficos para Conteúdos"
 
-
-# -----------------------------------------------------------------------------
-# MODEL PARA O GLOSSÁRIO
-# -----------------------------------------------------------------------------
 class TermoGlossario(models.Model):
     termo = models.CharField(max_length=100, unique=True, verbose_name="Termo")
-
-    # Usa o editor de texto rico para a explicação
     explicacao = HTMLField(
         verbose_name="Explicação do Termo",
         help_text="Use as ferramentas de formatação para criar uma explicação clara e didática."

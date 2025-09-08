@@ -5,13 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block titulo %}Roraima Trade Hub{% endblock %}</title>
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@400;600;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
-    
     <link rel="stylesheet" href="{% static 'gerenciamento_home/css/global.css' %}">
-    
     {% block css_pagina %}{% endblock %}
 </head>
 <body {% if imagem_fundo %}style="background-image: url('{{ imagem_fundo.imagem.url }}');"{% endif %}>
@@ -36,7 +33,6 @@
                 {% endfor %}
             </div>
         </header>
-
         <main>
             {% block conteudo %}
             {% endblock %}
@@ -48,24 +44,20 @@
                             <a href="{{ logo.link_url|default:'#' }}" target="_blank" class="parceiro-logo">
                                 <img src="{{ logo.imagem.url }}" alt="{{ logo.nome_parceiro }}">
                             </a>
-                            {% endfor %}
-                            
+                            {% endfor %}           
                             </div>
                     </div>
                 </div>
             </section>
         </main>
     </div>
-
     <footer class="rodape-site">
         <div class="rodape-creditos">
             <p>&copy; {% now "Y" %} Governo de Roraima. Todos os direitos reservados.</p>
             <p><strong>Roraima Trade Hub</strong></p>
         </div>
     </footer>
-    
     <script src="{% static 'gerenciamento_home/js/scroller.js' %}"></script>
-    
     <script src="{% static 'gerenciamento_home/js/header.js' %}"></script>
     {% block js_pagina %}{% endblock %}
 </body>

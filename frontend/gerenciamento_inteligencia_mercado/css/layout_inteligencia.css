@@ -1,10 +1,7 @@
-/* Estilo geral para os containers das páginas de inteligência */
 .container-conteudo,
 .container-conteudo-detalhe {
     padding: 20px 0;
 }
-
-/* --- PAINÉIS PRINCIPAIS (Listagem e Detalhes) --- */
 
 .painel-listagem-cards {
     background-color: rgba(20, 74, 93, 0.3);
@@ -22,8 +19,6 @@
     line-height: 1.8;
     font-size: 1.1rem;
 }
-
-/* --- CABEÇALHOS DAS PÁGINAS (Comuns) --- */
 
 .painel-cabecalho {
     display: flex;
@@ -74,8 +69,6 @@
     margin: 20px 0;
 }
 
-/* --- ESTILOS PARA LISTAGEM DE CARDS --- */
-
 .container-cards {
     display: flex;
     justify-content: center;
@@ -95,7 +88,9 @@
     max-width: 45%;
     flex-grow: 1;
 }
-.card-link:hover { transform: translateY(-5px) scale(1.02); }
+.card-link:hover { 
+    transform: translateY(-5px) scale(1.02);
+}
 
 .card-imagem-fundo {
     position: absolute;
@@ -139,8 +134,6 @@
     color: #E4F8FF;
 }
 
-/* --- ESTILOS PARA PÁGINA DE DETALHES --- */
-
 .titulo-detalhe-card {
     font-family: 'Montserrat', sans-serif;
     color: #144A5D;
@@ -165,12 +158,9 @@
     border: none;
     height: 1px;
     background-color: rgba(20, 74, 93, 0.1);
-    
-    /* === CORREÇÃO AQUI === */
-    width: calc(100% - 100px); /* Ajusta a largura para o padding do painel (50px de cada lado) */
-    margin: 30px auto 40px auto; /* Centraliza a linha horizontalmente e ajusta espaçamento */
+    width: calc(100% - 100px);
+    margin: 30px auto 40px auto;
 }
-
 
 .corpo-artigo h1, .corpo-artigo h2, .corpo-artigo h3 {
     color: #144A5D;
@@ -178,9 +168,19 @@
     margin-bottom: 15px;
     line-height: 1.4;
 }
-.corpo-artigo p { margin-bottom: 15px; }
-.corpo-artigo ul, .corpo-artigo ol { margin-left: 20px; margin-bottom: 15px; }
-.corpo-artigo li { margin-bottom: 5px; }
+
+.corpo-artigo p { 
+    margin-bottom: 15px;
+}
+
+.corpo-artigo ul, .corpo-artigo ol { 
+    margin-left: 20px; 
+    margin-bottom: 15px;
+}
+
+.corpo-artigo li { 
+    margin-bottom: 5px;
+}
 
 .corpo-artigo .echarts-container {
     background-color: #f8fcfd;
@@ -189,8 +189,6 @@
     margin: 30px auto;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
-
-/* --- ESTILOS PARA A PÁGINA DO GLOSSÁRIO --- */
 
 .secao-letra {
     margin-bottom: 40px;
@@ -220,24 +218,37 @@
 .termo-explicacao {
     font-size: 1.1rem;
     line-height: 1.7;
-    color: #144A5D; /* Cor do texto mais escura para melhor contraste no fundo claro */
+    color: #144A5D;
     margin-left: 0;
-    padding: 15px 20px; /* Padding interno para o background */
-    background-color: #E4F8FF; /* Fundo branco ou um tom muito claro de azul */
-    border-radius: 15px; /* Bordas arredondadas para um visual suave */
-    border-left: 8px solid #37A2FF; /* Mantém a linha de destaque à esquerda */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08); /* Sombra sutil para "levantar" o card */
-    margin-top: 10px; /* Espaçamento entre o título do termo e a explicação */
+    padding: 15px 20px;
+    background-color: #E4F8FF;
+    border-radius: 15px;
+    border-left: 8px solid #37A2FF;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+    margin-top: 10px;
 }
 
-/* --- RESPONSIVIDADE GERAL DO MÓDULO --- */
-
 @media (max-width: 900px) {
-    .card-link { max-width: 100%; }
-    .cabecalho-detalhe-topo { padding: 0 20px; }
-    .titulo-detalhe-card { font-size: 2rem; }
-    .subtitulo-detalhe-card { font-size: 1.1rem; }
-    .painel-conteudo-detalhe-branco { padding: 30px; font-size: 1rem; }
+    .card-link { 
+        max-width: 100%;
+    }
+
+    .cabecalho-detalhe-topo { 
+        padding: 0 20px;
+    }
+
+    .titulo-detalhe-card { 
+        font-size: 2rem;
+    }
+
+    .subtitulo-detalhe-card { 
+        font-size: 1.1rem;
+    }
+
+    .painel-conteudo-detalhe-branco { 
+        padding: 30px; 
+        font-size: 1rem;
+    }
 }
 
 @media (max-width: 600px) {
@@ -245,15 +256,26 @@
         flex-direction: column;
         align-items: stretch;
     }
+
     .titulo-pagina {
         text-align: center;
         margin-top: 10px;
     }
+
     .cabecalho-detalhe-topo {
         padding: 0 10px;
         text-align: center;
     }
-    .titulo-detalhe-card { font-size: 1.8rem; }
-    .subtitulo-detalhe-card { font-size: 1rem; }
-    .painel-conteudo-detalhe-branco { padding: 20px; }
+
+    .titulo-detalhe-card { 
+        font-size: 1.8rem;
+    }
+
+    .subtitulo-detalhe-card { 
+        font-size: 1rem;
+    }
+
+    .painel-conteudo-detalhe-branco { 
+        padding: 20px;
+    }
 }

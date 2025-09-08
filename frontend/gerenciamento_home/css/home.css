@@ -1,6 +1,3 @@
-/* Arquivo: home.css */
-
-/* --- Seção de Apresentação (Hero) --- */
 .secao-apresentacao {
     display: flex;
     align-items: center;
@@ -46,7 +43,9 @@
     transition: opacity 1.5s ease-in-out;
 }
 
-.slide-hero.is-active { opacity: 1; }
+.slide-hero.is-active { 
+    opacity: 1;
+}
 
 .slide-hero img {
     width: 100%;
@@ -54,7 +53,6 @@
     object-fit: contain;
 }
 
-/* --- Navegação Principal --- */
 .navegacao-principal {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -91,40 +89,47 @@
     transform: translateY(-5px);
 }
 
-/* --- MUDANÇAS NO GRID PARA COMPRAR/VENDER --- */
-/* Posiciona o card "Quero Comprar" na primeira linha e primeira coluna */
 .card-comprar {
     grid-column: 1 / 2;
-    grid-row: 1 / 2; /* ALTERAÇÃO: Agora ocupa apenas UMA linha */
+    grid-row: 1 / 2;
     background-color: #E4F8FF;
     color: #144A5D;
     backdrop-filter: none;
 }
-.card-comprar:hover { background-color: #c0e0eb; }
 
-/* Posiciona o card "Quero Vender" na segunda linha e primeira coluna */
+.card-comprar:hover { 
+    background-color: #c0e0eb;
+}
+
 .card-vender {
     grid-column: 1 / 2;
-    grid-row: 2 / 3; /* ALTERAÇÃO: Agora ocupa a linha seguinte */
+    grid-row: 2 / 3;
     background-color: #144A5D;
     color: #E4F8FF;
     backdrop-filter: none;
 }
-.card-vender:hover { background-color: #0d2f3b; }
 
+.card-vender:hover { 
+    background-color: #0d2f3b;
+}
 
-/* --- Responsividade --- */
-
-/* Tablets e telas menores */
 @media (max-width: 1024px) {
     .secao-apresentacao {
         flex-direction: column;
         text-align: center;
     }
-    .apresentacao-texto h1 { font-size: 3.5rem; }
-    .apresentacao-texto p { font-size: 1.3rem; }
 
-    .navegacao-principal { grid-template-columns: repeat(2, 1fr); }
+    .apresentacao-texto h1 { 
+        font-size: 3.5rem;
+    }
+
+    .apresentacao-texto p { 
+        font-size: 1.3rem;
+    }
+
+    .navegacao-principal { 
+        grid-template-columns: repeat(2, 1fr);
+    }
 
     .card-comprar, .card-vender {
         grid-column: auto;
@@ -132,12 +137,24 @@
     }
 }
 
-/* Celulares */
 @media (max-width: 768px) {
-    .apresentacao-carrossel { display: none; }
-    .apresentacao-texto { padding: 40px 20px; }
-    .apresentacao-texto h1 { font-size: 2.5rem; }
-    .apresentacao-texto p { font-size: 1.1rem; }
+    .apresentacao-carrossel { 
+        display: none;
+    }
 
-    .navegacao-principal { grid-template-columns: 1fr; }
+    .apresentacao-texto { 
+        padding: 40px 20px;
+    }
+
+    .apresentacao-texto h1 { 
+        font-size: 2.5rem;
+    }
+
+    .apresentacao-texto p { 
+        font-size: 1.1rem;
+    }
+
+    .navegacao-principal { 
+        grid-template-columns: 1fr;
+    }
 }

@@ -1,4 +1,3 @@
-/* Estilos para containers de formulários e mensagens */
 .container-formulario, .container-conteudo {
     display: flex;
     justify-content: center;
@@ -23,7 +22,6 @@
     color: #E4F8FF;
 }
 
-/* Estilos dos formulários */
 .form-group {
     margin-bottom: 20px;
     text-align: left;
@@ -72,10 +70,12 @@
     font-size: 1.1rem;
     transition: all 0.3s ease;
 }
+
 .botao-acao:hover {
     background-color: #c0e0eb;
     transform: translateY(-3px);
 }
+
 .botao-acao:disabled {
     background-color: #5a6a70;
     color: #aaaaaa;

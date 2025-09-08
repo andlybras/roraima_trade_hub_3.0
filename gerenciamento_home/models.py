@@ -1,5 +1,3 @@
-# Arquivo: gerenciamento_home/models.py
-
 from django.db import models
 
 class HeaderLogo(models.Model):
@@ -18,8 +16,7 @@ class ImagemApresentacao(models.Model):
     TIPO_CHOICES = [
         ('FUNDO', 'Imagem de Fundo do Site'),
         ('HERO', 'Imagem do Carrossel (Hero)'),
-    ]
-    
+    ]    
     tipo = models.CharField(max_length=5, choices=TIPO_CHOICES, default='HERO')
     descricao = models.CharField(max_length=100, help_text="Descrição interna da imagem (ex: Paisagem RR).")
     imagem = models.ImageField(upload_to='apresentacao/', help_text="Imagem principal da home page ou fundo do site.")
