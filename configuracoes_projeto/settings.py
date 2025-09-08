@@ -108,3 +108,5 @@ TINYMCE_DEFAULT_CONFIG = {
 }
 
 AUTH_USER_MODEL = 'gerenciamento_registros.CustomUser'
+
+SILENCED_SYSTEM_CHECKS = ['django_recaptcha.recaptcha_test_key_error']
