@@ -1,3 +1,93 @@
-from django.db import models
+# Arquivo: gerenciamento_registros/models.py
 
-# Create your models here.
+from django.db import models
+from django.contrib.auth.models import AbstractUser
+from tinymce.models import HTMLField
+
+# -----------------------------------------------------------------------------
+# MODEL PRINCIPAL DE USUÁRIO
+# Este será o model central para login, com um campo que diferencia os tipos.
+# -----------------------------------------------------------------------------
+class CustomUser(AbstractUser):
+    TIPO_USUARIO_CHOICES = [
+        ('PERMISSIONARIO', 'Permissionário (Equipe Interna)'),
+        ('EMPRESA_EMPREENDEDOR', 'Empresa ou Empreendedor'),
+        ('APRENDIZ', 'Aprendiz (Aprenda Comex)'),
+    ]
+
+    tipo_usuario = models.CharField(
+        max_length=20,
+        choices=TIPO_USUARIO_CHOICES,
+        verbose_name="Tipo de Usuário",
+        default='EMPRESA_EMPREENDEDOR'
+    )
+    is_email_verified = models.BooleanField(
+        default=False,
+        verbose_name="E-mail verificado"
+    )
+
+# -----------------------------------------------------------------------------
+# PERFIL MÍNIMO PARA PERMISSIONÁRIOS
+# Contém os dados extras necessários no momento do registro pelo superusuário.
+# -----------------------------------------------------------------------------
+class PermissionarioProfile(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key=True, related_name='permissionario_profile')
+    orgao_lotacao = models.CharField(max_length=255, verbose_name="Órgão/Lotação")
+
+    def __str__(self):
+        return self.user.get_full_name() or self.user.username
+    
+    class Meta:
+        verbose_name = "Perfil de Permissionário"
+        verbose_name_plural = "Perfis de Permissionários"
+
+# -----------------------------------------------------------------------------
+# PERFIL MÍNIMO PARA APRENDIZES
+# Contém os dados extras necessários no momento do registro.
+# -----------------------------------------------------------------------------
+class AprendizProfile(models.Model):
+    NIVEL_CONHECIMENTO_CHOICES = [
+        ('INICIANTE', 'Iniciante (Nunca estudei/trabalhei com Comex)'),
+        ('INTERMEDIARIO', 'Intermediário (Já tive algum contato ou estudei o básico)'),
+        ('AVANCADO', 'Avançado (Trabalho ou tenho conhecimento sólido na área)'),
+    ]
+
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key=True, related_name='aprendiz_profile')
+    cpf = models.CharField(max_length=14, unique=True, verbose_name="CPF")
+    data_nascimento = models.DateField(verbose_name="Data de Nascimento")
+    residencia = models.CharField(max_length=100, verbose_name="Estado/País de Residência")
+    nivel_conhecimento_comex = models.CharField(
+        max_length=20,
+        choices=NIVEL_CONHECIMENTO_CHOICES,
+        verbose_name="Nível de conhecimento em Comércio Exterior"
+    )
+
+    def __str__(self):
+        return self.user.get_full_name() or self.user.username
+
+    class Meta:
+        verbose_name = "Perfil de Aprendiz"
+        verbose_name_plural = "Perfis de Aprendizes"
+
+# -----------------------------------------------------------------------------
+# MODEL PARA A CENTRAL DE COMUNICAÇÃO (TEMPLATES DE E-MAIL)
+# -----------------------------------------------------------------------------
+class ModeloEmail(models.Model):
+    identificador = models.SlugField(
+        max_length=100,
+        unique=True,
+        verbose_name="Identificador Único",
+        help_text="Um nome curto, sem espaços ou caracteres especiais (ex: 'ativacao-conta', 'reset-senha'). Usado internamente pelo sistema."
+    )
+    assunto = models.CharField(max_length=200, verbose_name="Assunto do E-mail")
+    corpo = HTMLField(
+        verbose_name="Corpo do E-mail",
+        help_text="O conteúdo do e-mail. Você pode usar variáveis como {{ user.username }}, {{ link_ativacao }}, etc., que serão substituídas dinamicamente."
+    )
+
+    def __str__(self):
+        return self.assunto
+
+    class Meta:
+        verbose_name = "Modelo de E-mail"
+        verbose_name_plural = "4. Central de Comunicação (Modelos de E-mail)"
