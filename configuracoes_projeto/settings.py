@@ -75,9 +75,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'pt-br'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Boa_Vista'
 
 USE_I18N = True
 
@@ -110,3 +110,7 @@ TINYMCE_DEFAULT_CONFIG = {
 AUTH_USER_MODEL = 'gerenciamento_registros.CustomUser'
 
 SILENCED_SYSTEM_CHECKS = ['django_recaptcha.recaptcha_test_key_error']
+
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = BASE_DIR / 'media'
