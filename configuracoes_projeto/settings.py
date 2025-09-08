@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'gerenciamento_home',
     'gerenciamento_inteligencia_mercado',
     'tinymce',
+    'gerenciamento_registros',
 ]
 
 MIDDLEWARE = [
@@ -149,3 +150,5 @@ TINYMCE_DEFAULT_CONFIG = {
                "a11ycheck ltr rtl | showcomments addcomment code",
     "custom_undo_redo_levels": 10,
 }
+
+AUTH_USER_MODEL = 'gerenciamento_registros.CustomUser'
