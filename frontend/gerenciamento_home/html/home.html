@@ -25,7 +25,7 @@
         <img src="{% static 'gerenciamento_home/icons/cards/icone-comprar.svg' %}" alt="Ícone de um carrinho de compras">
         <span>Quero Comprar</span>
     </a>
-    <a href="#" class="nav-card card-vender">
+    <a href="{% url 'vender:pagina_inicial' %}" class="nav-card card-vender">
         <img src="{% static 'gerenciamento_home/icons/cards/icone-vender.svg' %}" alt="Ícone de uma etiqueta de preço">
         <span>Quero Vender</span>
     </a>

@@ -151,3 +151,13 @@ body::before {
 .rodape-creditos p { 
     margin: 5px 0;
 }
+
+/* Arquivo: frontend/gerenciamento_home/css/global.css */
+
+/* ... (todo o código anterior do arquivo) */
+
+/* Adicionado para garantir espaçamento superior consistente em todas as páginas */
+.container-conteudo {
+    padding-top: 40px;
+    padding-bottom: 20px;
+}

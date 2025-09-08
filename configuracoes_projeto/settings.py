@@ -16,6 +16,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'gerenciamento_home',
+    'gerenciamento_vender',
     'gerenciamento_inteligencia_mercado',
     'gerenciamento_aprenda',
     'gerenciamento_registros',
