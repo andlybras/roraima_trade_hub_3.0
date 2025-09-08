@@ -11,6 +11,8 @@ urlpatterns = [
     path('aprenda-comex/', include('gerenciamento_aprenda.urls')),
     path('quero-vender/', include('gerenciamento_vender.urls')),
     path('acordos-e-regulamentos/', include('gerenciamento_acordos.urls')),
+    path('oportunidades/', include('gerenciamento_oportunidades.urls')),
+    path('destino-roraima/', include('gerenciamento_destino.urls')),
 ]
 
 if settings.DEBUG:

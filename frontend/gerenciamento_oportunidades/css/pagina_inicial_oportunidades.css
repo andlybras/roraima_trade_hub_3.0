@@ -1,12 +1,12 @@
-/* Arquivo: frontend/gerenciamento_acordos/css/pagina_inicial_acordos.css */
+/* Arquivo: frontend/gerenciamento_oportunidades/css/pagina_inicial_oportunidades.css */
 
-.layout-acordos {
+.layout-oportunidades {
     display: grid;
     grid-template-columns: 3fr 1fr;
     gap: 30px;
     align-items: stretch;
 }
-.acordos-coluna-principal .acordos-painel-conteudo {
+.oportunidades-coluna-principal .oportunidades-painel-conteudo {
     background-color: rgba(20, 74, 93, 0.3);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(228, 248, 255, 0.2);
@@ -16,8 +16,9 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
+    min-height: 420px; /* Garante uma altura mínima consistente */
 }
-.acordos-titulo-pagina {
+.oportunidades-titulo-pagina {
     font-family: 'Montserrat', sans-serif;
     color: #E4F8FF;
     margin: 0;
@@ -30,10 +31,7 @@
     background-color: rgba(228, 248, 255, 0.3);
     margin: 15px 0;
 }
-/* A classe abaixo foi trocada pela global .separador-painel-principal no HTML */
-/* Se precisar de um estilo específico, pode recriá-la como .acordos-separador */
-
-.acordos-conteudo-dividido {
+.oportunidades-conteudo-dividido {
     display: flex;
     gap: 30px;
     align-items: center;
@@ -41,20 +39,20 @@
     flex-grow: 1;
     justify-content: space-between;
 }
-.acordos-texto-apresentacao {
+.oportunidades-texto-apresentacao {
     flex-basis: 45%;
     color: #E4F8FF;
     display: flex;
     align-items: center;
     height: 100%;
 }
-.acordos-imagem-apresentacao {
+.oportunidades-imagem-apresentacao {
     flex-basis: 45%;
     display: flex;
     align-items: center;
     justify-content: center;
 }
-.acordos-texto-apresentacao h2 {
+.oportunidades-texto-apresentacao h2 {
     font-family: 'Montserrat', sans-serif;
     font-size: 1.5rem;
     line-height: 1.5;
@@ -82,13 +80,13 @@
     height: 100%;
     border-radius: 20px;
 }
-.acordos-coluna-lateral .acordos-navegacao-lateral {
+.oportunidades-coluna-lateral .oportunidades-navegacao-lateral {
     display: flex;
     flex-direction: column;
     gap: 20px;
     height: 100%;
 }
-.acordos-nav-card {
+.oportunidades-nav-card {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
@@ -106,50 +104,41 @@
     transition: all 0.3s ease;
     cursor: pointer;
 }
-.acordos-nav-card img {
+.oportunidades-nav-card img {
     height: 40px;
 }
-.acordos-nav-card:hover {
+.oportunidades-nav-card:hover {
     transform: translateY(-5px);
 }
 /* Estilos específicos para os botões do módulo */
-.acordos-nav-card.card-legislacao {
+.oportunidades-nav-card.card-investa {
     background-color: #E4F8FF;
     color: #144A5D;
     border-color: #E4F8FF;
 }
-.acordos-nav-card.card-legislacao:hover {
+.oportunidades-nav-card.card-investa:hover {
     background-color: #c0e0eb;
 }
-.acordos-nav-card.card-acordos-comerciais {
+.oportunidades-nav-card.card-prospeccao {
     background-color: #144A5D;
     color: #E4F8FF;
     border-color: #144A5D;
 }
-.acordos-nav-card.card-acordos-comerciais:hover {
+.oportunidades-nav-card.card-prospeccao:hover {
     background-color: #0d2f3b;
 }
-.acordos-nav-card.card-regulamentos-int {
-    background-color: rgba(20, 74, 93, 0.3);
-    backdrop-filter: blur(10px);
-    border-color: rgba(228, 248, 255, 0.2);
-    color: #E4F8FF;
-}
-.acordos-nav-card.card-regulamentos-int:hover {
-    background-color: rgba(20, 74, 93, 0.5);
-}
 @media (max-width: 900px) {
-    .layout-acordos {
+    .layout-oportunidades {
         grid-template-columns: 1fr;
     }
-    .acordos-coluna-principal .acordos-painel-conteudo {
+    .oportunidades-coluna-principal .oportunidades-painel-conteudo {
         min-height: auto;
     }
-    .acordos-conteudo-dividido {
+    .oportunidades-conteudo-dividido {
         flex-direction: column;
         text-align: center;
     }
-    .acordos-texto-apresentacao, .acordos-imagem-apresentacao {
+    .oportunidades-texto-apresentacao, .oportunidades-imagem-apresentacao {
         height: auto;
         flex-basis: 100%;
     }

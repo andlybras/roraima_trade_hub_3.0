@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}Oportunidades | Roraima Trade Hub{% endblock %}
+
+{% block css_pagina %}
+    <link rel="stylesheet" href="{% static 'gerenciamento_oportunidades/css/pagina_inicial_oportunidades.css' %}">
+{% endblock %}
+
+{% block conteudo %}
+<div class="container-conteudo layout-oportunidades">
+    <div class="oportunidades-coluna-principal">
+        <div class="oportunidades-painel-conteudo">
+            <h1 class="oportunidades-titulo-pagina">Oportunidades</h1>
+            <hr class="separador-painel-principal">
+            <div class="oportunidades-conteudo-dividido">
+                <div class="oportunidades-texto-apresentacao">
+                    <h2>Descubra o potencial de Roraima e encontre o cenário ideal para o seu próximo grande negócio.</h2>
+                </div>
+                <div class="oportunidades-imagem-apresentacao">
+                    {% if conteudo_apresentacao and conteudo_apresentacao.tipo_conteudo == 'IMAGEM' and conteudo_apresentacao.imagem %}
+                        <img src="{{ conteudo_apresentacao.imagem.url }}" alt="{{ conteudo_apresentacao.descricao }}" class="apresentacao-midia">
+                    {% elif conteudo_apresentacao and conteudo_apresentacao.tipo_conteudo == 'VIDEO' and conteudo_apresentacao.video_url %}
+                        <div class="video-container"><iframe src="{{ conteudo_apresentacao.get_embed_url }}" frameborder="0" allowfullscreen></iframe></div>
+                    {% else %}
+                        <p style="color: #fff;">Nenhum conteúdo de apresentação configurado.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <aside class="oportunidades-coluna-lateral">
+        <nav class="oportunidades-navegacao-lateral">
+            <a href="#" class="oportunidades-nav-card card-investa">
+                <img src="{% static 'gerenciamento_oportunidades/icons/icone-oportunidades-investa.svg' %}" alt="">
+                <span>Invista em Roraima</span>
+            </a>
+            <a href="#" class="oportunidades-nav-card card-prospeccao">
+                <img src="{% static 'gerenciamento_oportunidades/icons/icone-oportunidades-prospeccao.svg' %}" alt="">
+                <span>Prospecção de Mercados</span>
+            </a>
+        </nav>
+    </aside>
+</div>
+{% endblock %}
