@@ -8,6 +8,7 @@ urlpatterns = [
     path('', include('gerenciamento_home.urls')),
     path('inteligencia-de-mercado/', include('gerenciamento_inteligencia_mercado.urls')),
     path('contas/', include('gerenciamento_registros.urls')),
+    path('aprenda-comex/', include('gerenciamento_aprenda.urls')),
 ]
 
 if settings.DEBUG:

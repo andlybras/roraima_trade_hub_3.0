@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}Aprenda Comex | Roraima Trade Hub{% endblock %}
+
+{% block css_pagina %}
+    <link rel="stylesheet" href="{% static 'gerenciamento_aprenda/css/pagina_inicial_aprenda.css' %}">
+{% endblock %}
+
+{% block conteudo %}
+<div class="container-conteudo layout-aprenda">
+    
+    <div class="aprenda-coluna-principal">
+        <div class="aprenda-painel-conteudo">
+            <h1 class="aprenda-titulo-pagina">Aprenda Comex</h1>
+            <hr class="aprenda-separador">
+            <div class="aprenda-conteudo-dividido">
+                <div class="aprenda-texto-apresentacao">
+                    <h2>Capacite-se para o mercado global. Explore nossos cursos e materiais sobre comércio exterior.</h2>
+                </div>
+                
+                <div class.="aprenda-imagem-apresentacao">
+                    {# --- LÓGICA DE EXIBIÇÃO --- #}
+                    {% if conteudo_apresentacao %}
+                        {% if conteudo_apresentacao.tipo_conteudo == 'IMAGEM' and conteudo_apresentacao.imagem %}
+                            <img src="{{ conteudo_apresentacao.imagem.url }}" alt="{{ conteudo_apresentacao.descricao }}" class="apresentacao-midia">
+                        {% elif conteudo_apresentacao.tipo_conteudo == 'VIDEO' and conteudo_apresentacao.video_url %}
+                            <div class="video-container">
+                                <iframe 
+                                    src="{{ conteudo_apresentacao.get_embed_url }}" 
+                                    frameborder="0" 
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                    allowfullscreen>
+                                </iframe>
+                            </div>
+                        {% endif %}
+                    {% else %}
+                        {# Mensagem caso nada seja cadastrado ou marcado como ativo #}
+                        <p style="color: #fff;">Nenhum conteúdo de apresentação configurado.</p>
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <aside class="aprenda-coluna-lateral">
+        <nav class="aprenda-navegacao-lateral">
+            <a href="#" class="aprenda-nav-card card-criar-perfil">
+                <img src="{% static 'gerenciamento_aprenda/icons/icone-aprenda-perfil.svg' %}" alt="Ícone de perfil de usuário">
+                <span>Crie seu Perfil Educacional</span>
+            </a>
+            <a href="#" class="aprenda-nav-card card-acessar-ambiente">
+                <img src="{% static 'gerenciamento_aprenda/icons/icone-aprenda-ambiente.svg' %}" alt="Ícone de ambiente educacional">
+                <span>Acesse o Ambiente Educacional</span>
+            </a>
+            <a href="#" class="aprenda-nav-card card-outras-opcoes">
+                <img src="{% static 'gerenciamento_aprenda/icons/icone-aprenda-opcoes.svg' %}" alt="Ícone de opções">
+                <span>Conheça outras Opções</span>
+            </a>
+        </nav>
+    </aside>
+
+</div>
+{% endblock %}
+
+{% block js_pagina %}
+    {# Não precisamos mais do ECharts aqui! #}
+{% endblock %}

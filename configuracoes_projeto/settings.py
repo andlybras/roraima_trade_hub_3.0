@@ -17,6 +17,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'gerenciamento_home',
     'gerenciamento_inteligencia_mercado',
+    'gerenciamento_aprenda',
     'gerenciamento_registros',
     'tinymce',
     'django_recaptcha',
