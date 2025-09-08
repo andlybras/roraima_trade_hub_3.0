@@ -1,12 +1,12 @@
-/* Arquivo: frontend/gerenciamento_vendas/css/pagina_inicial_vendas.css */
+/* Arquivo: frontend/gerenciamento_acordos/css/pagina_inicial_acordos.css */
 
-.layout-vender {
+.layout-acordos {
     display: grid;
     grid-template-columns: 3fr 1fr;
     gap: 30px;
     align-items: stretch;
 }
-.vender-coluna-principal .vender-painel-conteudo {
+.acordos-coluna-principal .acordos-painel-conteudo {
     background-color: rgba(20, 74, 93, 0.3);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(228, 248, 255, 0.2);
@@ -17,19 +17,16 @@
     display: flex;
     flex-direction: column;
 }
-.vender-titulo-pagina {
+.acordos-titulo-pagina {
     font-family: 'Montserrat', sans-serif;
     color: #E4F8FF;
     margin: 0;
     text-align: right;
 }
-.vender-separador {
-    border: none;
-    height: 2px;
-    background-color: rgba(228, 248, 255, 0.3);
-    margin: 15px 0;
-}
-.vender-conteudo-dividido {
+/* A classe abaixo foi trocada pela global .separador-painel-principal no HTML */
+/* Se precisar de um estilo específico, pode recriá-la como .acordos-separador */
+
+.acordos-conteudo-dividido {
     display: flex;
     gap: 30px;
     align-items: center;
@@ -37,20 +34,20 @@
     flex-grow: 1;
     justify-content: space-between;
 }
-.vender-texto-apresentacao {
+.acordos-texto-apresentacao {
     flex-basis: 45%;
     color: #E4F8FF;
     display: flex;
     align-items: center;
     height: 100%;
 }
-.vender-imagem-apresentacao {
+.acordos-imagem-apresentacao {
     flex-basis: 45%;
     display: flex;
     align-items: center;
     justify-content: center;
 }
-.vender-texto-apresentacao h2 {
+.acordos-texto-apresentacao h2 {
     font-family: 'Montserrat', sans-serif;
     font-size: 1.5rem;
     line-height: 1.5;
@@ -78,13 +75,13 @@
     height: 100%;
     border-radius: 20px;
 }
-.vender-coluna-lateral .vender-navegacao-lateral {
+.acordos-coluna-lateral .acordos-navegacao-lateral {
     display: flex;
     flex-direction: column;
     gap: 20px;
     height: 100%;
 }
-.vender-nav-card {
+.acordos-nav-card {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
@@ -102,49 +99,50 @@
     transition: all 0.3s ease;
     cursor: pointer;
 }
-.vender-nav-card img {
+.acordos-nav-card img {
     height: 40px;
 }
-.vender-nav-card:hover {
+.acordos-nav-card:hover {
     transform: translateY(-5px);
 }
-.vender-nav-card.card-criar-perfil {
-    background-color: #144A5D;
-    color: #E4F8FF;
-    border-color: #144A5D;
-}
-.vender-nav-card.card-criar-perfil:hover {
-    background-color: #0d2f3b;
-}
-.vender-nav-card.card-acessar-ambiente {
+/* Estilos específicos para os botões do módulo */
+.acordos-nav-card.card-legislacao {
     background-color: #E4F8FF;
     color: #144A5D;
     border-color: #E4F8FF;
 }
-.vender-nav-card.card-acessar-ambiente:hover {
+.acordos-nav-card.card-legislacao:hover {
     background-color: #c0e0eb;
 }
-.vender-nav-card.card-outras-opcoes {
+.acordos-nav-card.card-acordos-comerciais {
+    background-color: #144A5D;
+    color: #E4F8FF;
+    border-color: #144A5D;
+}
+.acordos-nav-card.card-acordos-comerciais:hover {
+    background-color: #0d2f3b;
+}
+.acordos-nav-card.card-regulamentos-int {
     background-color: rgba(20, 74, 93, 0.3);
     backdrop-filter: blur(10px);
     border-color: rgba(228, 248, 255, 0.2);
     color: #E4F8FF;
 }
-.vender-nav-card.card-outras-opcoes:hover {
+.acordos-nav-card.card-regulamentos-int:hover {
     background-color: rgba(20, 74, 93, 0.5);
 }
 @media (max-width: 900px) {
-    .layout-vender {
+    .layout-acordos {
         grid-template-columns: 1fr;
     }
-    .vender-coluna-principal .vender-painel-conteudo {
+    .acordos-coluna-principal .acordos-painel-conteudo {
         min-height: auto;
     }
-    .vender-conteudo-dividido {
+    .acordos-conteudo-dividido {
         flex-direction: column;
         text-align: center;
     }
-    .vender-texto-apresentacao, .vender-imagem-apresentacao {
+    .acordos-texto-apresentacao, .acordos-imagem-apresentacao {
         height: auto;
         flex-basis: 100%;
     }

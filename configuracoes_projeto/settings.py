@@ -19,6 +19,7 @@ INSTALLED_APPS = [
     'gerenciamento_vender',
     'gerenciamento_inteligencia_mercado',
     'gerenciamento_aprenda',
+    'gerenciamento_acordos',
     'gerenciamento_registros',
     'tinymce',
     'django_recaptcha',

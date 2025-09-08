@@ -17,9 +17,9 @@
 
 .coluna-principal .painel-conteudo hr {
     border: none; 
-    height: 1px;
+    height: 2px;
     background-color: rgba(228, 248, 255, 0.3);
-    margin: 5px 0;
+    margin: 15px 0;
 }
 
 .coluna-lateral .navegacao-inteligencia {
