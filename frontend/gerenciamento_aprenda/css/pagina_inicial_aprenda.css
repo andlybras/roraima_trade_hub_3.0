@@ -149,13 +149,11 @@
 }
 
 .aprenda-nav-card.card-outras-opcoes {
-    background-color: rgba(20, 74, 93, 0.3);
+    background-color: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(10px);
-    border-color: rgba(228, 248, 255, 0.2);
-    color: #E4F8FF;
 }
 .aprenda-nav-card.card-outras-opcoes:hover {
-    background-color: rgba(20, 74, 93, 0.5);
+    background-color: #144A5D;
 }
 
 
