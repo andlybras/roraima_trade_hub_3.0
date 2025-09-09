@@ -1,6 +1,5 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-# ADICIONADO IMPORTS QUE FALTAVAM
 from .models import CustomUser, AprendizProfile, EmpreendedorProfile, EmpresaProfile 
 from django_recaptcha.fields import ReCaptchaField
 from django.core.exceptions import ValidationError
@@ -89,13 +88,12 @@ class ResendActivationEmailForm(forms.Form):
 class EmpreendedorProfileForm(forms.ModelForm):
     class Meta:
         model = EmpreendedorProfile
-        fields = ['nome_completo', 'cpf'] # Campos do Empreendedor
-        # Adicione widgets se precisar de máscaras (ex: CPF)
+        fields = ['nome_completo', 'cpf']
 
 class EmpresaProfileForm(forms.ModelForm):
     class Meta:
         model = EmpresaProfile
-        fields = ['nome_fantasia', 'razao_social', 'cnpj'] # Campos da Empresa
+        fields = ['nome_fantasia', 'razao_social', 'cnpj']
         widgets = {
             'cnpj': forms.TextInput(attrs={'class': 'cnpj-mask'}),
         }
