@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}Acesso Administrativo | Roraima Trade Hub{% endblock %}
+
+{% block css_pagina %}
+    {# Reusamos o mesmo CSS do formulário de login público #}
+    <link rel="stylesheet" href="{% static 'gerenciamento_registros/css/formularios_autenticacao.css' %}">
+{% endblock %}
+
+{% block header %}
+    {# Bloco vazio para sobrescrever e esconder o header padrão #}
+{% endblock %}
+
+{% block conteudo %}
+<div class="container-formulario">
+    <div class="painel-formulario">
+        <h1 class="titulo-pagina">Acesso Administrativo</h1>
+        <p style="color: #c0e0eb; margin-top: -30px; margin-bottom: 25px; font-size: 1.5rem;">Roraima Trade Hub</p>
+
+        <form method="post" id="loginForm" action="{% url 'admin:login' %}">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="erro-geral">
+                    {% for error in form.non_field_errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <div class="form-group">
+                <label for="{{ form.username.id_for_label }}">Nome de usuário</label>
+                {{ form.username }}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.password.id_for_label }}">Senha</label>
+                {{ form.password }}
+            </div>
+            
+            <input type="hidden" name="next" value="{{ next }}">
+
+            <button type="submit" class="botao-acao" id="loginButton" disabled>Entrar</button>
+
+            <div id="form-message" class="mensagem-validacao">
+                Por favor, preencha todos os campos.
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block parceiros %}
+    {# Bloco vazio para esconder a seção de parceiros #}
+{% endblock parceiros %}
+
+{% block footer %}
+    {# Bloco vazio para esconder o rodapé #}
+{% endblock footer %}
+
+{% block js_pagina %}
+    {# Reusamos o mesmo JS do formulário de login público #}
+    <script src="{% static 'gerenciamento_registros/js/login.js' %}"></script>
+{% endblock %}

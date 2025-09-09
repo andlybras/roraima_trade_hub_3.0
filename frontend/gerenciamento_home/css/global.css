@@ -161,3 +161,52 @@ body::before {
     padding-top: 40px;
     padding-bottom: 20px;
 }
+
+/* Estilos para o Dropdown do Usuário Logado */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-toggle {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.dropdown-toggle img {
+    height: 28px;
+    width: 28px;
+}
+
+.dropdown-menu {
+    display: none; /* Escondido por padrão */
+    position: absolute;
+    top: 120%;
+    right: 0;
+    background-color: #144A5D;
+    border: 1px solid rgba(228, 248, 255, 0.5);
+    border-radius: 15px;
+    min-width: 180px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1001;
+    overflow: hidden;
+}
+
+.dropdown-menu.show {
+    display: block; /* Mostra o menu */
+}
+
+.dropdown-item {
+    color: #E4F8FF;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    font-size: 0.95rem;
+    transition: background-color 0.2s;
+}
+
+.dropdown-item:hover {
+    background-color: #0d2f3b;
+}

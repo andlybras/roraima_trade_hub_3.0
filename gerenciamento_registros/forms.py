@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from .models import CustomUser, AprendizProfile
 from django_recaptcha.fields import ReCaptchaField
 from django.core.exceptions import ValidationError
@@ -65,3 +65,19 @@ class AprendizRegistrationForm(UserCreationForm):
                 nivel_conhecimento_comex=self.cleaned_data.get('nivel_conhecimento_comex'),
             )
         return user
+    
+class PublicAuthenticationForm(AuthenticationForm):
+    """
+    Formulário de login customizado que impede o login de usuários staff/admin.
+    """
+    def confirm_login_allowed(self, user):
+        """
+        Método do Django para validações extras após a autenticação.
+        Vamos verificar aqui se o usuário é um membro da equipe.
+        """
+        if user.is_staff:
+            raise ValidationError(
+                "Contas administrativas devem acessar pelo painel de administração.",
+                code='admin_login_denied'
+            )
+        super().confirm_login_allowed(user)

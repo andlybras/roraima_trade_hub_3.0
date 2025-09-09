@@ -13,16 +13,31 @@
 </head>
 <body {% if imagem_fundo %}style="background-image: url('{{ imagem_fundo.imagem.url }}');"{% endif %}>
     <div class="container-geral">
+        {% block header %}
         <header class="cabecalho-principal">
             <nav class="cabecalho-nav">
                 <a href="{% url 'gerenciamento_home:home' %}" aria-label="Acesso à página Home">
-                    <img src="{% static 'gerenciamento_home/icons/home.svg' %}" alt="Ícone para acesso a página Home">
+                    <img src="{% static 'gerenciamento_home/icons/home.svg' %}" alt="icone para acesso a página Home">
                 </a>
-                <a href="#" aria-label="Acesso à conta do usuário">
-                    <img src="{% static 'gerenciamento_home/icons/user.svg' %}" alt="Ícone para acesso à conta do usuário">
-                </a>
+
+                {% if user.is_authenticated and not user.is_staff %}
+                    <div class="dropdown">
+                        <button type="button" class="dropdown-toggle" id="userMenuButton" aria-haspopup="true" aria-expanded="false">
+                            <img src="{% static 'gerenciamento_home/icons/user-logged-in.svg' %}" alt="Ícone de usuário logado">
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="userMenuButton">
+                            <a class="dropdown-item" href="#">Acessar Meu Painel</a>
+                            <a class="dropdown-item" href="{% url 'gerenciamento_registros:logout' %}">Sair</a>
+                        </div>
+                    </div>
+                {% else %}
+                    <a href="{% url 'gerenciamento_registros:login' %}" aria-label="Acesso à conta do usuário">
+                        <img src="{% static 'gerenciamento_home/icons/user.svg' %}" alt="icone para acesso à conta do usuário">
+                    </a>
+                {% endif %}
+
                 <a href="/admin/" aria-label="Acesso ao painel administrativo" target="_blank">
-                    <img src="{% static 'gerenciamento_home/icons/admin.svg' %}" alt="Ícone para acesso ao painel administrativo">
+                    <img src="{% static 'gerenciamento_home/icons/admin.svg' %}" alt="icone para acesso ao painel administrativo">
                 </a>
             </nav>
             <div class="cabecalho-logos">
@@ -33,9 +48,11 @@
                 {% endfor %}
             </div>
         </header>
+        {% endblock %}
         <main>
             {% block conteudo %}
             {% endblock %}
+            {% block parceiros %}
             <section class="secao-parceiros">
                 <div class="container-parceiros"> <h2>Nossos Parceiros</h2>
                     <div class="carrossel-infinito" data-animacao="true">
@@ -49,16 +66,20 @@
                     </div>
                 </div>
             </section>
+            {% endblock parceiros %}
         </main>
     </div>
+    {% block footer %}
     <footer class="rodape-site">
         <div class="rodape-creditos">
             <p>&copy; {% now "Y" %} Governo de Roraima. Todos os direitos reservados.</p>
             <p><strong>Roraima Trade Hub</strong></p>
         </div>
     </footer>
+    {% endblock footer %}
     <script src="{% static 'gerenciamento_home/js/scroller.js' %}"></script>
     <script src="{% static 'gerenciamento_home/js/header.js' %}"></script>
+    <script src="{% static 'gerenciamento_home/js/dropdown.js' %}"></script>
     {% block js_pagina %}{% endblock %}
 </body>
 </html>

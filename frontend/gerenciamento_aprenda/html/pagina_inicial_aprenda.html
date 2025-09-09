@@ -50,7 +50,7 @@
                 <img src="{% static 'gerenciamento_aprenda/icons/icone-aprenda-perfil.svg' %}" alt="Ícone de perfil de usuário">
                 <span>Crie seu Perfil Educacional</span>
             </a>
-            <a href="#" class="aprenda-nav-card card-acessar-ambiente">
+            <a href="{% url 'gerenciamento_registros:login' %}" class="aprenda-nav-card card-acessar-ambiente">
                 <img src="{% static 'gerenciamento_aprenda/icons/icone-aprenda-ambiente.svg' %}" alt="Ícone de ambiente educacional">
                 <span>Acesse o Ambiente Educacional</span>
             </a>

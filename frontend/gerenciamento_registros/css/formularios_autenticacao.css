@@ -1,13 +1,16 @@
-.container-formulario, .container-conteudo {
+/* Arquivo: frontend/gerenciamento_registros/css/formularios_autenticacao.css */
+
+.container-formulario {
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 40px 20px;
+    min-height: 60vh;
 }
 
-.painel-formulario, .painel-mensagem {
+.painel-formulario {
     width: 100%;
-    max-width: 600px;
+    max-width: 500px;
     background-color: rgba(20, 74, 93, 0.5);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(228, 248, 255, 0.3);
@@ -16,10 +19,9 @@
     text-align: center;
 }
 
-.painel-mensagem p {
-    font-size: 1.2rem;
-    line-height: 1.6;
-    color: #E4F8FF;
+.titulo-pagina {
+    font-family: 'Montserrat', sans-serif;
+    margin-bottom: 25px;
 }
 
 .form-group {
@@ -34,7 +36,7 @@
     color: #E4F8FF;
 }
 
-.form-group input, .form-group select {
+.form-group input {
     width: 100%;
     padding: 12px 20px;
     background-color: rgba(20, 74, 93, 0.7);
@@ -46,16 +48,28 @@
     box-sizing: border-box;
 }
 
-.form-group input:focus, .form-group select:focus {
+.form-group input:focus {
     background-color: rgba(228, 248, 255, 0.9);
     color: #144A5D;
     outline: none;
 }
 
-.captcha-container {
+.opcoes-formulario {
     display: flex;
-    justify-content: center;
-    margin-top: 30px;
+    justify-content: space-between;
+    margin-bottom: 25px;
+    font-size: 0.9rem;
+}
+
+.opcoes-formulario a {
+    color: #c0e0eb;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.opcoes-formulario a:hover {
+    color: #FFFFFF;
+    text-decoration: underline;
 }
 
 .botao-acao {
@@ -83,13 +97,31 @@
     transform: none;
 }
 
-.erro-campo, .erro-geral {
+.erro-geral {
     color: #ff9999;
+    background-color: rgba(255, 100, 100, 0.1);
+    border: 1px solid #ff9999;
+    border-radius: 15px;
+    padding: 10px;
+    margin-bottom: 20px;
     font-size: 0.9rem;
-    margin-top: 5px;
 }
 
 .mensagem-validacao {
     color: #ffc4c4;
     margin-top: 15px;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.mensagem-validacao.show {
+    opacity: 1;
+}
+
+/* ... (resto do arquivo) */
+
+/* Novo estilo para campos preenchidos, mesmo sem foco */
+.form-group input.filled {
+    background-color: rgba(228, 248, 255, 0.9);
+    color: #144A5D;
 }
