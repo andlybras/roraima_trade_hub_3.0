@@ -178,7 +178,8 @@ body::before {
     display: none;
     position: absolute;
     top: 120%;
-    right: 0;
+    left: 50%; 
+    transform: translateX(-50%);
     background-color: #144A5D;
     border: 1px solid rgba(228, 248, 255, 0.5);
     border-radius: 15px;
@@ -199,8 +200,20 @@ body::before {
     display: block;
     font-size: 0.95rem;
     transition: background-color 0.2s;
+    width: 100%;    
+    background: none;     
+    border: none;      
+    text-align: left;    
+    cursor: pointer;        
+    font-family: inherit; 
 }
 
 .dropdown-item:hover {
     background-color: #0d2f3b;
+}
+
+.dropdown-toggle.active {
+    background-color: #144A5D; 
+    border-radius: 5px; 
+    padding: 0px 5px;
 }

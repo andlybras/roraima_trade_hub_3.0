@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block titulo %}Editar Perfil de Empreendedor{% endblock %}
+{% block css_pagina %}<link rel="stylesheet" href="{% static 'gerenciamento_registros/css/perfil.css' %}">{% endblock %}
+
+{% block conteudo %}
+<div class="container-formulario">
+    <form method="post" class="painel-formulario profile-form" novalidate>
+        <h1 class="titulo-pagina">Perfil de Empreendedor</h1>
+        {% csrf_token %}
+        <fieldset><legend>Dados Pessoais</legend>{{ form.as_p }}</fieldset>
+        <div class="form-actions">
+            <a href="{% url 'vender:dashboard' %}" class="botao-acao botao-cancelar">Cancelar</a>
+            <button type="submit" class="botao-acao">Salvar Alterações</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

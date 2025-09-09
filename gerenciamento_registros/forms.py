@@ -1,17 +1,24 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .models import CustomUser, AprendizProfile
+# ADICIONADO IMPORTS QUE FALTAVAM
+from .models import CustomUser, AprendizProfile, EmpreendedorProfile, EmpresaProfile 
 from django_recaptcha.fields import ReCaptchaField
 from django.core.exceptions import ValidationError
 
 class EmpresaEmpreendedorRegistrationForm(UserCreationForm):
+    tipo_perfil = forms.ChoiceField(
+        choices=[('EMPRESA', 'Sou uma Empresa'), ('EMPREENDEDOR', 'Sou um Empreendedor')],
+        widget=forms.RadioSelect, 
+        label="Este perfil é para:",
+        required=True
+    )
     email = forms.EmailField(required=True, help_text="O e-mail deve ser único.", label="E-mail")
     email2 = forms.EmailField(label="Confirme seu e-mail")
     captcha = ReCaptchaField()
 
     class Meta(UserCreationForm.Meta):
         model = CustomUser
-        fields = ('username', 'email', 'email2')
+        fields = ('username', 'tipo_perfil', 'email')
 
     def clean_email2(self):
         email = self.cleaned_data.get("email")
@@ -22,7 +29,7 @@ class EmpresaEmpreendedorRegistrationForm(UserCreationForm):
 
     def save(self, commit=True):
         user = super().save(commit=False)
-        user.tipo_usuario = 'EMPRESA_EMPREENDEDOR'
+        user.tipo_usuario = self.cleaned_data['tipo_perfil']
         if commit:
             user.save()
         return user
@@ -75,3 +82,23 @@ class PublicAuthenticationForm(AuthenticationForm):
                 code='admin_login_denied'
             )
         super().confirm_login_allowed(user)
+        
+class ResendActivationEmailForm(forms.Form):
+    email = forms.EmailField(label="E-mail", widget=forms.TextInput(attrs={'placeholder': 'Digite o e-mail cadastrado'}))
+    
+class EmpreendedorProfileForm(forms.ModelForm):
+    class Meta:
+        model = EmpreendedorProfile
+        fields = ['nome_completo', 'cpf'] # Campos do Empreendedor
+        # Adicione widgets se precisar de máscaras (ex: CPF)
+
+class EmpresaProfileForm(forms.ModelForm):
+    class Meta:
+        model = EmpresaProfile
+        fields = ['nome_fantasia', 'razao_social', 'cnpj'] # Campos da Empresa
+        widgets = {
+            'cnpj': forms.TextInput(attrs={'class': 'cnpj-mask'}),
+        }
+        
+    class ResendActivationEmailForm(forms.Form):
+        email = forms.EmailField(label="E-mail", widget=forms.TextInput(attrs={'placeholder': 'Digite o e-mail cadastrado'}))

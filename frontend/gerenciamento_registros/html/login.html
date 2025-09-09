@@ -26,8 +26,8 @@
                 {{ form.password }}
             </div>
             <div class="opcoes-formulario">
-                <a href="#">Esqueceu a senha?</a>
-                <a href="#">Reenviar e-mail de ativação</a>
+                <a href="{% url 'gerenciamento_registros:password_reset' %}">Esqueceu a senha?</a>
+                <a href="{% url 'gerenciamento_registros:resend_activation' %}">Reenviar e-mail de ativação</a>
             </div>
             <button type="submit" class="botao-acao" id="loginButton" disabled>Entrar</button>
             <div id="form-message" class="mensagem-validacao">

@@ -1,3 +1,5 @@
+# Arquivo: gerenciamento_registros/models.py
+
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from tinymce.models import HTMLField
@@ -5,14 +7,15 @@ from tinymce.models import HTMLField
 class CustomUser(AbstractUser):
     TIPO_USUARIO_CHOICES = [
         ('PERMISSIONARIO', 'Permissionário (Equipe Interna)'),
-        ('EMPRESA_EMPREENDEDOR', 'Empresa ou Empreendedor'),
+        ('EMPRESA', 'Empresa'),
+        ('EMPREENDEDOR', 'Empreendedor'),
         ('APRENDIZ', 'Aprendiz (Aprenda Comex)'),
     ]
     tipo_usuario = models.CharField(
         max_length=20,
         choices=TIPO_USUARIO_CHOICES,
         verbose_name="Tipo de Usuário",
-        default='EMPRESA_EMPREENDEDOR'
+        # Removemos o default para garantir que seja sempre definido
     )
     is_email_verified = models.BooleanField(
         default=False,
@@ -72,3 +75,32 @@ class ModeloEmail(models.Model):
     class Meta:
         verbose_name = "Modelo de E-mail"
         verbose_name_plural = "4. Central de Comunicação (Modelos de E-mail)"
+
+# --- MODELOS DE PERFIL FALTANTES ---
+class EmpreendedorProfile(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key=True, related_name='empreendedor_profile')
+    nome_completo = models.CharField(max_length=255, verbose_name="Nome Completo", blank=True)
+    cpf = models.CharField(max_length=14, verbose_name="CPF", blank=True)
+    # ... outros campos futuros para empreendedor
+
+    def __str__(self):
+        return self.user.username
+
+    class Meta:
+        verbose_name = "Perfil de Empreendedor"
+        verbose_name_plural = "Perfis de Empreendedores"
+
+
+class EmpresaProfile(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key=True, related_name='empresa_profile')
+    nome_fantasia = models.CharField(max_length=255, verbose_name="Nome Fantasia", blank=True)
+    razao_social = models.CharField(max_length=255, verbose_name="Razão Social", blank=True)
+    cnpj = models.CharField(max_length=18, verbose_name="CNPJ", blank=True)
+    # ... outros campos futuros para empresa
+
+    def __str__(self):
+        return self.user.username
+
+    class Meta:
+        verbose_name = "Perfil de Empresa"
+        verbose_name_plural = "Perfis de Empresas"

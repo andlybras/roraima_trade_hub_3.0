@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block titulo %}Conta Ativada | Roraima Trade Hub{% endblock %}
+{% block css_pagina %}
+    <link rel="stylesheet" href="{% static 'gerenciamento_registros/css/formularios_autenticacao.css' %}">
+{% endblock %}
+{% block conteudo %}
+<div class="container-formulario">
+    <div class="painel-formulario" style="text-align: center;">
+        <h1 class="titulo-pagina">Conta ativada com sucesso!</h1>
+        <p style="color: #c0e0eb; font-size: 1.1rem; line-height: 1.6;">
+            Obrigado pela confirmação. Sua conta está pronta para ser usada.
+        </p>
+        <a href="{% url 'gerenciamento_registros:login' %}" class="botao-acao" style="margin-top: 20px;">Ir para Login</a>
+    </div>
+</div>
+{% endblock %}

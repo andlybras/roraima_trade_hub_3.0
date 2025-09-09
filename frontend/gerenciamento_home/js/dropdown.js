@@ -5,10 +5,12 @@ document.addEventListener('DOMContentLoaded', function() {
         userMenuButton.addEventListener('click', function(event) {
             event.stopPropagation();
             dropdownMenu.classList.toggle('show');
+            userMenuButton.classList.toggle('active');
         });
         window.addEventListener('click', function(event) {
             if (!userMenuButton.contains(event.target)) {
                 dropdownMenu.classList.remove('show');
+                userMenuButton.classList.remove('active');
             }
         });
     }

@@ -1,0 +1,37 @@
+{% extends 'gerenciamento_registros/html/_base_registro.html' %}
+{% block titulo %}Registro de Empresa ou Empreendedor{% endblock %}
+{% block titulo_formulario %}Crie seu Perfil de Negócios{% endblock %}
+{% block campos_formulario %}
+    <div class="form-group radio-group">
+        <label>{{ form.tipo_perfil.label }}</label>
+        {{ form.tipo_perfil }}
+    </div>
+    <div class="form-group">
+        <label for="{{ form.username.id_for_label }}">Nome de usuário</label>
+        {{ form.username }}
+        <div class="erro-campo">{{ form.username.errors }}</div>
+    </div>
+    <div class="form-group">
+        <label for="{{ form.email.id_for_label }}">E-mail</label>
+        {{ form.email }}
+        <div class="erro-campo" id="email-error">{{ form.email.errors }}</div>
+    </div>
+    <div class="form-group">
+        <label for="{{ form.email2.id_for_label }}">Confirme seu e-mail</label>
+        {{ form.email2 }}
+        <div class="erro-campo" id="email2-error"></div>
+    </div>
+    <div class="form-group">
+        <label for="{{ form.password1.id_for_label }}">Senha</label>
+        {{ form.password1 }}
+        <div class="erro-campo">{{ form.password1.errors }}</div>
+        <div id="password-feedback">
+            <div class="validation-rules"></div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="{{ form.password2.id_for_label }}">Confirme sua senha</label>
+        {{ form.password2 }}
+        <div class="erro-campo" id="password2-error"></div>
+    </div>
+{% endblock %}

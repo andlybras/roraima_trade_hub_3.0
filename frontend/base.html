@@ -26,8 +26,11 @@
                             <img src="{% static 'gerenciamento_home/icons/user-logged-in.svg' %}" alt="Ícone de usuário logado">
                         </button>
                         <div class="dropdown-menu" aria-labelledby="userMenuButton">
-                            <a class="dropdown-item" href="#">Acessar Meu Painel</a>
-                            <a class="dropdown-item" href="{% url 'gerenciamento_registros:logout' %}">Sair</a>
+                            <a class="dropdown-item" href="{% url 'vender:dashboard' %}">Acessar Meu Painel</a>
+                            <form action="{% url 'gerenciamento_registros:logout' %}" method="post" style="margin: 0;">
+                                {% csrf_token %}
+                                <button type="submit" class="dropdown-item">Sair</button>
+                            </form>
                         </div>
                     </div>
                 {% else %}
