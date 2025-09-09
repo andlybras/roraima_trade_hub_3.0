@@ -1,15 +1,11 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block titulo %}Acordos e Regulamentos | Roraima Trade Hub{% endblock %}
-
 {% block css_pagina %}
     <link rel="stylesheet" href="{% static 'gerenciamento_acordos/css/pagina_inicial_acordos.css' %}">
 {% endblock %}
-
 {% block conteudo %}
 <div class="container-conteudo layout-acordos">
-
     <div class="acordos-coluna-principal">
         <div class="acordos-painel-conteudo">
             <h1 class="acordos-titulo-pagina">Acordos e Regulamentos</h1>
@@ -18,7 +14,6 @@
                 <div class="acordos-texto-apresentacao">
                     <h2>Navegue pelas normas que regem o comércio exterior e entenda o cenário global.</h2>
                 </div>
-
                 <div class="acordos-imagem-apresentacao">
                     {% if conteudo_apresentacao %}
                         {% if conteudo_apresentacao.tipo_conteudo == 'IMAGEM' and conteudo_apresentacao.imagem %}
@@ -32,11 +27,9 @@
                         <p style="color: #fff;">Nenhum conteúdo de apresentação configurado.</p>
                     {% endif %}
                 </div>
-
             </div>
         </div>
     </div>
-
     <aside class="acordos-coluna-lateral">
         <nav class="acordos-navegacao-lateral">
             <a href="#" class="acordos-nav-card card-legislacao">
@@ -53,6 +46,5 @@
             </a>
         </nav>
     </aside>
-
 </div>
 {% endblock %}

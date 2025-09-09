@@ -1,4 +1,3 @@
-// Arquivo: home.js
 document.addEventListener('DOMContentLoaded', function() {
     const heroSlides = document.querySelectorAll('.slide-hero');
     if (heroSlides.length > 1) {

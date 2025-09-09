@@ -1,15 +1,11 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block titulo %}Aprenda Comex | Roraima Trade Hub{% endblock %}
-
 {% block css_pagina %}
     <link rel="stylesheet" href="{% static 'gerenciamento_aprenda/css/pagina_inicial_aprenda.css' %}">
 {% endblock %}
-
 {% block conteudo %}
 <div class="container-conteudo layout-aprenda">
-    
     <div class="aprenda-coluna-principal">
         <div class="aprenda-painel-conteudo">
             <h1 class="aprenda-titulo-pagina">Aprenda Comex</h1>
@@ -18,9 +14,7 @@
                 <div class="aprenda-texto-apresentacao">
                     <h2>Capacite-se para o mercado global. Explore nossos cursos e materiais sobre comércio exterior.</h2>
                 </div>
-                
                 <div class.="aprenda-imagem-apresentacao">
-                    {# --- LÓGICA DE EXIBIÇÃO --- #}
                     {% if conteudo_apresentacao %}
                         {% if conteudo_apresentacao.tipo_conteudo == 'IMAGEM' and conteudo_apresentacao.imagem %}
                             <img src="{{ conteudo_apresentacao.imagem.url }}" alt="{{ conteudo_apresentacao.descricao }}" class="apresentacao-midia">
@@ -35,7 +29,6 @@
                             </div>
                         {% endif %}
                     {% else %}
-                        {# Mensagem caso nada seja cadastrado ou marcado como ativo #}
                         <p style="color: #fff;">Nenhum conteúdo de apresentação configurado.</p>
                     {% endif %}
                 </div>
@@ -43,7 +36,6 @@
             </div>
         </div>
     </div>
-
     <aside class="aprenda-coluna-lateral">
         <nav class="aprenda-navegacao-lateral">
             <a href="#" class="aprenda-nav-card card-criar-perfil">
@@ -60,10 +52,7 @@
             </a>
         </nav>
     </aside>
-
 </div>
 {% endblock %}
-
 {% block js_pagina %}
-    {# Não precisamos mais do ECharts aqui! #}
 {% endblock %}

@@ -1,5 +1,3 @@
-# Arquivo: gerenciamento_aprenda/models.py
-
 from django.db import models
 
 class ConteudoApresentacaoAprenda(models.Model):
@@ -7,7 +5,6 @@ class ConteudoApresentacaoAprenda(models.Model):
         ('IMAGEM', 'Imagem Estática'),
         ('VIDEO', 'Vídeo (YouTube)'),
     ]
-
     descricao = models.CharField(
         max_length=200,
         verbose_name="Descrição Interna",
@@ -39,16 +36,12 @@ class ConteudoApresentacaoAprenda(models.Model):
     )
 
     def get_embed_url(self):
-        """
-        Converte uma URL normal do YouTube para a URL de incorporação (embed).
-        """
         if self.video_url and 'watch?v=' in self.video_url:
             video_id = self.video_url.split('watch?v=')[1].split('&')[0]
             return f"https://www.youtube.com/embed/{video_id}?autoplay=1&mute=1&loop=1&playlist={video_id}&controls=0"
         return None
 
     def save(self, *args, **kwargs):
-        # Garante que apenas um item possa estar em exibição por vez.
         if self.em_exibicao:
             ConteudoApresentacaoAprenda.objects.filter(em_exibicao=True).update(em_exibicao=False)
         super().save(*args, **kwargs)

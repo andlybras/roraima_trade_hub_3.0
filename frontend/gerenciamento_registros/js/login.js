@@ -1,5 +1,3 @@
-// Arquivo: frontend/gerenciamento_registros/js/login.js
-
 document.addEventListener('DOMContentLoaded', function() {
     const loginForm = document.getElementById('loginForm');
     if (!loginForm) return;
@@ -12,12 +10,10 @@ document.addEventListener('DOMContentLoaded', function() {
     function checkLoginForm() {
         if (!usernameInput || !passwordInput || !loginButton) return;
         
-        // MUDANÇA 1: Adiciona/remove a classe 'filled' dinamicamente
         usernameInput.classList.toggle('filled', usernameInput.value.length > 0);
         passwordInput.classList.toggle('filled', passwordInput.value.length > 0);
 
         const isUsernameFilled = usernameInput.value.length > 0;
-        // MUDANÇA 2: Verifica se a senha tem no mínimo 8 caracteres
         const isPasswordValid = passwordInput.value.length >= 8;
 
         loginButton.disabled = !(isUsernameFilled && isPasswordValid);
@@ -25,7 +21,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function showTemporaryMessage(messageElement) {
         if (messageElement) {
-            // Atualiza a mensagem se a senha for o problema
             if (usernameInput.value.length > 0 && passwordInput.value.length > 0 && passwordInput.value.length < 8) {
                 messageElement.textContent = "A senha deve ter no mínimo 8 caracteres.";
             } else {
@@ -45,14 +40,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Adicionamos 'blur' para garantir que o estilo 'filled' seja aplicado
-    // mesmo se o usuário apenas preencher e sair do campo.
     usernameInput.addEventListener('input', checkLoginForm);
     usernameInput.addEventListener('blur', checkLoginForm); 
-    
     passwordInput.addEventListener('input', checkLoginForm);
     passwordInput.addEventListener('blur', checkLoginForm);
-    
-    // Verifica o formulário no carregamento da página
+
     checkLoginForm();
 });

@@ -152,17 +152,11 @@ body::before {
     margin: 5px 0;
 }
 
-/* Arquivo: frontend/gerenciamento_home/css/global.css */
-
-/* ... (todo o código anterior do arquivo) */
-
-/* Adicionado para garantir espaçamento superior consistente em todas as páginas */
 .container-conteudo {
     padding-top: 40px;
     padding-bottom: 20px;
 }
 
-/* Estilos para o Dropdown do Usuário Logado */
 .dropdown {
     position: relative;
     display: inline-block;
@@ -181,7 +175,7 @@ body::before {
 }
 
 .dropdown-menu {
-    display: none; /* Escondido por padrão */
+    display: none;
     position: absolute;
     top: 120%;
     right: 0;
@@ -195,7 +189,7 @@ body::before {
 }
 
 .dropdown-menu.show {
-    display: block; /* Mostra o menu */
+    display: block;
 }
 
 .dropdown-item {

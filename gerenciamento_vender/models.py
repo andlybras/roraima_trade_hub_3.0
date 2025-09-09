@@ -1,5 +1,3 @@
-# Arquivo: gerenciamento_vendas/models.py
-
 from django.db import models
 
 class ConteudoApresentacaoVender(models.Model):
@@ -7,7 +5,6 @@ class ConteudoApresentacaoVender(models.Model):
         ('IMAGEM', 'Imagem Estática'),
         ('VIDEO', 'Vídeo (YouTube)'),
     ]
-
     descricao = models.CharField(
         max_length=200,
         verbose_name="Descrição Interna",

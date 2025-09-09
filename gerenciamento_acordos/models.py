@@ -1,5 +1,3 @@
-# Arquivo: gerenciamento_acordos/models.py
-
 from django.db import models
 
 class ConteudoApresentacaoAcordos(models.Model):

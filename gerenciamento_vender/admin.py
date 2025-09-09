@@ -1,5 +1,3 @@
-# Arquivo: gerenciamento_vendas/admin.py
-
 from django.contrib import admin
 from .models import ConteudoApresentacaoVender
 

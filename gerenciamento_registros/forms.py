@@ -67,14 +67,8 @@ class AprendizRegistrationForm(UserCreationForm):
         return user
     
 class PublicAuthenticationForm(AuthenticationForm):
-    """
-    Formulário de login customizado que impede o login de usuários staff/admin.
-    """
+
     def confirm_login_allowed(self, user):
-        """
-        Método do Django para validações extras após a autenticação.
-        Vamos verificar aqui se o usuário é um membro da equipe.
-        """
         if user.is_staff:
             raise ValidationError(
                 "Contas administrativas devem acessar pelo painel de administração.",

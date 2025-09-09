@@ -1,5 +1,3 @@
-# Arquivo: gerenciamento_acordos/admin.py
-
 from django.contrib import admin
 from .models import ConteudoApresentacaoAcordos
 

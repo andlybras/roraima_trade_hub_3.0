@@ -1,5 +1,3 @@
-/* Arquivo: frontend/gerenciamento_registros/css/formularios_autenticacao.css */
-
 .container-formulario {
     display: flex;
     justify-content: center;
@@ -118,9 +116,6 @@
     opacity: 1;
 }
 
-/* ... (resto do arquivo) */
-
-/* Novo estilo para campos preenchidos, mesmo sem foco */
 .form-group input.filled {
     background-color: rgba(228, 248, 255, 0.9);
     color: #144A5D;

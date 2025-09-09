@@ -1,11 +1,10 @@
-/* Arquivo: frontend/gerenciamento_oportunidades/css/pagina_inicial_oportunidades.css */
-
 .layout-oportunidades {
     display: grid;
     grid-template-columns: 3fr 1fr;
     gap: 30px;
     align-items: stretch;
 }
+
 .oportunidades-coluna-principal .oportunidades-painel-conteudo {
     background-color: rgba(20, 74, 93, 0.3);
     backdrop-filter: blur(10px);
@@ -16,8 +15,9 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    min-height: 420px; /* Garante uma altura mínima consistente */
+    min-height: 420px;
 }
+
 .oportunidades-titulo-pagina {
     font-family: 'Montserrat', sans-serif;
     color: #E4F8FF;
@@ -31,6 +31,7 @@
     background-color: rgba(228, 248, 255, 0.3);
     margin: 15px 0;
 }
+
 .oportunidades-conteudo-dividido {
     display: flex;
     gap: 30px;
@@ -39,6 +40,7 @@
     flex-grow: 1;
     justify-content: space-between;
 }
+
 .oportunidades-texto-apresentacao {
     flex-basis: 45%;
     color: #E4F8FF;
@@ -46,12 +48,14 @@
     align-items: center;
     height: 100%;
 }
+
 .oportunidades-imagem-apresentacao {
     flex-basis: 45%;
     display: flex;
     align-items: center;
     justify-content: center;
 }
+
 .oportunidades-texto-apresentacao h2 {
     font-family: 'Montserrat', sans-serif;
     font-size: 1.5rem;
@@ -59,6 +63,7 @@
     font-weight: 600;
     margin: 0;
 }
+
 .apresentacao-midia {
     width: 100%;
     height: 100%;
@@ -66,12 +71,14 @@
     object-fit: contain;
     border-radius: 20px;
 }
+
 .video-container {
     position: relative;
     width: 100%;
     padding-top: 56.25%;
     height: 0;
 }
+
 .video-container iframe {
     position: absolute;
     top: 0;
@@ -80,12 +87,14 @@
     height: 100%;
     border-radius: 20px;
 }
+
 .oportunidades-coluna-lateral .oportunidades-navegacao-lateral {
     display: flex;
     flex-direction: column;
     gap: 20px;
     height: 100%;
 }
+
 .oportunidades-nav-card {
     flex-grow: 1;
     display: flex;
@@ -104,40 +113,49 @@
     transition: all 0.3s ease;
     cursor: pointer;
 }
+
 .oportunidades-nav-card img {
     height: 40px;
 }
+
 .oportunidades-nav-card:hover {
     transform: translateY(-5px);
 }
-/* Estilos específicos para os botões do módulo */
+
 .oportunidades-nav-card.card-investa {
     background-color: #E4F8FF;
     color: #144A5D;
     border-color: #E4F8FF;
 }
+
 .oportunidades-nav-card.card-investa:hover {
     background-color: #c0e0eb;
 }
+
 .oportunidades-nav-card.card-prospeccao {
     background-color: #144A5D;
     color: #E4F8FF;
     border-color: #144A5D;
 }
+
 .oportunidades-nav-card.card-prospeccao:hover {
     background-color: #0d2f3b;
 }
+
 @media (max-width: 900px) {
     .layout-oportunidades {
         grid-template-columns: 1fr;
     }
+
     .oportunidades-coluna-principal .oportunidades-painel-conteudo {
         min-height: auto;
     }
+
     .oportunidades-conteudo-dividido {
         flex-direction: column;
         text-align: center;
     }
+    
     .oportunidades-texto-apresentacao, .oportunidades-imagem-apresentacao {
         height: auto;
         flex-basis: 100%;
