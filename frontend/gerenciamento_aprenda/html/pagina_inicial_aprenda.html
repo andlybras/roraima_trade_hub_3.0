@@ -32,20 +32,26 @@
                         <p style="color: #fff;">Nenhum conteúdo de apresentação configurado.</p>
                     {% endif %}
                 </div>
-
             </div>
         </div>
     </div>
     <aside class="aprenda-coluna-lateral">
         <nav class="aprenda-navegacao-lateral">
-            <a href="#" class="aprenda-nav-card card-criar-perfil">
-                <img src="{% static 'gerenciamento_aprenda/icons/icone-aprenda-perfil.svg' %}" alt="Ícone de perfil de usuário">
-                <span>Crie seu Perfil Educacional</span>
-            </a>
-            <a href="{% url 'gerenciamento_registros:login' %}" class="aprenda-nav-card card-acessar-ambiente">
-                <img src="{% static 'gerenciamento_aprenda/icons/icone-aprenda-ambiente.svg' %}" alt="Ícone de ambiente educacional">
-                <span>Acesse o Ambiente Educacional</span>
-            </a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'aprenda:dashboard_educacional' %}" class="aprenda-nav-card card-acessar-ambiente">
+                    <img src="{% static 'gerenciamento_aprenda/icons/icone-aprenda-ambiente.svg' %}" alt="Ícone de ambiente educacional">
+                    <span>Acessar o Painel</span>
+                </a>
+            {% else %}
+                <a href="{% url 'gerenciamento_registros:registro_aprendiz' %}" class="aprenda-nav-card card-criar-perfil">
+                    <img src="{% static 'gerenciamento_aprenda/icons/icone-aprenda-perfil.svg' %}" alt="Ícone de perfil de usuário">
+                    <span>Crie seu Perfil Educacional</span>
+                </a>
+                <a href="{% url 'gerenciamento_registros:login' %}" class="aprenda-nav-card card-acessar-ambiente">
+                    <img src="{% static 'gerenciamento_aprenda/icons/icone-aprenda-ambiente.svg' %}" alt="Ícone de ambiente educacional">
+                    <span>Acesse o Ambiente Educacional</span>
+                </a>
+            {% endif %}
             <a href="#" class="aprenda-nav-card card-outras-opcoes">
                 <img src="{% static 'gerenciamento_aprenda/icons/icone-aprenda-opcoes.svg' %}" alt="Ícone de opções">
                 <span>Conheça outras Opções</span>

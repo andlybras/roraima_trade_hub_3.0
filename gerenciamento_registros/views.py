@@ -14,10 +14,17 @@ from .models import CustomUser, EmpresaProfile, EmpreendedorProfile, AprendizPro
 from .tokens import account_activation_token
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
 
 class BaseRegisterView(CreateView):
     model = CustomUser
     success_url = reverse_lazy('gerenciamento_registros:ativacao_enviada')
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            messages.info(request, 'Você já está logado. Para criar uma nova conta, por favor, saia primeiro.')
+            return redirect('gerenciamento_registros:redirect_after_login')
+        return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
         user = form.save(commit=False)
@@ -122,3 +129,27 @@ def perfil_update_view(request):
         form = form_class(instance=profile)
 
     return render(request, template_name, {'form': form})
+
+def acesso_negado_view(request):
+    return render(request, 'gerenciamento_registros/html/acesso_negado.html')
+
+@login_required
+def redirect_after_login(request):
+    if request.user.tipo_usuario in ['EMPRESA', 'EMPREENDEDOR']:
+        return redirect('vender:dashboard')
+    elif request.user.tipo_usuario == 'APRENDIZ':
+        return redirect('aprenda:dashboard_educacional')
+    else:
+        return redirect('gerenciamento_home:home')
+    
+def logout_and_register_view(request, profile_type):
+    if request.user.is_authenticated:
+        logout(request)
+        messages.info(request, "Sua sessão foi encerrada para que você possa criar um novo perfil.")
+
+    if profile_type == 'educacional':
+        return redirect('gerenciamento_registros:registro_aprendiz')
+    elif profile_type == 'empresarial':
+        return redirect('gerenciamento_registros:registro_empresa_empreendedor')
+    
+    return redirect('gerenciamento_home:home')

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block titulo %}Acesso Negado | Roraima Trade Hub{% endblock %}
+{% block css_pagina %}
+    <link rel="stylesheet" href="{% static 'gerenciamento_registros/css/formularios_autenticacao.css' %}">
+{% endblock %}
+{% block conteudo %}
+<div class="container-formulario">
+    <div class="painel-formulario" style="text-align: center;">
+        <h1 class="titulo-pagina">Acesso Negado</h1>
+        <p style="color: #c0e0eb; font-size: 1.1rem; line-height: 1.6;">
+            Seu perfil de <strong>{{ request.user.get_tipo_usuario_display }}</strong> não tem permissão para acessar esta área.
+        </p>
+        <div style="margin-top: 30px; display: flex; flex-direction: column; gap: 15px; align-items: center;">
+            <p style="color: #fff; font-size: 1.1rem;">1. Saia da sua conta atual para acessar com outro perfil.</p>
+            <form action="{% url 'gerenciamento_registros:logout' %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="botao-acao" style="background-color: #5a6a70; color: #E4F8FF;">Sair</button>
+            </form>
+            <hr style="border-color: rgba(228, 248, 255, 0.2); width: 80%; margin: 20px 0;">
+            <p style="color: #fff; font-size: 1.1rem;">2. Ou crie um novo perfil, caso não possua um do tipo correto.</p>
+            {% if request.user.tipo_usuario == 'APRENDIZ' %}
+                <a href="{% url 'gerenciamento_registros:logout_and_register' profile_type='empresarial' %}" class="botao-acao">Criar Perfil Empresarial</a>
+            {% elif request.user.tipo_usuario == 'EMPRESA' or request.user.tipo_usuario == 'EMPREENDEDOR' %}
+                <a href="{% url 'gerenciamento_registros:logout_and_register' profile_type='educacional' %}" class="botao-acao">Criar Perfil Educacional</a>
+            
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block parceiros %}{% endblock %}
+{% block footer %}{% endblock %}

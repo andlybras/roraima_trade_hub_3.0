@@ -4,10 +4,16 @@ from tinymce.models import HTMLField
 
 class CustomUser(AbstractUser):
     TIPO_USUARIO_CHOICES = [
-        ('PERMISSIONARIO', 'Permissionário (Equipe Interna)'),
-        ('EMPRESA', 'Empresa'),
-        ('EMPREENDEDOR', 'Empreendedor'),
-        ('APRENDIZ', 'Aprendiz (Aprenda Comex)'),
+        ('ADMIN', (
+            ('PERMISSIONARIO', 'Permissionário (Equipe Interna)'),
+        )),
+        ('EMPRESARIAL', (
+            ('EMPRESA', 'Empresa'),
+            ('EMPREENDEDOR', 'Empreendedor'),
+        )),
+        ('EDUCACIONAL', (
+            ('APRENDIZ', 'Aprendiz (Aprenda Comex)'),
+        ))
     ]
     tipo_usuario = models.CharField(
         max_length=20,

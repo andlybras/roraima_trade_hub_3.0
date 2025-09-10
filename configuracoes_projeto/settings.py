@@ -114,12 +114,16 @@ TINYMCE_DEFAULT_CONFIG = {
 
 AUTH_USER_MODEL = 'gerenciamento_registros.CustomUser'
 
+LOGIN_URL = 'gerenciamento_registros:login'
+
+LOGIN_REDIRECT_URL = 'gerenciamento_registros:redirect_after_login'
+
+LOGOUT_REDIRECT_URL = 'gerenciamento_registros:login'
+
 SILENCED_SYSTEM_CHECKS = ['django_recaptcha.recaptcha_test_key_error']
 
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = BASE_DIR / 'media'
-
-LOGIN_REDIRECT_URL = '/quero-vender/dashboard/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

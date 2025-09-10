@@ -6,22 +6,28 @@ from .views import (
     AprendizRegisterView, 
     activate, 
     resend_activation_email_view,
-    perfil_update_view
+    perfil_update_view,
+    acesso_negado_view,
+    redirect_after_login,
+    logout_and_register_view
 )
 from .forms import PublicAuthenticationForm
 
 app_name = 'gerenciamento_registros'
 
 urlpatterns = [
+    path('redirect/', redirect_after_login, name='redirect_after_login'),
     path('registro/empresa-empreendedor/', EmpresaEmpreendedorRegisterView.as_view(), name='registro_empresa_empreendedor'),
     path('registro/aprendiz/', AprendizRegisterView.as_view(), name='registro_aprendiz'),
+    path('logout-e-registrar/<str:profile_type>/', logout_and_register_view, name='logout_and_register'),
     path('ativacao-enviada/', TemplateView.as_view(template_name='gerenciamento_registros/html/ativacao_enviada.html'), name='ativacao_enviada'),
     path('ativar/<str:uidb64>/<str:token>/', activate, name='ativar_conta'),
     path('ativacao/sucesso/', TemplateView.as_view(template_name='gerenciamento_registros/html/ativacao_sucesso.html'), name='ativacao_sucesso'),
     path('ativacao/invalida/', TemplateView.as_view(template_name='gerenciamento_registros/html/ativacao_invalida.html'), name='ativacao_invalida'),
     path('login/', auth_views.LoginView.as_view(template_name='gerenciamento_registros/html/login.html', redirect_authenticated_user=True, authentication_form=PublicAuthenticationForm), name='login'),
     path('reenviar-ativacao/', resend_activation_email_view, name='resend_activation'),
-    path('logout/', auth_views.LogoutView.as_view(next_page='/'), name='logout'),
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('acesso-negado/', acesso_negado_view, name='acesso_negado'),
     path('perfil/', perfil_update_view, name='perfil_update'),
     path('recuperar-senha/', auth_views.PasswordResetView.as_view(
         template_name='gerenciamento_registros/html/password_reset_form.html',
