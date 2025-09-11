@@ -4,11 +4,12 @@
 {% block titulo_formulario %}Crie seu Perfil de Negócios{% endblock %}
 {% block campos_formulario %}
     <div class="form-group">
-        <label>{{ form.tipo_perfil.label }}</label>
+        <div class="form-group-label">{{ form.tipo_perfil.label }}</div>
         <div class="tipo-perfil-group">
             {% for radio in form.tipo_perfil %}
             <div class="radio-option">
-                {{ radio.tag }} <label for="{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
+                {{ radio.tag }}
+                <label for="{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
             </div>
             {% endfor %}
         </div>
@@ -19,10 +20,10 @@
         <div class="erro-campo">{{ form.username.errors }}</div>
     </div>
     <div class="form-group">
-        <label for="{{ form.email.id_for_label }}">E-mail</label>
-        {{ form.email }}
-        <div class="erro-campo" id="email-error"></div> 
-    </div>
+    <label for="{{ form.email.id_for_label }}">E-mail</label>
+    {{ form.email }}
+    <div class="erro-campo" id="email-error"></div> 
+</div>
     <div class="form-group">
         <label for="{{ form.email2.id_for_label }}">Confirme seu e-mail</label>
         {{ form.email2 }}

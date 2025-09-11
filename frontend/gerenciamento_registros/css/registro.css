@@ -88,3 +88,11 @@
     text-align: left;
     margin-top: 5px;
 }
+
+/* Adicione ao final de registro.css */
+.form-group-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #E4F8FF;
+}
