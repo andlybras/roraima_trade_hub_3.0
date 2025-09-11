@@ -63,3 +63,22 @@ class NoticiaDestaque(models.Model):
         verbose_name = "Notícia em Destaque"
         verbose_name_plural = "3. Notícias em Destaque"
         ordering = ['ordem']
+        
+class BannerNoticias(models.Model):
+    titulo = models.CharField(max_length=150, verbose_name="Título do Banner")
+    subtitulo = models.TextField(blank=True, null=True, verbose_name="Subtítulo/Texto (Opcional)")
+    imagem_fundo = models.ImageField(upload_to='noticias/banners/', verbose_name="Imagem de Fundo")
+    ativo = models.BooleanField(default=False, verbose_name="Está ativo?", help_text="Apenas um banner pode estar ativo por vez.")
+
+    def save(self, *args, **kwargs):
+        if self.ativo:
+            # Garante que qualquer outro banner ativo seja desativado
+            BannerNoticias.objects.filter(ativo=True).update(ativo=False)
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.titulo
+
+    class Meta:
+        verbose_name = "Banner da Página de Notícias"
+        verbose_name_plural = "0. Banners da Página de Notícias"

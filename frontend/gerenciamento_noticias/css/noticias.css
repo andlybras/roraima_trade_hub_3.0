@@ -1,19 +1,63 @@
-/* Layout geral da página de notícias */
+/* =================================================================== */
+/* ARQUIVO CSS COMPLETO E REATORADO PARA O MÓDULO DE NOTÍCIAS     */
+/* =================================================================== */
+
+/* --- Variáveis de Cor para fácil manutenção --- */
+:root {
+    --cor-principal: #144A5D;
+    --cor-texto-claro: #E4F8FF;
+    --cor-fundo-card: rgb(20, 74, 93); /* Fundo semitransparente padrão */
+    --cor-borda-card: rgba(228, 248, 255, 0.2);
+}
+
+/* --- Layout Geral --- */
 .layout-noticias {
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    gap: 20px;
+    padding-top: 0;
 }
 
-/* Seção do meio (Destaques + Categorias) */
+/* --- 1. Banner Superior --- */
+.noticias-banner-topo {
+    height: 150px;
+    border-radius: 40px;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+}
+.noticias-banner-topo::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: var(--cor-texto-claro);
+}
+.banner-conteudo {
+    position: relative;
+    z-index: 2;
+    color: var(--cor-fundo-card);
+}
+.banner-conteudo h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 3rem;
+}
+
+/* --- 2. Seção Intermediária (Destaques + Tópicos) --- */
 .noticias-secao-meio {
     display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 30px;
+    grid-template-columns: 3fr 1fr;
+    gap: 20px;
     align-items: stretch;
+    margin-bottom: -30px;
 }
 
-/* Carrossel de Destaques */
+/* 2.1 - Carrossel de Destaques */
 .destaques-container {
     position: relative;
     border-radius: 40px;
@@ -37,88 +81,121 @@
 }
 .destaque-titulo {
     position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    padding: 20px;
-    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
-    color: #fff;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    padding: 15px;
+    background-color: rgba(20, 74, 93, 0.75);
+    color: var(--cor-texto-claro);
+    border-radius: 15px;
+    backdrop-filter: blur(5px);
+    border: 1px solid var(--cor-borda-card);
 }
 .destaque-titulo span {
-    background-color: #E4F8FF;
-    color: #144A5D;
+    background-color: var(--cor-texto-claro);
+    color: var(--cor-principal);
     padding: 3px 8px;
     font-weight: bold;
     font-size: 0.8rem;
     border-radius: 5px;
 }
-.carousel-nav {
+#prev-btn,
+#next-btn {
     position: absolute;
     top: 50%;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
     transform: translateY(-50%);
-    padding: 0 10px;
-}
-.carousel-nav button {
-    background-color: rgba(20, 74, 93, 0.5);
+    z-index: 10;
+    background-color: rgba(20, 74, 93, 0.6);
     color: #fff;
-    border: none;
-    padding: 10px 15px;
-    cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    transition: background-color 0.3s;
+}
+#prev-btn:hover,
+#next-btn:hover {
+    background-color: rgba(20, 74, 93, 0.9);
+}
+#prev-btn {
+    left: 15px;
+}
+#next-btn {
+    right: 15px;
 }
 
-/* Categorias */
+/* 2.2 - Container de Tópicos */
 .categorias-container {
-    background-color: rgba(20, 74, 93, 0.3);
+    background-color: var(--cor-fundo-card);
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(228, 248, 255, 0.2);
+    border: 1px solid var(--cor-borda-card);
     border-radius: 40px;
-    padding: 20px;
+    padding: 25px;
     display: flex;
     flex-direction: column;
 }
-.categorias-container h4 {
+.categorias-container .titulo-secao-lateral {
     margin-top: 0;
-    text-align: right;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.8rem;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--cor-borda-card);
+    margin-bottom: 15px;
+    color: var(--cor-texto-claro);
 }
 .lista-categorias {
     list-style: none;
     padding: 0;
     margin: 0;
-    overflow-y: auto; /* Adiciona scroll se a lista for grande */
+    overflow-y: auto;
     flex-grow: 1;
 }
 .lista-categorias li a {
     display: block;
-    padding: 10px 15px;
+    padding: 12px 15px;
     text-decoration: none;
-    color: #E4F8FF;
+    color: var(--cor-texto-claro);
     border-radius: 20px;
     margin-bottom: 5px;
     transition: background-color 0.3s;
+    font-size: 1.2rem;
+    text-align: center;
 }
 .lista-categorias li a:hover {
-    background-color: #144A5D;
+    background-color: var(--cor-texto-claro);
+    color: var(--cor-principal);
 }
 
-/* Grid de Notícias */
-.noticias-secao-inferior h3 {
+/* --- 3. Seção Inferior (Últimas Notícias) --- */
+.noticias-secao-inferior .titulo-secao-principal {
+    background-color: var(--cor-texto-claro);
+    border: 1px solid var(--cor-borda-card);
+    padding: 40px;
+    border-radius: 30px;
     text-align: center;
     margin-bottom: 20px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2rem;
+    color: var(--cor-fundo-card);
 }
 .noticias-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 20px;
 }
+
+/* 3.1 - Card de Notícia Individual */
 .noticia-card {
-    background-color: rgba(20, 74, 93, 0.3);
+    background-color: var(--cor-fundo-card);
     border-radius: 20px;
     text-decoration: none;
-    color: #E4F8FF;
+    color: var(--cor-texto-claro);
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -134,6 +211,9 @@
 }
 .card-conteudo {
     padding: 15px;
+    flex-grow: 1; /* Garante que o conteúdo ocupe o espaço */
+    display: flex;
+    flex-direction: column;
 }
 .card-data {
     font-size: 0.8rem;
@@ -141,21 +221,31 @@
 }
 .card-titulo {
     margin: 5px 0;
+    font-size: 1.2rem;
+    line-height: 1.4;
+    height: 50px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
 }
 .card-subtitulo {
     font-size: 0.9rem;
     opacity: 0.9;
     line-height: 1.4;
+    margin-top: auto; /* Empurra o subtítulo para baixo se houver espaço */
 }
 
-/* Paginação */
+/* --- 4. Paginação --- */
 .paginacao-container {
     text-align: center;
-    margin-top: 40px;
+    margin-top: 20px;
 }
 .botao-acao {
-    background-color: #E4F8FF;
-    color: #144A5D;
+    background-color: var(--cor-texto-claro);
+    color: var(--cor-principal);
     font-weight: 700;
     padding: 12px 30px;
     border-radius: 25px;
@@ -164,10 +254,10 @@
     font-size: 1.1rem;
 }
 
-/* Página de Detalhe */
+/* --- 5. Página de Detalhe da Notícia --- */
 .painel-noticia {
-    background-color: rgba(228, 248, 255, 0.95);
-    color: #144A5D;
+    background-color: rgb(228, 248, 255);
+    color: var(--cor-principal);
     border-radius: 40px;
     padding: 40px;
 }

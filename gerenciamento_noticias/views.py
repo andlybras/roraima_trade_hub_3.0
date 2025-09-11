@@ -1,7 +1,8 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView
-from .models import Noticia, Categoria, NoticiaDestaque
+from .models import Noticia, Categoria, NoticiaDestaque, BannerNoticias
 from django.core.paginator import Paginator
+from django.http import HttpResponse
 
 class PaginaInicialNoticias(ListView):
     model = Noticia
@@ -10,12 +11,13 @@ class PaginaInicialNoticias(ListView):
     paginate_by = 6 
 
     def get_queryset(self):
-        return Noticia.objects.filter(status='PUBLICADO').order_by('-data_publicacao')
+        return Noticia.objects.filter(status='PUBLICADO').order_by('-data_atualizacao')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['destaques'] = NoticiaDestaque.objects.all().select_related('noticia')
         context['categorias'] = Categoria.objects.all()
+        context['banner'] = BannerNoticias.objects.filter(ativo=True).first()
         return context
 
 class DetalheNoticia(DetailView):
@@ -43,8 +45,23 @@ class NoticiasPorCategoria(ListView):
         return context
 
 def mais_noticias_ajax(request):
-    page_number = request.GET.get('page', 1)
+    """
+    View para a paginação 'Carregar Mais' com AJAX.
+    """
+    page_number = request.GET.get('page', 2) # Começa da página 2
     noticias_list = Noticia.objects.filter(status='PUBLICADO').order_by('-data_publicacao')
     paginator = Paginator(noticias_list, 6)
-    page_obj = paginator.get_page(page_number)
+
+    try:
+        page_number = int(page_number)
+        # Se a página pedida não existir, o Paginator levanta uma exceção
+        if page_number > paginator.num_pages:
+            return HttpResponse('') # Retorna uma resposta vazia
+            
+        page_obj = paginator.page(page_number)
+
+    except (ValueError, TypeError):
+        # Se o número da página não for um inteiro, retorna vazio
+        return HttpResponse('')
+
     return render(request, 'gerenciamento_noticias/html/partials/noticia_card.html', {'noticias': page_obj})

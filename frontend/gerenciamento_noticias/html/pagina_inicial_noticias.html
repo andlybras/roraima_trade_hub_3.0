@@ -9,10 +9,16 @@
 
 {% block conteudo %}
 <div class="container-conteudo layout-noticias">
-    <section class="noticias-banner-topo">
-        <h2>A Vitrine de Notícias de Roraima</h2>
+    {% if banner %}
+    <section class="noticias-banner-topo" style="background-image: url('{{ banner.imagem_fundo.url }}');">
+        <div class="banner-conteudo">
+            <h1>{{ banner.titulo }}</h1>
+            {% if banner.subtitulo %}
+                <p>{{ banner.subtitulo }}</p>
+            {% endif %}
+        </div>
     </section>
-
+    {% endif %}
     <section class="noticias-secao-meio">
         <div class="destaques-container">
             <div id="destaques-carousel">
@@ -26,14 +32,12 @@
                 </a>
                 {% endfor %}
             </div>
-            <div class="carousel-nav">
-                <button id="prev-btn">&lt;</button>
-                <button id="next-btn">&gt;</button>
-            </div>
+            <button id="prev-btn">&lt;</button>
+            <button id="next-btn">&gt;</button>
         </div>
 
         <aside class="categorias-container">
-            <h4>TÓPICOS</h4>
+            <h4 class="titulo-secao-lateral">TÓPICOS</h4>
             <ul class="lista-categorias">
                 {% for categoria in categorias %}
                 <li><a href="{% url 'noticias:noticias_por_categoria' categoria.slug %}">{{ categoria.nome }}</a></li>
@@ -43,7 +47,7 @@
     </section>
 
     <section class="noticias-secao-inferior">
-        <h3>ÚLTIMAS NOTÍCIAS</h3>
+        <h3 class="titulo-secao-principal">ÚLTIMAS NOTÍCIAS</h3>
         <div class="noticias-grid" id="lista-noticias-grid">
             {% include 'gerenciamento_noticias/html/partials/noticia_card.html' with noticias=page_obj %}
         </div>
