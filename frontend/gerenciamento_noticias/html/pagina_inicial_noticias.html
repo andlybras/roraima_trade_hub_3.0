@@ -35,14 +35,20 @@
             <button id="prev-btn">&lt;</button>
             <button id="next-btn">&gt;</button>
         </div>
-
         <aside class="categorias-container">
             <h4 class="titulo-secao-lateral">TÓPICOS</h4>
+            
             <ul class="lista-categorias">
                 {% for categoria in categorias %}
-                <li><a href="{% url 'noticias:noticias_por_categoria' categoria.slug %}">{{ categoria.nome }}</a></li>
+                    <li><a href="{% url 'noticias:noticias_por_categoria' categoria.slug %}">{{ categoria.nome }}</a></li>
                 {% endfor %}
             </ul>
+            <div class="busca-container">
+                <form method="get" action="{% url 'noticias:busca_noticias' %}">
+                    <input type="search" name="q" placeholder="Buscar notícias..." required>
+                    <button type="submit">Buscar</button>
+                </form>
+            </div>
         </aside>
     </section>
 

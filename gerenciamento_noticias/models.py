@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.utils.text import slugify
 from tinymce.models import HTMLField
 from django.utils import timezone
+from taggit.managers import TaggableManager
 
 class Categoria(models.Model):
     nome = models.CharField(max_length=100, unique=True, verbose_name="Nome da Categoria")
@@ -34,6 +35,7 @@ class Noticia(models.Model):
     imagem_card = models.ImageField(upload_to='noticias/cards/', verbose_name="Imagem de Capa/Card", help_text="Imagem principal da matéria.")
     autor = models.ForeignKey(User, on_delete=models.PROTECT, related_name='noticias_autor', verbose_name="Autor")
     categorias = models.ManyToManyField(Categoria, related_name='noticias', verbose_name="Categorias")
+    tags = TaggableManager(verbose_name="Tags", help_text="Uma lista de tags separadas por vírgula.", blank=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='RASCUNHO', verbose_name="Status")
     data_publicacao = models.DateTimeField(default=timezone.now, verbose_name="Data de Publicação")
     data_criacao = models.DateTimeField(auto_now_add=True)

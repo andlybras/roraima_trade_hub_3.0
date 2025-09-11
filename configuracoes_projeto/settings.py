@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     'gerenciamento_oportunidades',
     'gerenciamento_destino',
     'gerenciamento_noticias',
+    'taggit',
     'tinymce',
     'django_recaptcha',
 ]
@@ -119,3 +120,5 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+TAGGIT_STRIP_UNICODE_WHEN_SLUGIFYING = True

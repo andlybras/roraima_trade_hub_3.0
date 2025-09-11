@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}Notícias com a tag "{{ tag.name }}" | Roraima Trade Hub{% endblock %}
+
+{% block css_pagina %}
+    <link rel="stylesheet" href="{% static 'gerenciamento_noticias/css/noticias.css' %}">
+{% endblock %}
+
+{% block conteudo %}
+<div class="container-conteudo">
+    <div class="cabecalho-listagem" style="padding: 40px;">
+        <h1>Notícias com a tag: <strong>{{ tag.name }}</strong></h1>
+    </div>
+    <div class="noticias-grid">
+        {% include 'gerenciamento_noticias/html/partials/noticia_card.html' with noticias=noticias %}
+    </div>
+
+    </div>
+{% endblock %}

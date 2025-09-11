@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}Resultados para "{{ query }}" | Roraima Trade Hub{% endblock %}
+
+{% block css_pagina %}
+    <link rel="stylesheet" href="{% static 'gerenciamento_noticias/css/noticias.css' %}">
+{% endblock %}
+
+{% block conteudo %}
+<div class="container-conteudo">
+    <div class="cabecalho-listagem" style="padding: 40px; text-align: center;">
+        {% if query %}
+            <h1>Resultados da busca por: <strong>"{{ query }}"</strong></h1>
+        {% else %}
+            <h1>Por favor, digite um termo para buscar.</h1>
+        {% endif %}
+    </div>
+
+    {% if noticias %}
+        <div class="noticias-grid">
+            {% include 'gerenciamento_noticias/html/partials/noticia_card.html' with noticias=noticias %}
+        </div>
+    {% elif query %}
+        <p style="text-align: center; font-size: 1.2rem;">Nenhuma notícia encontrada com este termo.</p>
+    {% endif %}
+    
+    </div>
+{% endblock %}

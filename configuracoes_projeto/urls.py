@@ -6,6 +6,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('gerenciamento_home.urls')),
+    path('tinymce/', include('tinymce.urls')),
     path('noticias/', include('gerenciamento_noticias.urls', namespace='noticias')),
     path('inteligencia-de-mercado/', include('gerenciamento_inteligencia_mercado.urls')),
     path('aprenda-comex/', include('gerenciamento_aprenda.urls')),

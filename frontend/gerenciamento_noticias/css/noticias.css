@@ -280,3 +280,79 @@
     color: #0d2f3b;
     font-weight: bold;
 }
+
+/* Adicione ao final de noticias.css */
+.noticia-tags {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(20, 74, 93, 0.1);
+}
+.tag-link {
+    display: inline-block;
+    background-color: #e1eef2;
+    color: var(--cor-principal);
+    padding: 5px 12px;
+    border-radius: 15px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    margin-right: 8px;
+    margin-bottom: 8px;
+    transition: background-color 0.3s;
+}
+.tag-link:hover {
+    background-color: #cddce2;
+}
+
+/* Adicione ao final de noticias.css */
+.busca-container {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 2px solid var(--cor-borda-card);
+}
+.busca-container form {
+    display: flex;
+    gap: 10px;
+}
+.busca-container input[type="search"] {
+    flex-grow: 1;
+    border: 1px solid var(--cor-borda-card);
+    background-color: transparent;
+    padding: 10px 15px;
+    border-radius: 20px;
+    color: var(--cor-texto-claro);
+    font-size: 0.9rem;
+    outline: none; /* REMOVE O STROKE PRETO PADRÃO DO NAVEGADOR */
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+.busca-container button {
+    background-color: var(--cor-texto-claro);
+    color: var(--cor-principal);
+    border: none;
+    padding: 0 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.busca-container input[type="search"]:focus {
+    background-color: var(--cor-texto-claro);
+    color: var(--cor-principal);
+    border-color: var(--cor-principal); /* Pode adicionar uma borda colorida se quiser */
+}
+
+/* NOVO ESTILO: Fundo branco e texto escuro quando preenchido (se tiver conteúdo) */
+.busca-container input[type="search"]:not(:placeholder-shown) {
+    background-color: var(--cor-texto-claro);
+    color: var(--cor-principal);
+    border-color: var(--cor-principal);
+}
+
+/* Estilo para o placeholder para ser legível no fundo transparente */
+.busca-container input[type="search"]::placeholder {
+    color: rgba(228, 248, 255, 0.7); /* Cor mais clara para o placeholder */
+}
+/* E quando o input estiver em foco/preenchido, o placeholder não deve aparecer, mas se por algum motivo aparecer, que seja legível */
+.busca-container input[type="search"]:focus::placeholder,
+.busca-container input[type="search"]:not(:placeholder-shown)::placeholder {
+    color: rgba(20, 74, 93, 0.7); /* Cor escura para o placeholder em fundo claro */
+}

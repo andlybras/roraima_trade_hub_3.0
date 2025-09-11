@@ -3,6 +3,10 @@ from django.views.generic import ListView, DetailView
 from .models import Noticia, Categoria, NoticiaDestaque, BannerNoticias
 from django.core.paginator import Paginator
 from django.http import HttpResponse
+from taggit.models import Tag
+from django.db.models import Q
+from django.db.models.functions import Lower
+
 
 class PaginaInicialNoticias(ListView):
     model = Noticia
@@ -65,3 +69,48 @@ def mais_noticias_ajax(request):
         return HttpResponse('')
 
     return render(request, 'gerenciamento_noticias/html/partials/noticia_card.html', {'noticias': page_obj})
+
+class NoticiasPorTag(ListView):
+    model = Noticia
+    template_name = 'gerenciamento_noticias/html/noticias_por_tag.html'
+    context_object_name = 'noticias'
+    paginate_by = 9
+
+    def get_queryset(self):
+        self.tag = get_object_or_404(Tag, slug=self.kwargs['slug'])
+        return Noticia.objects.filter(tags=self.tag, status='PUBLICADO').order_by('-data_publicacao')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['tag'] = self.tag
+        return context
+    
+class BuscaNoticias(ListView):
+    model = Noticia
+    template_name = 'gerenciamento_noticias/html/busca_resultados.html'
+    context_object_name = 'noticias'
+    paginate_by = 9
+
+    def get_queryset(self):
+        # Pega o parâmetro 'q' da URL (ex: /busca/?q=agricultura)
+        query = self.request.GET.get('q', '')
+        if query:
+            # Filtra notícias publicadas que contenham a palavra-chave no título,
+            # no subtítulo, no corpo OU no nome de uma tag associada.
+            # O .distinct() evita resultados duplicados.
+            return Noticia.objects.filter(
+                Q(titulo__icontains=query) |
+                Q(subtitulo__icontains=query) |
+                Q(corpo__icontains=query) |
+                Q(tags__name__icontains=query),
+                status='PUBLICADO'
+            ).distinct().order_by('-data_publicacao')
+        
+        # Se não houver busca, não retorna nada
+        return Noticia.objects.none()
+
+    def get_context_data(self, **kwargs):
+        # Adiciona a palavra buscada ao contexto para usá-la no título da página
+        context = super().get_context_data(**kwargs)
+        context['query'] = self.request.GET.get('q', '')
+        return context

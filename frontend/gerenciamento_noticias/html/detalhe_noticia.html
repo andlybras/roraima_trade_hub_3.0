@@ -27,6 +27,14 @@
         <div class="noticia-corpo">
             {{ noticia.corpo|safe }}
         </div>
+        {% if noticia.tags.all %}
+        <div class="noticia-tags">
+            <strong>Tags:</strong>
+            {% for tag in noticia.tags.all %}
+                <a href="{% url 'noticias:noticias_por_tag' tag.slug %}" class="tag-link">{{ tag.name }}</a>
+            {% endfor %}
+        </div>
+        {% endif %}
     </article>
 </div>
 {% endblock %}
