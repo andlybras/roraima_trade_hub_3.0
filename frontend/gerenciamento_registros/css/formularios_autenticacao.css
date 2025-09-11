@@ -120,3 +120,11 @@
     background-color: rgba(228, 248, 255, 0.9);
     color: #144A5D;
 }
+
+/* Adicione este código no final de formularios_autenticacao.css */
+
+.captcha-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
