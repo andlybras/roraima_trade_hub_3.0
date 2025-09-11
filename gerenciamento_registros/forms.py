@@ -1,8 +1,11 @@
+# CÓDIGO COMPLETO E LIMPO para gerenciamento_registros/forms.py
+
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .models import CustomUser, AprendizProfile, EmpreendedorProfile, EmpresaProfile 
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordResetForm
+from .models import CustomUser, AprendizProfile, EmpreendedorProfile, EmpresaProfile
 from django_recaptcha.fields import ReCaptchaField
 from django.core.exceptions import ValidationError
+from django_recaptcha.widgets import ReCaptchaV2Checkbox
 
 class EmpresaEmpreendedorRegistrationForm(UserCreationForm):
     tipo_perfil = forms.ChoiceField(
@@ -73,7 +76,6 @@ class AprendizRegistrationForm(UserCreationForm):
         return user
     
 class PublicAuthenticationForm(AuthenticationForm):
-
     def confirm_login_allowed(self, user):
         if user.is_staff:
             raise ValidationError(
@@ -81,9 +83,6 @@ class PublicAuthenticationForm(AuthenticationForm):
                 code='admin_login_denied'
             )
         super().confirm_login_allowed(user)
-        
-class ResendActivationEmailForm(forms.Form):
-    email = forms.EmailField(label="E-mail", widget=forms.TextInput(attrs={'placeholder': 'Digite o e-mail cadastrado'}))
     
 class EmpreendedorProfileForm(forms.ModelForm):
     class Meta:
@@ -97,6 +96,28 @@ class EmpresaProfileForm(forms.ModelForm):
         widgets = {
             'cnpj': forms.TextInput(attrs={'class': 'cnpj-mask'}),
         }
-        
-    class ResendActivationEmailForm(forms.Form):
-        email = forms.EmailField(label="E-mail", widget=forms.TextInput(attrs={'placeholder': 'Digite o e-mail cadastrado'}))
+
+class CustomResendActivationForm(forms.Form):
+    email = forms.EmailField(
+        label="E-mail",
+        # AQUI ESTÁ A CORREÇÃO:
+        # Forçamos o widget a ser um input de texto e definimos o atributo 'type' como 'email'.
+        widget=forms.TextInput(attrs={
+            'placeholder': 'Digite o e-mail cadastrado',
+            'type': 'email' # Esta linha força o HTML a ser <input type="email" ...>
+        })
+    )
+    captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox(
+        attrs={
+            'data-callback': 'recaptchaSolvedCallback',
+            'data-expired-callback': 'recaptchaExpiredCallback',
+        }
+    ))
+
+class CustomPasswordResetForm(PasswordResetForm):
+    captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox(
+        attrs={
+            'data-callback': 'recaptchaSolvedCallback',
+            'data-expired-callback': 'recaptchaExpiredCallback',
+        }
+    ))

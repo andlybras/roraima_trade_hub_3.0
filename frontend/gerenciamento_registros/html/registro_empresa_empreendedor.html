@@ -1,4 +1,5 @@
 {% extends 'gerenciamento_registros/html/_base_registro.html' %}
+{% load static %}
 {% block titulo %}Registro de Empresa ou Empreendedor{% endblock %}
 {% block titulo_formulario %}Crie seu Perfil de Negócios{% endblock %}
 {% block campos_formulario %}
@@ -34,4 +35,8 @@
         {{ form.password2 }}
         <div class="erro-campo" id="password2-error"></div>
     </div>
+{% endblock %}
+{% block js_pagina %}
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="{% static 'gerenciamento_registros/js/registro.js' %}"></script>
 {% endblock %}

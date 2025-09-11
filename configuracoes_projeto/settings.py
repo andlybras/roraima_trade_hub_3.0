@@ -118,7 +118,7 @@ LOGIN_URL = 'gerenciamento_registros:login'
 
 LOGIN_REDIRECT_URL = 'gerenciamento_registros:redirect_after_login'
 
-LOGOUT_REDIRECT_URL = 'gerenciamento_registros:login'
+LOGOUT_REDIRECT_URL = '/'
 
 SILENCED_SYSTEM_CHECKS = ['django_recaptcha.recaptcha_test_key_error']
 
