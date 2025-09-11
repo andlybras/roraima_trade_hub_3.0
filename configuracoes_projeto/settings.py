@@ -22,6 +22,7 @@ INSTALLED_APPS = [
     'gerenciamento_acordos',
     'gerenciamento_oportunidades',
     'gerenciamento_destino',
+    'gerenciamento_noticias',
     'tinymce',
     'django_recaptcha',
 ]
