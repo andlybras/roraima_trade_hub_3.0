@@ -22,7 +22,6 @@ INSTALLED_APPS = [
     'gerenciamento_acordos',
     'gerenciamento_oportunidades',
     'gerenciamento_destino',
-    'gerenciamento_registros',
     'tinymce',
     'django_recaptcha',
 ]
@@ -111,14 +110,6 @@ TINYMCE_DEFAULT_CONFIG = {
                "a11ycheck ltr rtl | showcomments addcomment code",
     "custom_undo_redo_levels": 10,
 }
-
-AUTH_USER_MODEL = 'gerenciamento_registros.CustomUser'
-
-LOGIN_URL = 'gerenciamento_registros:login'
-
-LOGIN_REDIRECT_URL = 'gerenciamento_registros:redirect_after_login'
-
-LOGOUT_REDIRECT_URL = '/'
 
 SILENCED_SYSTEM_CHECKS = ['django_recaptcha.recaptcha_test_key_error']
 

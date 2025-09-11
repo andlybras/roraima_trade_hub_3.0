@@ -1,3 +1,5 @@
+/* Conteúdo para frontend/admin/css/admin_login.css */
+
 .container-formulario {
     display: flex;
     justify-content: center;
@@ -5,7 +7,6 @@
     padding: 40px 20px;
     min-height: 60vh;
 }
-
 .painel-formulario {
     width: 100%;
     max-width: 500px;
@@ -16,24 +17,20 @@
     padding: 40px 50px;
     text-align: center;
 }
-
 .titulo-pagina {
     font-family: 'Montserrat', sans-serif;
     margin-bottom: 25px;
 }
-
 .form-group {
     margin-bottom: 20px;
     text-align: left;
 }
-
 .form-group label {
     display: block;
     margin-bottom: 8px;
     font-weight: 600;
     color: #E4F8FF;
 }
-
 .form-group input {
     width: 100%;
     padding: 12px 20px;
@@ -45,31 +42,11 @@
     transition: all 0.3s ease;
     box-sizing: border-box;
 }
-
-.form-group input:focus {
+.form-group input:focus, .form-group input.filled {
     background-color: rgba(228, 248, 255, 0.9);
     color: #144A5D;
     outline: none;
 }
-
-.opcoes-formulario {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 25px;
-    font-size: 0.9rem;
-}
-
-.opcoes-formulario a {
-    color: #c0e0eb;
-    text-decoration: none;
-    transition: color 0.3s;
-}
-
-.opcoes-formulario a:hover {
-    color: #FFFFFF;
-    text-decoration: underline;
-}
-
 .botao-acao {
     background-color: #E4F8FF;
     color: #144A5D;
@@ -82,19 +59,16 @@
     font-size: 1.1rem;
     transition: all 0.3s ease;
 }
-
 .botao-acao:hover {
     background-color: #c0e0eb;
     transform: translateY(-3px);
 }
-
 .botao-acao:disabled {
     background-color: #5a6a70;
     color: #aaaaaa;
     cursor: not-allowed;
     transform: none;
 }
-
 .erro-geral {
     color: #ff9999;
     background-color: rgba(255, 100, 100, 0.1);
@@ -104,27 +78,7 @@
     margin-bottom: 20px;
     font-size: 0.9rem;
 }
-
 .mensagem-validacao {
     color: #ffc4c4;
     margin-top: 15px;
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out;
-}
-
-.mensagem-validacao.show {
-    opacity: 1;
-}
-
-.form-group input.filled {
-    background-color: rgba(228, 248, 255, 0.9);
-    color: #144A5D;
-}
-
-/* Adicione este código no final de formularios_autenticacao.css */
-
-.captcha-container {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
 }

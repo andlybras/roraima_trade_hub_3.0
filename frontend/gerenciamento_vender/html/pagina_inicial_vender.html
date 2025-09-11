@@ -37,25 +37,14 @@
     </div>
     <aside class="vender-coluna-lateral">
         <nav class="vender-navegacao-lateral">
-            {% if user.is_authenticated %}
-                <a href="{% url 'vender:dashboard' %}" class="vender-nav-card card-acessar-ambiente">
-                    <img src="{% static 'gerenciamento_vender/icons/icone-vender-ambiente.svg' %}" alt="Ícone de ambiente empresarial">
-                    <span>Acessar o Painel</span>
-                </a>
-                <a href="{% url 'gerenciamento_registros:perfil_update' %}" class="vender-nav-card card-criar-perfil">
-                    <img src="{% static 'gerenciamento_vender/icons/icone-vender-perfil.svg' %}" alt="Ícone de perfil empresarial">
-                    <span>Editar Meu Perfil</span>
-                </a>
-            {% else %}
-                <a href="{% url 'gerenciamento_registros:registro_empresa_empreendedor' %}" class="vender-nav-card card-criar-perfil">
-                    <img src="{% static 'gerenciamento_vender/icons/icone-vender-perfil.svg' %}" alt="Ícone de perfil empresarial">
-                    <span>Crie seu Perfil Empresarial</span>
-                </a>
-                <a href="{% url 'gerenciamento_registros:login' %}" class="vender-nav-card card-acessar-ambiente">
-                    <img src="{% static 'gerenciamento_vender/icons/icone-vender-ambiente.svg' %}" alt="Ícone de ambiente empresarial">
-                    <span>Acesse o Ambiente Empresarial</span>
-                </a>
-            {% endif %}
+            <a href="#" class="vender-nav-card card-criar-perfil">
+                <img src="{% static 'gerenciamento_vender/icons/icone-vender-perfil.svg' %}" alt="Ícone de perfil empresarial">
+                <span>Cadastre seu Produto</span>
+            </a>
+            <a href="#" class="vender-nav-card card-acessar-ambiente">
+                <img src="{% static 'gerenciamento_vender/icons/icone-vender-ambiente.svg' %}" alt="Ícone de ambiente empresarial">
+                <span>Encontre Compradores</span>
+            </a>
             <a href="#" class="vender-nav-card card-outras-opcoes">
                 <img src="{% static 'gerenciamento_vender/icons/icone-vender-faq.svg' %}" alt="Ícone de perguntas frequentes">
                 <span>Perguntas Frequentes</span>

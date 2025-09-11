@@ -19,29 +19,9 @@
                 <a href="{% url 'gerenciamento_home:home' %}" aria-label="Acesso à página Home">
                     <img src="{% static 'gerenciamento_home/icons/home.svg' %}" alt="icone para acesso a página Home">
                 </a>
-                {% if user.is_authenticated and not user.is_staff %}
-                    <div class="dropdown">
-                        <button type="button" class="dropdown-toggle" id="userMenuButton" aria-haspopup="true" aria-expanded="false">
-                            <img src="{% static 'gerenciamento_home/icons/user-logged-in.svg' %}" alt="Ícone de usuário logado">
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="userMenuButton">
-                            
-                            {% if user.tipo_usuario == 'EMPRESA' or user.tipo_usuario == 'EMPREENDEDOR' %}
-                                <a class="dropdown-item" href="{% url 'vender:dashboard' %}">Acessar Meu Painel</a>
-                            {% elif user.tipo_usuario == 'APRENDIZ' %}
-                                <a class="dropdown-item" href="{% url 'aprenda:dashboard_educacional' %}">Acessar Meu Painel</a>
-                            {% endif %}
-                            <form action="{% url 'gerenciamento_registros:logout' %}" method="post" style="margin: 0;">
-                                {% csrf_token %}
-                                <button type="submit" class="dropdown-item">Sair</button>
-                            </form>
-                        </div>
-                    </div>
-                {% else %}
-                    <a href="{% url 'gerenciamento_registros:login' %}" aria-label="Acesso à conta do usuário">
-                        <img src="{% static 'gerenciamento_home/icons/user.svg' %}" alt="icone para acesso à conta do usuário">
-                    </a>
-                {% endif %}
+                <a href="#" aria-label="Acesso à conta do usuário (desativado)">
+                    <img src="{% static 'gerenciamento_home/icons/user.svg' %}" alt="icone para acesso à conta do usuário">
+                </a>
                 <a href="/admin/" aria-label="Acesso ao painel administrativo" target="_blank">
                     <img src="{% static 'gerenciamento_home/icons/admin.svg' %}" alt="icone para acesso ao painel administrativo">
                 </a>
@@ -85,7 +65,6 @@
     {% endblock footer %}
     <script src="{% static 'gerenciamento_home/js/scroller.js' %}"></script>
     <script src="{% static 'gerenciamento_home/js/header.js' %}"></script>
-    <script src="{% static 'gerenciamento_home/js/dropdown.js' %}"></script>
     {% block js_pagina %}
     {% endblock %}
 </body>
