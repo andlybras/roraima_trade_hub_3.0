@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}{{ noticia.titulo }} | Roraima Trade Hub{% endblock %}
+
+{% block css_pagina %}
+    <link rel="stylesheet" href="{% static 'gerenciamento_noticias/css/noticias.css' %}">
+{% endblock %}
+
+{% block conteudo %}
+<div class="container-conteudo container-noticia-detalhe">
+    <article class="painel-noticia">
+        <div class="noticia-cabecalho">
+            <h1 class="noticia-titulo-detalhe">{{ noticia.titulo }}</h1>
+            {% if noticia.subtitulo %}
+            <h2 class="noticia-subtitulo-detalhe">{{ noticia.subtitulo }}</h2>
+            {% endif %}
+            <p class="noticia-meta">
+                Por <strong>{{ noticia.autor.get_full_name|default:noticia.autor.username }}</strong> <br>
+                Publicado em: {{ noticia.data_publicacao|date:"d \d\e F \d\e Y, H:i" }}
+                {% if noticia.data_atualizacao|timesince != noticia.data_criacao|timesince %}
+                 (Atualizado em: {{ noticia.data_atualizacao|date:"d/m/Y, H:i" }})
+                {% endif %}
+            </p>
+        </div>
+        <img class="noticia-imagem-detalhe" src="{{ noticia.imagem_card.url }}" alt="Imagem de capa para a notícia: {{ noticia.titulo }}">
+        <div class="noticia-corpo">
+            {{ noticia.corpo|safe }}
+        </div>
+    </article>
+</div>
+{% endblock %}

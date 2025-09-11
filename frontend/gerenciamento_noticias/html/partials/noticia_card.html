@@ -1,0 +1,14 @@
+{% for noticia in noticias %}
+<a href="{% url 'noticias:detalhe_noticia' noticia.slug %}" class="noticia-card">
+    <div class="card-imagem">
+        <img src="{{ noticia.imagem_card.url }}" alt="Imagem de capa para a notícia: {{ noticia.titulo }}">
+    </div>
+    <div class="card-conteudo">
+        <span class="card-data">{{ noticia.data_publicacao|date:"d M, Y" }}</span>
+        <h3 class="card-titulo">{{ noticia.titulo }}</h3>
+        {% if noticia.subtitulo %}
+        <p class="card-subtitulo">{{ noticia.subtitulo|truncatewords:15 }}</p>
+        {% endif %}
+    </div>
+</a>
+{% endfor %}
