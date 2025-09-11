@@ -18,12 +18,13 @@
     padding-top: 0;
 }
 
+/* Em noticias.css */
+
+/* SUBSTITUA a regra .noticias-banner-topo e suas relacionadas por estas */
 /* --- 1. Banner Superior --- */
 .noticias-banner-topo {
-    height: 150px;
+    height: 150px; /* Tamanho igual ao da home, como solicitado */
     border-radius: 40px;
-    background-size: cover;
-    background-position: center;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -31,21 +32,40 @@
     padding: 20px;
     position: relative;
     overflow: hidden;
+    /* Fundo padrão, estilo 'card da home' */
+    background-color: var(--cor-fundo-card);
+    border: 1px solid var(--cor-borda-card);
 }
-.noticias-banner-topo::before {
+.banner-fundo {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+}
+.banner-fundo::after { /* Overlay para escurecer a imagem e facilitar a leitura */
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
-    background-color: var(--cor-texto-claro);
+    background-color: rgba(20, 74, 93, 0.5);
 }
 .banner-conteudo {
     position: relative;
     z-index: 2;
-    color: var(--cor-fundo-card);
+    color: var(--cor-texto-claro);
+}
+.banner-conteudo.texto-estatico {
+     color: var(--cor-texto-claro); /* Cor diferente se for só texto */
 }
 .banner-conteudo h1 {
     font-family: 'Montserrat', sans-serif;
     font-size: 3rem;
+    margin: 0;
+}
+.banner-conteudo p {
+    font-size: 1.2rem;
+    max-width: 600px;
+    margin: 10px auto 0;
 }
 
 /* --- 2. Seção Intermediária (Destaques + Tópicos) --- */
@@ -136,8 +156,12 @@
     border: 1px solid var(--cor-borda-card);
     border-radius: 40px;
     padding: 25px;
-    display: flex;
-    flex-direction: column;
+    
+    /* MUDANÇA PRINCIPAL: Usando Grid em vez de Flexbox */
+    display: grid;
+    grid-template-rows: auto 1fr auto; /* Título(auto) | Lista(ocupa espaço) | Busca(auto) */
+    gap: 15px;
+    max-height: 400px;
 }
 .categorias-container .titulo-secao-lateral {
     margin-top: 0;
@@ -155,6 +179,10 @@
     margin: 0;
     overflow-y: auto;
     flex-grow: 1;
+    min-height: 0;
+    /* Linhas para o Firefox */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(228, 248, 255, 0.5) rgba(20, 74, 93, 0.3);
 }
 .lista-categorias li a {
     display: block;
@@ -163,6 +191,7 @@
     color: var(--cor-texto-claro);
     border-radius: 20px;
     margin-bottom: 5px;
+    margin-right: 5px;
     transition: background-color 0.3s;
     font-size: 1.2rem;
     text-align: center;
@@ -355,4 +384,32 @@
 .busca-container input[type="search"]:focus::placeholder,
 .busca-container input[type="search"]:not(:placeholder-shown)::placeholder {
     color: rgba(20, 74, 93, 0.7); /* Cor escura para o placeholder em fundo claro */
+}
+
+/* --- 6. Estilo da Barra de Rolagem Customizada para a Lista de Tópicos --- */
+
+/* Para navegadores baseados em WebKit (Chrome, Edge, Safari, Opera) */
+
+/* Define a largura da barra de rolagem inteira */
+.lista-categorias::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Estiliza o fundo (a trilha) da barra de rolagem */
+.lista-categorias::-webkit-scrollbar-track {
+    background: rgba(20, 74, 93, 0.3); /* A "barra mais opaca" - o fundo */
+    border-radius: 10px;
+}
+
+/* Estiliza a alça de rolagem (a parte que você arrasta) */
+.lista-categorias::-webkit-scrollbar-thumb {
+    background-color: rgba(228, 248, 255, 0.5); /* A "barra menor menos opaca" - a alça */
+    border-radius: 10px;
+    border: 2px solid transparent; /* Cria um efeito de preenchimento interno */
+    background-clip: content-box;
+}
+
+/* Efeito ao passar o mouse sobre a alça de rolagem */
+.lista-categorias::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(228, 248, 255, 0.8);
 }

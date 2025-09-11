@@ -1,0 +1,169 @@
+(function() {
+    // --- PARTE 1: DEFINIÇÃO E INJEÇÃO DOS ESTILOS (ESPAÇAMENTO AJUSTADO) ---
+    const cssStyles = `
+        /* Estilo principal para o container do banner com efeito de vidro */
+        .noticias-banner-topo {
+            height: 180px !important; 
+            background-color: rgba(255, 255, 255, 0.05) !important;
+            backdrop-filter: blur(10px) !important;
+            border: 1px solid rgba(228, 248, 255, 0.5) !important;
+            border-radius: 50px !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            box-shadow: none !important;
+        }
+        
+        .noticias-banner-topo::before, .noticias-banner-topo::after { display: none !important; }
+
+        #banner-animacao-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            padding: 15px;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        #banner-animacao-container .texto-animado {
+            color: #E4F8FF;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+            transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+            opacity: 0;
+            transform: translateY(15px);
+            will-change: opacity, transform;
+            display: block;
+        }
+        #banner-animacao-container .texto-animado.visivel {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        #banner-animacao-container .texto-animado.oculto {
+            display: none;
+        }
+
+        #banner-animacao-container .main-title {
+            font-size: clamp(2.5rem, 6vw, 3.5rem); 
+            font-weight: 700;
+        }
+
+        #banner-animacao-container .subtitle {
+            font-family: 'Bai Jamjuree', sans-serif;
+            font-size: clamp(1.1rem, 4vw, 1.4rem); 
+            /* ALTERAÇÃO AQUI: Diminuímos a margem superior para aproximar as linhas */
+            margin-top: -25px; 
+        }
+        
+        #banner-animacao-container .dynamic-text {
+            font-size: clamp(1.4rem, 5vw, 1.9rem); 
+            font-weight: 600;
+            min-height: 1.2em;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 3px;
+            background-color: #E4F8FF;
+            animation: blink 1s infinite;
+        }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+    `;
+
+    function injectStyles(styles) {
+        const styleSheetId = 'banner-animation-styles';
+        if (document.getElementById(styleSheetId)) {
+            document.getElementById(styleSheetId).innerText = styles;
+            return;
+        }
+        const styleSheet = document.createElement("style");
+        styleSheet.id = styleSheetId;
+        styleSheet.innerText = styles;
+        document.head.appendChild(styleSheet);
+    }
+
+    // --- PARTE 2: LÓGICA DA ANIMAÇÃO (SEM ALTERAÇÕES) ---
+    const container = document.getElementById('banner-animacao-container');
+    if (!container) return;
+
+    const act1_title = "Roraima Trade Hub";
+    const act1_subtitle = "O seu portal de notícias sobre o mercado roraimense!";
+    const act2_phrases = [
+        "Notícias sobre as conexões globais que partem de Roraima e as oportunidades que chegam do exterior",
+        "Notícias sobre a força do agronegócio, o crescimento da indústria e a inovação nos serviços que geram riqueza no estado",
+        "Notícias sobre as decisões do governo e as parcerias estratégicas que definem o ambiente de negócios em Roraima",
+        "Notícias sobre os eventos, feiras e encontros onde as conexões se transformam em grandes negócios",
+        "Notícias que estão aqui para levar Roraima para o mundo!"
+    ];
+
+    const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+    async function type(element, text, speed = 80) {
+        element.innerHTML = '';
+        element.classList.remove('oculto');
+        element.classList.add('visivel');
+        const cursor = '<span class="cursor">|</span>';
+        for (let i = 0; i < text.length; i++) {
+            element.innerHTML = text.substring(0, i + 1) + cursor;
+            await wait(speed);
+        }
+        element.innerHTML = text;
+    }
+    
+    async function erase(element, speed = 40) {
+        const text = element.textContent;
+        const cursor = '<span class="cursor">|</span>';
+        for (let i = text.length; i > 0; i--) {
+            element.innerHTML = text.substring(0, i - 1) + cursor;
+            await wait(speed);
+        }
+        element.innerHTML = '';
+    }
+
+    async function mainAnimation() {
+        container.innerHTML = `
+            <h1 class="texto-animado main-title"></h1>
+            <p class="texto-animado subtitle"></p>
+            <p class="texto-animado dynamic-text"></p>
+        `;
+        const titleElem = container.querySelector('.main-title');
+        const subtitleElem = container.querySelector('.subtitle');
+        const dynamicElem = container.querySelector('.dynamic-text');
+
+        while (true) {
+            // --- 1º ATO ---
+            titleElem.classList.remove('oculto');
+            subtitleElem.classList.remove('oculto');
+            dynamicElem.classList.add('oculto');
+
+            await type(titleElem, act1_title);
+            await wait(500);
+            await type(subtitleElem, act1_subtitle);
+            await wait(15000);
+            titleElem.classList.remove('visivel');
+            subtitleElem.classList.remove('visivel');
+            await wait(1000);
+
+            // --- 2º ATO ---
+            titleElem.classList.add('oculto');
+            subtitleElem.classList.add('oculto');
+            dynamicElem.classList.remove('oculto');
+            
+            for (const phrase of act2_phrases) {
+                await type(dynamicElem, phrase, 60);
+                await wait(2000);
+                await erase(dynamicElem, 30);
+                await wait(500);
+            }
+            dynamicElem.classList.remove('visivel');
+            await wait(1000);
+        }
+    }
+
+    injectStyles(cssStyles);
+    mainAnimation();
+
+})();

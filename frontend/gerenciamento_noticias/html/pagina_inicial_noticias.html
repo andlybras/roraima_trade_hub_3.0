@@ -10,13 +10,27 @@
 {% block conteudo %}
 <div class="container-conteudo layout-noticias">
     {% if banner %}
-    <section class="noticias-banner-topo" style="background-image: url('{{ banner.imagem_fundo.url }}');">
-        <div class="banner-conteudo">
-            <h1>{{ banner.titulo }}</h1>
-            {% if banner.subtitulo %}
-                <p>{{ banner.subtitulo }}</p>
-            {% endif %}
-        </div>
+    <section class="noticias-banner-topo">
+    {% if banner %}
+        {% if banner.tipo_conteudo == 'IMAGEM_TEXTO' and banner.imagem_fundo %}
+            <div class="banner-fundo" style="background-image: url('{{ banner.imagem_fundo.url }}');"></div>
+            <div class="banner-conteudo">
+                <h1>{{ banner.titulo }}</h1>
+                {% if banner.subtitulo %}<p>{{ banner.subtitulo }}</p>{% endif %}
+            </div>
+        {% elif banner.tipo_conteudo == 'TEXTO_ESTATICO' %}
+            <div class="banner-conteudo texto-estatico">
+                <h1>{{ banner.titulo }}</h1>
+                {% if banner.subtitulo %}<p>{{ banner.subtitulo }}</p>{% endif %}
+            </div>
+        {% elif banner.tipo_conteudo == 'ANIMACAO_JS' %}
+            <div id="banner-animacao-container" style="width: 100%; height: 100%;">
+                </div>
+            <script>
+                {{ banner.codigo_js|safe }}
+            </script>
+        {% endif %}
+    {% endif %}
     </section>
     {% endif %}
     <section class="noticias-secao-meio">

@@ -67,19 +67,39 @@ class NoticiaDestaque(models.Model):
         ordering = ['ordem']
         
 class BannerNoticias(models.Model):
-    titulo = models.CharField(max_length=150, verbose_name="Título do Banner")
-    subtitulo = models.TextField(blank=True, null=True, verbose_name="Subtítulo/Texto (Opcional)")
-    imagem_fundo = models.ImageField(upload_to='noticias/banners/', verbose_name="Imagem de Fundo")
+    TIPO_CHOICES = [
+        ('IMAGEM_TEXTO', 'Imagem de Fundo com Texto Sobreposto'),
+        ('TEXTO_ESTATICO', 'Apenas Texto Estático'),
+        ('ANIMACAO_JS', 'Animação com Código JavaScript'),
+    ]
+    tipo_conteudo = models.CharField(
+        max_length=20,
+        choices=TIPO_CHOICES,
+        default='IMAGEM_TEXTO',
+        verbose_name="Tipo de Conteúdo do Banner"
+    )
+    titulo = models.CharField(max_length=150, verbose_name="Título", blank=True)
+    subtitulo = models.TextField(blank=True, verbose_name="Subtítulo/Texto (Opcional)")
+    imagem_fundo = models.ImageField(
+        upload_to='noticias/banners/',
+        verbose_name="Imagem de Fundo",
+        blank=True, null=True,
+        help_text="Usado apenas para o tipo 'Imagem de Fundo'."
+    )
+    codigo_js = models.TextField(
+        blank=True,
+        verbose_name="Código JavaScript",
+        help_text="Cole aqui o script completo da animação. Ele será renderizado na página."
+    )
     ativo = models.BooleanField(default=False, verbose_name="Está ativo?", help_text="Apenas um banner pode estar ativo por vez.")
 
     def save(self, *args, **kwargs):
         if self.ativo:
-            # Garante que qualquer outro banner ativo seja desativado
-            BannerNoticias.objects.filter(ativo=True).update(ativo=False)
+            BannerNoticias.objects.filter(ativo=True).exclude(pk=self.pk).update(ativo=False)
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return self.titulo
+        return self.titulo or f"Banner do tipo {self.get_tipo_conteudo_display()}"
 
     class Meta:
         verbose_name = "Banner da Página de Notícias"
