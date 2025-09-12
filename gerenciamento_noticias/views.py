@@ -1,10 +1,12 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView
 from .models import Noticia, Categoria, NoticiaDestaque, BannerNoticias
+from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 from django.http import HttpResponse
 from taggit.models import Tag
 from django.db.models import Q, Count
+
 class PaginaInicialNoticias(ListView):
     model = Noticia
     template_name = 'gerenciamento_noticias/html/pagina_inicial_noticias.html'
@@ -35,7 +37,6 @@ class DetalheNoticia(DetailView):
         noticia_atual = self.get_object()
         tags_da_noticia = noticia_atual.tags.values_list('id', flat=True)
         materias_relacionadas = Noticia.objects.none()
-
         if tags_da_noticia:
             materias_relacionadas = Noticia.objects.filter(
                 status='PUBLICADO', 
@@ -44,10 +45,26 @@ class DetalheNoticia(DetailView):
             materias_relacionadas = materias_relacionadas.annotate(
                 num_common_tags=Count('tags')
             ).order_by('-num_common_tags', '-data_publicacao').distinct()[:4]
-
         context['materias_relacionadas'] = materias_relacionadas
         return context
 
+class NoticiasPorAutor(ListView):
+    model = Noticia
+    template_name = 'gerenciamento_noticias/html/noticias_por_autor.html' 
+    context_object_name = 'noticias'
+    paginate_by = 9
+
+    def get_queryset(self):
+
+        self.autor = get_object_or_404(User, username=self.kwargs['username'])
+
+        return Noticia.objects.filter(autor=self.autor, status='PUBLICADO').order_by('-data_publicacao')
+
+    def get_context_data(self, **kwargs):
+
+        context = super().get_context_data(**kwargs)
+        context['autor'] = self.autor
+        return context
 
 class NoticiasPorCategoria(ListView):
     model = Noticia
