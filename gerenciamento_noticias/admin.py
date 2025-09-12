@@ -14,16 +14,9 @@ class NoticiaAdmin(admin.ModelAdmin):
     search_fields = ('titulo', 'subtitulo', 'corpo')
     prepopulated_fields = {'slug': ('titulo',)}
     date_hierarchy = 'data_publicacao'
-    
-    # Esta linha torna o campo 'autor' visível, mas não editável no formulário
     readonly_fields = ('autor',)
 
     def save_model(self, request, obj, form, change):
-        """
-        Sobrescreve o método de salvar do admin.
-        """
-        # Se o objeto (notícia) ainda não tiver um autor,
-        # significa que está sendo criado agora.
         if not obj.autor_id:
             obj.autor = request.user
         super().save_model(request, obj, form, change)

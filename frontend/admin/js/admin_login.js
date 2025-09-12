@@ -1,5 +1,3 @@
-// CÓDIGO CORRIGIDO para frontend/admin/js/admin_login.js
-
 document.addEventListener('DOMContentLoaded', function() {
     const loginForm = document.getElementById('loginForm');
     if (!loginForm) return;
@@ -15,7 +13,6 @@ document.addEventListener('DOMContentLoaded', function() {
         passwordInput.classList.toggle('filled', passwordInput.value.length > 0);
 
         const isUsernameFilled = usernameInput.value.length > 0;
-        // AQUI ESTÁ A MUDANÇA: verificamos se a senha tem 8 ou mais caracteres.
         const isPasswordValid = passwordInput.value.length >= 8; 
         
         loginButton.disabled = !(isUsernameFilled && isPasswordValid);

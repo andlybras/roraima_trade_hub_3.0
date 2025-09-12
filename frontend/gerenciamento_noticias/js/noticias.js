@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
     
-    // --- LÓGICA DO CARROSSEL DE DESTAQUES ---
     const carousel = document.getElementById('destaques-carousel');
     if (carousel) {
         const slides = carousel.querySelectorAll('.destaque-slide');
@@ -29,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         function startCarousel() {
-            slideInterval = setInterval(nextSlide, 5000); // Muda a cada 5 segundos
+            slideInterval = setInterval(nextSlide, 10000);
         }
 
         function stopCarousel() {
@@ -51,14 +50,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // --- LÓGICA DA PAGINAÇÃO AJAX ---
     const carregarMaisBtn = document.getElementById('carregar-mais-btn');
     if (carregarMaisBtn) {
         let page = 2;
-        let isLoading = false; // Flag para evitar cliques duplos
+        let isLoading = false;
 
         carregarMaisBtn.addEventListener('click', function() {
-            if (isLoading) return; // Se já estiver carregando, não faz nada
+            if (isLoading) return;
             
             isLoading = true;
             carregarMaisBtn.textContent = 'Carregando...';
@@ -73,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         isLoading = false;
                     } else {
                         carregarMaisBtn.textContent = 'Fim das Notícias';
-                        carregarMaisBtn.disabled = true; // Desabilita o botão permanentemente
+                        carregarMaisBtn.disabled = true;
                     }
                 })
                 .catch(error => {

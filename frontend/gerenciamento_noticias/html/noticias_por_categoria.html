@@ -1,12 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block titulo %}Notícias sobre {{ categoria.nome }} | Roraima Trade Hub{% endblock %}
-
 {% block css_pagina %}
     <link rel="stylesheet" href="{% static 'gerenciamento_noticias/css/noticias.css' %}">
 {% endblock %}
-
 {% block conteudo %}
 <div class="container-conteudo">
     <div class="cabecalho-listagem">
@@ -15,6 +12,5 @@
     <div class="noticias-grid">
         {% include 'gerenciamento_noticias/html/partials/noticia_card.html' with noticias=noticias %}
     </div>
-    
     </div>
 {% endblock %}
