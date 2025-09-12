@@ -6,6 +6,7 @@ from django.core.paginator import Paginator
 from django.http import HttpResponse
 from taggit.models import Tag
 from django.db.models import Q, Count
+from django.utils import timezone
 
 class PaginaInicialNoticias(ListView):
     model = Noticia
@@ -14,11 +15,15 @@ class PaginaInicialNoticias(ListView):
     paginate_by = 6
 
     def get_queryset(self):
-        return Noticia.objects.filter(status='PUBLICADO').order_by('-data_publicacao')
+
+        return Noticia.publicadas.all().order_by('-data_publicacao')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['destaques'] = NoticiaDestaque.objects.all().select_related('noticia')
+
+        context['destaques'] = NoticiaDestaque.objects.filter(
+            noticia__in=Noticia.publicadas.all()
+        ).select_related('noticia')
         context['categorias'] = Categoria.objects.all()
         context['banner'] = BannerNoticias.objects.filter(ativo=True).first()
         return context
@@ -30,7 +35,8 @@ class DetalheNoticia(DetailView):
     slug_url_kwarg = 'slug'
 
     def get_queryset(self):
-        return Noticia.objects.filter(status='PUBLICADO')
+
+        return Noticia.publicadas.all()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -38,8 +44,8 @@ class DetalheNoticia(DetailView):
         tags_da_noticia = noticia_atual.tags.values_list('id', flat=True)
         materias_relacionadas = Noticia.objects.none()
         if tags_da_noticia:
-            materias_relacionadas = Noticia.objects.filter(
-                status='PUBLICADO', 
+
+            materias_relacionadas = Noticia.publicadas.filter(
                 tags__in=tags_da_noticia
             ).exclude(id=noticia_atual.id)
             materias_relacionadas = materias_relacionadas.annotate(
@@ -55,13 +61,11 @@ class NoticiasPorAutor(ListView):
     paginate_by = 9
 
     def get_queryset(self):
-
         self.autor = get_object_or_404(User, username=self.kwargs['username'])
 
-        return Noticia.objects.filter(autor=self.autor, status='PUBLICADO').order_by('-data_publicacao')
+        return Noticia.publicadas.filter(autor=self.autor).order_by('-data_publicacao')
 
     def get_context_data(self, **kwargs):
-
         context = super().get_context_data(**kwargs)
         context['autor'] = self.autor
         return context
@@ -74,7 +78,8 @@ class NoticiasPorCategoria(ListView):
 
     def get_queryset(self):
         self.categoria = get_object_or_404(Categoria, slug=self.kwargs['slug'])
-        return Noticia.objects.filter(categorias=self.categoria, status='PUBLICADO').order_by('-data_publicacao')
+
+        return Noticia.publicadas.filter(categorias=self.categoria).order_by('-data_publicacao')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -83,7 +88,8 @@ class NoticiasPorCategoria(ListView):
 
 def mais_noticias_ajax(request):
     page_number = request.GET.get('page', 2)
-    noticias_list = Noticia.objects.filter(status='PUBLICADO').order_by('-data_publicacao')
+
+    noticias_list = Noticia.publicadas.all().order_by('-data_publicacao')
     paginator = Paginator(noticias_list, 6)
     
     try:
@@ -104,7 +110,7 @@ class NoticiasPorTag(ListView):
 
     def get_queryset(self):
         self.tag = get_object_or_404(Tag, slug=self.kwargs['slug'])
-        return Noticia.objects.filter(tags=self.tag, status='PUBLICADO').order_by('-data_publicacao')
+        return Noticia.publicadas.filter(tags=self.tag).order_by('-data_publicacao')
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -120,12 +126,11 @@ class BuscaNoticias(ListView):
     def get_queryset(self):
         query = self.request.GET.get('q', "")
         if query:
-            return Noticia.objects.filter(
+            return Noticia.publicadas.filter(
                 Q(titulo__icontains=query) |
                 Q(subtitulo__icontains=query) |
                 Q(corpo__icontains=query) |
-                Q(tags__name__icontains=query),
-                status='PUBLICADO'
+                Q(tags__name__icontains=query)
             ).distinct().order_by('-data_publicacao')
         return Noticia.objects.none()
 

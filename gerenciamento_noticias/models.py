@@ -10,6 +10,11 @@ from PIL import Image
 import io
 from django.core.files.base import ContentFile
 
+class PublicacaoManager(models.Manager):
+    def get_queryset(self):
+
+        return super().get_queryset().filter(status='PUBLICADO', data_publicacao__lte=timezone.now())
+
 class Categoria(models.Model):
     nome = models.CharField(max_length=100, unique=True, verbose_name="Nome da Categoria")
     slug = models.SlugField(max_length=120, unique=True, blank=True, help_text="Este campo é preenchido automaticamente.")
@@ -75,7 +80,8 @@ class Noticia(models.Model):
     data_publicacao = models.DateTimeField(default=timezone.now, verbose_name="Data de Publicação")
     data_criacao = models.DateTimeField(auto_now_add=True)
     data_atualizacao = models.DateTimeField(auto_now=True)
-
+    objects = models.Manager() 
+    publicadas = PublicacaoManager() 
     def get_absolute_url(self):
         return reverse('noticias:detalhe_noticia', kwargs={'slug': self.slug})
 
@@ -94,11 +100,8 @@ class Noticia(models.Model):
     def _redimensionar_imagem(self, imagem_field, largura_max):
         img = Image.open(imagem_field)
         
-        # === A CORREÇÃO ESTÁ AQUI ===
-        # Converte a imagem para RGB se ela tiver um canal Alpha (transparência)
         if img.mode != 'RGB':
             img = img.convert('RGB')
-        # ============================
 
         if img.width > largura_max:
             ratio = largura_max / float(img.width)
