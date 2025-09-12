@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block titulo %}{{ artigo.titulo }}{% endblock %}
+
 {% block meta_tags %}
     {% if artigo.meta_descricao %}
     <meta name="description" content="{{ artigo.meta_descricao }}">
@@ -10,91 +11,94 @@
     <meta name="keywords" content="{{ artigo.palavras_chave }}">
     {% endif %}
 {% endblock meta_tags %}
+
 {% block css_pagina %}
     <link rel="stylesheet" href="{% static 'gerenciamento_artigos/css/artigos.css' %}">
 {% endblock %}
 
 {% block conteudo %}
 <div class="container-conteudo">
-    <div style="padding: 0 15px 25px 15px;">
-        <a href="{{ request.META.HTTP_REFERER|default:'/' }}" class="botao-voltar-branco">
-            <img src="{% static 'gerenciamento_inteligencia_mercado/icons/icone-voltar.svg' %}" alt="icone de seta">
-            <span>Voltar</span>
-        </a>
-    </div>
 
-    <div class="painel-detalhe-artigo">
+    {% include 'gerenciamento_artigos/html/partials/breadcrumbs.html' %}
+
+    <article class="painel-detalhe-artigo">
         <div class="artigo-cabecalho">
             <h1>{{ artigo.titulo }}</h1>
             {% if artigo.subtitulo %}
             <h2>{{ artigo.subtitulo }}</h2>
             {% endif %}
-
             <p class="artigo-meta">
                 Publicado em: {{ artigo.data_publicacao|date:"d \d\e F \d\e Y, H:i" }}
                 {% if artigo.data_atualizacao|timesince != artigo.data_criacao|timesince %}
                     <br>(Atualizado em: {{ artigo.data_atualizacao|date:"d/m/Y, H:i" }})
                 {% endif %}
             </p>
-
         </div>
 
         <hr class="separador-titulo" style="background-color: rgba(20, 74, 93, 0.1);">
 
         {% if artigo.tipo_conteudo == 'PDF' %}
-            
             <div class="pdf-actions-container">
                 <a href="{{ artigo.arquivo_pdf.url }}" class="botao-download-pdf" download>
                     Baixar PDF
                 </a>
             </div>
-
             <div id="pdf-viewer" class="pdf-viewer-js-container" data-url="{{ artigo.arquivo_pdf.url }}">
                 <p style="text-align: center; padding: 20px;">Carregando PDF...</p>
             </div>
-
         {% else %}
             <div class="artigo-corpo">
                 {{ artigo.corpo_conteudo|safe }}
             </div>
         {% endif %}
-    </div>
+
+        <div class="artigo-compartilhamento">
+            <h4>Compartilhe este conteúdo:</h4>
+            <div class="botoes-compartilhamento">
+                <a href="https://api.whatsapp.com/send?text={{ artigo.titulo|urlencode }}%20{{ request.build_absolute_uri|urlencode }}" target="_blank" class="share-button whatsapp" aria-label="Compartilhar no WhatsApp">WhatsApp</a>
+                <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" target="_blank" class="share-button facebook" aria-label="Compartilhar no Facebook">Facebook</a>
+                <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&text={{ artigo.titulo|urlencode }}" target="_blank" class="share-button twitter" aria-label="Compartilhar no Twitter/X">Twitter/X</a>
+                <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}&title={{ artigo.titulo|urlencode }}" target="_blank" class="share-button linkedin" aria-label="Compartilhar no LinkedIn">LinkedIn</a>
+            </div>
+        </div>
+    </article>
 </div>
 {% endblock %}
 
 {% block js_pagina %}
-{% if artigo.tipo_conteudo == 'PDF' %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const container = document.getElementById('pdf-viewer');
-        const url = container.dataset.url;
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.worker.min.js';
-        container.innerHTML = '';
-
-        const loadingTask = pdfjsLib.getDocument(url);
-        loadingTask.promise.then(function(pdf) {
-            for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
-                pdf.getPage(pageNum).then(function(page) {
-                    const scale = 1.8;
-                    const viewport = page.getViewport({ scale: scale });
-                    const canvas = document.createElement('canvas');
-                    const context = canvas.getContext('2d');
-                    canvas.height = viewport.height;
-                    canvas.width = viewport.width;
-                    container.appendChild(canvas);
-                    const renderContext = {
-                        canvasContext: context,
-                        viewport: viewport
-                    };
-                    page.render(renderContext);
+    {% if artigo.tipo_conteudo == 'PDF' %}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js"></script>
+        <script>
+            // O JavaScript do PDF.js continua o mesmo aqui...
+            document.addEventListener('DOMContentLoaded', function() {
+                const container = document.getElementById('pdf-viewer');
+                if (!container) return;
+                const url = container.dataset.url;
+                pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.worker.min.js';
+                container.innerHTML = '';
+                const loadingTask = pdfjsLib.getDocument(url);
+                loadingTask.promise.then(function(pdf) {
+                    for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+                        pdf.getPage(pageNum).then(function(page) {
+                            const scale = 1.8;
+                            const viewport = page.getViewport({ scale: scale });
+                            const canvas = document.createElement('canvas');
+                            const context = canvas.getContext('2d');
+                            canvas.height = viewport.height;
+                            canvas.width = viewport.width;
+                            container.appendChild(canvas);
+                            const renderContext = {
+                                canvasContext: context,
+                                viewport: viewport
+                            };
+                            page.render(renderContext);
+                        });
+                    }
+                }, function (reason) {
+                    console.error(reason);
+                    container.innerHTML = '<p style="text-align: center; color: red;">Erro ao carregar o PDF.</p>';
                 });
-            }
-        }, function (reason) {
-            console.error(reason);
-            container.innerHTML = '<p style="text-align: center; color: red;">Erro ao carregar o PDF. Verifique o console para mais detalhes.</p>';
-        });
-    });
-</script>
-{% endif %}
+            });
+        </script>
+    {% endif %}
 {% endblock %}

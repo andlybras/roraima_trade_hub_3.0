@@ -9,6 +9,7 @@
 
 {% block conteudo %}
 <div class="container-conteudo">
+    {% include 'gerenciamento_artigos/html/partials/breadcrumbs.html' %}
     <div class="painel-listagem-artigos">
         <div class="painel-cabecalho">
             <a href="{% url url_voltar %}" class="botao-voltar-branco">
