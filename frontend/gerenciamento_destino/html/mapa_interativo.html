@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}{{ categoria.nome }} | Destino Roraima{% endblock %}
+
+{% block css_pagina %}
+    {% if tem_pontos %}
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha26-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    {% endif %}
+    <link rel="stylesheet" href="{% static 'gerenciamento_destino/css/mapa_interativo.css' %}">
+{% endblock %}
+
+{% block conteudo %}
+<div class="container-conteudo">
+    <div class="mapa-container">
+        <div class="mapa-cabecalho">
+            <h1>{{ categoria.nome }}</h1>
+        </div>
+        
+        {% if tem_pontos %}
+            <div id="mapa"></div>
+            {{ pontos_geojson|json_script:"pontos-data" }}
+        {% else %}
+            <div class="sem-pontos-container">
+                <h2>Em Breve</h2>
+                <p>Ainda não há locais cadastrados para a categoria "{{ categoria.nome }}".</p>
+                <a href="{% url 'destino:pagina_inicial' %}">Voltar para Destino Roraima</a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block parceiros %}{% endblock parceiros %}
+
+{% block js_pagina %}
+    {% if tem_pontos %}
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const pontosDataElement = document.getElementById('pontos-data');
+                const pontosData = JSON.parse(pontosDataElement.textContent);
+                
+                const mapa = L.map('mapa').setView([2.8235, -60.6758], 9);
+
+                setTimeout(function() {
+                    mapa.invalidateSize();
+                }, 100);
+
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    maxZoom: 18,
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                }).addTo(mapa);
+
+                if (pontosData.features && pontosData.features.length > 0) {
+                    L.geoJSON(pontosData, {
+                        onEachFeature: function(feature, layer) {
+                            const props = feature.properties;
+                            // CORRIGIDO: Removido o comentário de dentro do texto
+                            let popupContent = `
+                                <div class="popup-ponto-interesse">
+                                    ${props.imagem_url ? `<img src="${props.imagem_url}" alt="${props.titulo}">` : ''}
+                                    <div class="popup-ponto-interesse-conteudo">
+                                        <h3>${props.titulo}</h3>
+                                        <p>${props.descricao_curta}</p>
+                                        <a href="${props.detalhe_url}">Ver Detalhes</a>
+                                    </div>
+                                </div>
+                            `;
+                            layer.bindPopup(popupContent);
+                        }
+                    }).addTo(mapa);
+                }
+            });
+        </script>
+    {% endif %}
+{% endblock %}

@@ -28,17 +28,17 @@
     </div>
     <aside class="destino-coluna-lateral">
         <nav class="destino-navegacao-lateral">
-            <a href="#" class="destino-nav-card card-natureza">
+            <a href="{% url 'destino:mapa_categoria' 'belezas-da-natureza' %}" class="destino-nav-card card-natureza">
                 <img src="{% static 'gerenciamento_destino/icons/icone-destino-natureza.svg' %}" alt="">
                 <span>Belezas da Natureza</span>
             </a>
-            <a href="#" class="destino-nav-card card-cultura">
+            <a href="{% url 'destino:mapa_categoria' 'cultura-e-tradicoes' %}" class="destino-nav-card card-cultura">
                 <img src="{% static 'gerenciamento_destino/icons/icone-destino-cultura.svg' %}" alt="">
                 <span>Cultura e Tradições</span>
             </a>
             <a href="#" class="destino-nav-card card-suporte">
                 <img src="{% static 'gerenciamento_destino/icons/icone-destino-suporte.svg' %}" alt="">
-                <span>Suporte ao Turista</span>
+                <span>Guia de Serviços</span>
             </a>
         </nav>
     </aside>

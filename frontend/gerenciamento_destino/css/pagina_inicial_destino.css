@@ -1,3 +1,5 @@
+/* frontend/gerenciamento_destino/css/pagina_inicial_destino.css */
+
 .layout-destino {
     display: grid;
     grid-template-columns: 3fr 1fr;
@@ -74,7 +76,7 @@
 .video-container {
     position: relative;
     width: 100%;
-    padding-top: 56.25%;
+    padding-top: 56.25%; /* 16:9 Aspect Ratio */
     height: 0;
 }
 
@@ -90,7 +92,7 @@
 .destino-coluna-lateral .destino-navegacao-lateral {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 20px; /* <--- ESTA É A LINHA QUE CRIA O ESPAÇAMENTO */
     height: 100%;
 }
 
@@ -156,17 +158,15 @@
     .layout-destino {
         grid-template-columns: 1fr;
     }
-
     .destino-coluna-principal .destino-painel-conteudo {
         min-height: auto;
     }
-
     .destino-conteudo-dividido {
         flex-direction: column;
         text-align: center;
     }
-    
-    .destino-texto-apresentacao, .destino-imagem-apresentacao {
+    .destino-texto-apresentacao,
+    .destino-imagem-apresentacao {
         height: auto;
         flex-basis: 100%;
     }

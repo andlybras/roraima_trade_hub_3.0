@@ -1,0 +1,137 @@
+/* frontend/gerenciamento_destino/css/mapa_interativo.css */
+
+:root {
+    --cor-principal-destino: #2A9D8F; /* Verde Musgo */
+    --cor-destaque-destino: #E76F51; /* Laranja Queimado */
+    --cor-fundo-destino: #FEFBF5;    /* Areia / Bege Claro */
+    --cor-texto-destino: #264653;    /* Cinza Escuro */
+}
+
+.mapa-container {
+    background-color: rgba(20, 74, 93, 0.3);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(228, 248, 255, 0.2);
+    border-radius: 40px;
+    padding: 30px;
+    min-height: 75vh; /* Garante uma altura mínima para o container */
+}
+
+.mapa-cabecalho {
+    text-align: right;
+    margin-bottom: 25px;
+    padding-right: 15px;
+    border-bottom: 2px solid rgba(228, 248, 255, 0.3);
+    padding-bottom: 15px;
+}
+
+.mapa-cabecalho h1 {
+    font-family: 'Montserrat', sans-serif;
+    color: #E4F8FF;
+    margin: 0;
+    font-size: 2.5rem;
+}
+
+#mapa {
+    width: 100%;
+    height: 65vh; /* O mapa ocupará 65% da altura da tela */
+    border-radius: 20px;
+    border: 2px solid rgba(228, 248, 255, 0.3);
+}
+
+/* --- Estilização da Janela Pop-up do Mapa --- */
+.leaflet-popup .leaflet-popup-content-wrapper {
+    background-color: var(--cor-fundo-destino);
+    color: var(--cor-texto-destino);
+    border-radius: 12px;
+    box-shadow: 0 4px MuiDrawer-paper rgba(0,0,0,0.2);
+}
+
+.leaflet-popup .leaflet-popup-content {
+    margin: 0; /* Remove a margem padrão para a imagem colar nas bordas */
+    line-height: 1.5;
+    width: 250px !important; /* Define uma largura fixa para o pop-up */
+}
+
+.leaflet-popup .leaflet-popup-tip {
+    background-color: var(--cor-fundo-destino);
+}
+
+.popup-ponto-interesse img {
+    width: 100%;
+    height: 120px;
+    object-fit: cover; /* Faz a imagem cobrir o espaço, cortando excessos */
+    border-top-left-radius: 12px; /* Arredonda os cantos superiores */
+    border-top-right-radius: 12px;
+    display: block;
+}
+
+.popup-ponto-interesse-conteudo {
+    padding: 15px;
+}
+
+.popup-ponto-interesse-conteudo h3 {
+    margin: 0 0 5px 0;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.1rem;
+    color: var(--cor-principal-destino);
+}
+
+.popup-ponto-interesse-conteudo p {
+    margin: 0 0 10px 0;
+    font-size: 0.9rem;
+}
+
+.popup-ponto-interesse-conteudo a {
+    display: inline-block;
+    background-color: var(--cor-destaque-destino);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.8rem;
+    transition: background-color 0.2s;
+}
+
+.popup-ponto-interesse-conteudo a:hover {
+    background-color: #d85f41; /* Tom mais escuro do Laranja */
+}
+
+/* --- Estilo para o container "Em Breve" --- */
+.sem-pontos-container {
+    text-align: center;
+    padding: 60px 40px;
+    color: #E4F8FF;
+    background-color: rgba(20, 74, 93, 0.5); /* Fundo translúcido */
+    border-radius: 20px;
+    margin-top: 20px;
+}
+
+.sem-pontos-container h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2.2rem;
+    margin-bottom: 15px;
+}
+
+.sem-pontos-container p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    opacity: 0.9;
+}
+
+/* Estilo para o botão "Voltar" */
+.sem-pontos-container a {
+    display: inline-block;
+    background-color: #E4F8FF;
+    color: #144A5D;
+    font-weight: 700;
+    padding: 12px 30px;
+    border-radius: 25px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.sem-pontos-container a:hover {
+    background-color: #c0e0eb;
+    transform: translateY(-3px);
+}
