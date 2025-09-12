@@ -4,18 +4,15 @@ from .models import Noticia, Categoria, NoticiaDestaque, BannerNoticias
 from django.core.paginator import Paginator
 from django.http import HttpResponse
 from taggit.models import Tag
-from django.db.models import Q
-from django.db.models.functions import Lower
-
-
+from django.db.models import Q, Count
 class PaginaInicialNoticias(ListView):
     model = Noticia
     template_name = 'gerenciamento_noticias/html/pagina_inicial_noticias.html'
     context_object_name = 'noticias'
-    paginate_by = 6 
+    paginate_by = 6
 
     def get_queryset(self):
-        return Noticia.objects.filter(status='PUBLICADO').order_by('-data_atualizacao')
+        return Noticia.objects.filter(status='PUBLICADO').order_by('-data_publicacao')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -33,11 +30,30 @@ class DetalheNoticia(DetailView):
     def get_queryset(self):
         return Noticia.objects.filter(status='PUBLICADO')
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        noticia_atual = self.get_object()
+        tags_da_noticia = noticia_atual.tags.values_list('id', flat=True)
+        materias_relacionadas = Noticia.objects.none()
+
+        if tags_da_noticia:
+            materias_relacionadas = Noticia.objects.filter(
+                status='PUBLICADO', 
+                tags__in=tags_da_noticia
+            ).exclude(id=noticia_atual.id)
+            materias_relacionadas = materias_relacionadas.annotate(
+                num_common_tags=Count('tags')
+            ).order_by('-num_common_tags', '-data_publicacao').distinct()[:4]
+
+        context['materias_relacionadas'] = materias_relacionadas
+        return context
+
+
 class NoticiasPorCategoria(ListView):
     model = Noticia
     template_name = 'gerenciamento_noticias/html/noticias_por_categoria.html'
     context_object_name = 'noticias'
-    paginate_by = 9 
+    paginate_by = 9
 
     def get_queryset(self):
         self.categoria = get_object_or_404(Categoria, slug=self.kwargs['slug'])
@@ -49,24 +65,17 @@ class NoticiasPorCategoria(ListView):
         return context
 
 def mais_noticias_ajax(request):
-    """
-    View para a paginação 'Carregar Mais' com AJAX.
-    """
-    page_number = request.GET.get('page', 2) # Começa da página 2
+    page_number = request.GET.get('page', 2)
     noticias_list = Noticia.objects.filter(status='PUBLICADO').order_by('-data_publicacao')
     paginator = Paginator(noticias_list, 6)
-
+    
     try:
         page_number = int(page_number)
-        # Se a página pedida não existir, o Paginator levanta uma exceção
         if page_number > paginator.num_pages:
-            return HttpResponse('') # Retorna uma resposta vazia
-            
+            return HttpResponse("") 
         page_obj = paginator.page(page_number)
-
     except (ValueError, TypeError):
-        # Se o número da página não for um inteiro, retorna vazio
-        return HttpResponse('')
+        return HttpResponse("")
 
     return render(request, 'gerenciamento_noticias/html/partials/noticia_card.html', {'noticias': page_obj})
 
@@ -79,12 +88,12 @@ class NoticiasPorTag(ListView):
     def get_queryset(self):
         self.tag = get_object_or_404(Tag, slug=self.kwargs['slug'])
         return Noticia.objects.filter(tags=self.tag, status='PUBLICADO').order_by('-data_publicacao')
-
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['tag'] = self.tag
         return context
-    
+
 class BuscaNoticias(ListView):
     model = Noticia
     template_name = 'gerenciamento_noticias/html/busca_resultados.html'
@@ -92,12 +101,8 @@ class BuscaNoticias(ListView):
     paginate_by = 9
 
     def get_queryset(self):
-        # Pega o parâmetro 'q' da URL (ex: /busca/?q=agricultura)
-        query = self.request.GET.get('q', '')
+        query = self.request.GET.get('q', "")
         if query:
-            # Filtra notícias publicadas que contenham a palavra-chave no título,
-            # no subtítulo, no corpo OU no nome de uma tag associada.
-            # O .distinct() evita resultados duplicados.
             return Noticia.objects.filter(
                 Q(titulo__icontains=query) |
                 Q(subtitulo__icontains=query) |
@@ -105,12 +110,9 @@ class BuscaNoticias(ListView):
                 Q(tags__name__icontains=query),
                 status='PUBLICADO'
             ).distinct().order_by('-data_publicacao')
-        
-        # Se não houver busca, não retorna nada
         return Noticia.objects.none()
 
     def get_context_data(self, **kwargs):
-        # Adiciona a palavra buscada ao contexto para usá-la no título da página
         context = super().get_context_data(**kwargs)
-        context['query'] = self.request.GET.get('q', '')
+        context['query'] = self.request.GET.get('q', "")
         return context

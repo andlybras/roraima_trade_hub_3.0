@@ -59,6 +59,26 @@
                 <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}&title={{ noticia.titulo|urlencode }}" target="_blank" class="share-button linkedin" aria-label="Compartilhar no LinkedIn">LinkedIn</a>
             </div>
         </div>
+        {% if materias_relacionadas %}
+        <section class="relacionadas-container">
+            <h2>Leia Também</h2>
+            <div class="relacionadas-grid">
+                {% for relacionada in materias_relacionadas %}
+                <a href="{{ relacionada.get_absolute_url }}" class="relacionada-card">
+                    <div class="relacionada-imagem">
+                        <img src="{{ relacionada.imagem_card.url }}" alt="{{ relacionada.titulo }}">
+                    </div>
+                    <div class="relacionada-conteudo">
+                        {% if relacionada.categorias.first %}
+                            <span class="relacionada-categoria">{{ relacionada.categorias.first.name }}</span>
+                        {% endif %}
+                        <h3 class="relacionada-titulo">{{ relacionada.titulo }}</h3>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
         {# ================================================================================= #}
         {# ==                LEMBRETE CRÍTICO DE PRÉ-LANÇAMENTO (Facebook Comments)       == #}
         {# ================================================================================= #}
