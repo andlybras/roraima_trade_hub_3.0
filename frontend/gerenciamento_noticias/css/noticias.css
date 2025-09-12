@@ -447,16 +447,19 @@
 .breadcrumb-link {
     color: var(--cor-texto-claro);
     text-decoration: none;
-    transition: color 0.2s ease-in-out;
+    padding: 2px 8px;
+    border-radius: 5px;
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 }
 
 .breadcrumb-link:hover {
+    background-color: rgba(228, 248, 255, 0.15);
     color: #fff;
-    text-decoration: underline;
 }
 
 .breadcrumb-item.active {
     color: rgba(228, 248, 255, 0.7);
+    padding: 2px 8px;
 }
 
 .noticia-compartilhamento {
