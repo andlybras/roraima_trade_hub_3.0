@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block titulo %}Glossário de Termos | Inteligência de Mercado{% endblock %}
-{% block css_pagina %}
+{% block titulo %}Glossário | Inteligência de Mercado{% endblock %} {% block css_pagina %}
     <link rel="stylesheet" href="{% static 'gerenciamento_inteligencia_mercado/css/layout_inteligencia.css' %}">
 {% endblock %}
 {% block conteudo %}
@@ -9,7 +8,7 @@
     <div class="painel-listagem-cards">
         <div class="painel-cabecalho">
             <a href="{% url 'inteligencia:pagina_inicial' %}" class="botao-voltar-branco">
-                <img src="{% static 'gerenciamento_inteligencia_mercado/icons/icone-voltar.svg' %}" alt="Ícone de seta">
+                <img src="{% static 'gerenciamento_inteligencia_mercado/icons/icone-voltar.svg' %}" alt="icone de seta">
                 <span>Voltar</span>
             </a>
             <h1 class="titulo-pagina">{{ titulo_pagina }}</h1>

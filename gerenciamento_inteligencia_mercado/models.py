@@ -5,8 +5,9 @@ from tinymce.models import HTMLField
 class ConteudoInteligencia(models.Model):
     CATEGORIAS = [
         ('DADOS_ESTRUTURAIS', 'Dados Estruturais'),
-        ('ANALISES_E_ARTIGOS', 'Análises e Artigos'),
+        ('ANALISES_E_ARTIGOS', 'Análises'),
     ]
+
     categoria = models.CharField(max_length=50, choices=CATEGORIAS, verbose_name="Categoria do Conteúdo")
     titulo_card = models.CharField(max_length=100, verbose_name="Título no Card", help_text="Texto que aparece na listagem de cards da seção.")
     imagem_card = models.ImageField(upload_to='inteligencia_mercado/cards/', verbose_name="Imagem de Capa do Card", help_text="Imagem que aparece na listagem de cards.")
@@ -35,6 +36,7 @@ class Grafico(models.Model):
         ('OPTION_SIMPLE', 'Objeto Option Simples'),
         ('SCRIPT_COMPLETO', 'Script de Animação Completo'),
     ]
+
     tipo_grafico = models.CharField(
         max_length=20,
         choices=TIPO_CHOICES,
@@ -54,6 +56,8 @@ class Grafico(models.Model):
     def save(self, *args, **kwargs):
         if not self.chave:
             self.chave = f"g-{uuid.uuid4().hex[:6]}"
+        if self.is_grafico_principal:
+            Grafico.objects.filter(is_grafico_principal=True).exclude(pk=self.pk).update(is_grafico_principal=False)
         super().save(*args, **kwargs)
 
     def __str__(self):
