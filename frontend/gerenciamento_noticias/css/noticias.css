@@ -528,3 +528,9 @@
         padding: 25px 20px;
     }
 }
+
+.noticia-comentarios {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(20, 74, 93, 0.1);
+}

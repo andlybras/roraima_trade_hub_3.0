@@ -59,6 +59,35 @@
                 <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}&title={{ noticia.titulo|urlencode }}" target="_blank" class="share-button linkedin" aria-label="Compartilhar no LinkedIn">LinkedIn</a>
             </div>
         </div>
+        {# ================================================================================= #}
+        {# ==                LEMBRETE CRÍTICO DE PRÉ-LANÇAMENTO (Facebook Comments)       == #}
+        {# ================================================================================= #}
+        {#                                                                                   #}
+        {# ATENÇÃO: A seção de comentários do Facebook abaixo está ATIVA SEM MODERAÇÃO.      #}
+        {#                                                                                   #}
+        {# ISSO É UM RISCO DE SEGURANÇA E CREDIBILIDADE para o portal. Sem moderação,        #}
+        {# qualquer pessoa pode postar spam, conteúdo ofensivo ou desinformação.             #}
+        {#                                                                                   #}
+        {# AÇÃO NECESSÁRIA ANTES DE LANÇAR O SITE AO PÚBLICO:                                #}
+        {#                                                                                   #}
+        {# 1. Criar um App no Facebook Developers associado a uma conta institucional do     #}
+        {#    Governo (via Meta Business Suite), conforme discutido.                         #}
+        {#                                                                                   #}
+        {# 2. Obter o "ID do Aplicativo" (App ID) gerado por este processo.                  #}
+        {#                                                                                   #}
+        {# 3. Adicionar a seguinte meta tag ao arquivo `frontend/base.html` dentro da        #}
+        {#    tag <head>:                                                                    #}
+        {#                                                                                   #}
+        {#    <meta property="fb:app_id" content="COLE_O_ID_AQUI" />                         #}
+        {#                                                                                   #}
+        {# ================================================================================= #}
+        <div class="noticia-comentarios">
+            <div class="fb-comments" 
+                 data-href="{{ request.build_absolute_uri }}" {# ESSA LINHA GARANTE QUE CADA NOTÍCIA TENHA SUA PRÓPRIA CAIXA DE COMENTÁRIOS #}
+                 data-width="100%" 
+                 data-numposts="5">
+            </div>
+        </div>
     </article>
 </div>
 {% endblock %}
