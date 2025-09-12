@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'gerenciamento_oportunidades',
     'gerenciamento_destino',
     'gerenciamento_noticias',
+    'gerenciamento_artigos',
     'taggit',
     'tinymce',
     'django_recaptcha',
