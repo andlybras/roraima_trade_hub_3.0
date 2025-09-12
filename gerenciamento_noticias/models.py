@@ -18,8 +18,8 @@ class Categoria(models.Model):
         return self.nome
 
     class Meta:
-        verbose_name = "Categoria de Notícia"
-        verbose_name_plural = "1. Categorias de Notícias"
+        verbose_name = "Tópico"
+        verbose_name_plural = "Tópicos"
         ordering = ['nome']
 
 class Noticia(models.Model):
@@ -50,8 +50,8 @@ class Noticia(models.Model):
         return self.titulo
 
     class Meta:
-        verbose_name = "Notícia"
-        verbose_name_plural = "2. Notícias"
+        verbose_name = "Publicação"
+        verbose_name_plural = "Publicações"
         ordering = ['-data_publicacao']
 
 class NoticiaDestaque(models.Model):
@@ -62,8 +62,8 @@ class NoticiaDestaque(models.Model):
         return f"Destaque {self.ordem}: {self.noticia.titulo}"
 
     class Meta:
-        verbose_name = "Notícia em Destaque"
-        verbose_name_plural = "3. Notícias em Destaque"
+        verbose_name = "Publicação em Destaque"
+        verbose_name_plural = "Publicações em Destaque"
         ordering = ['ordem']
         
 class BannerNoticias(models.Model):
@@ -102,5 +102,5 @@ class BannerNoticias(models.Model):
         return self.titulo or f"Banner do tipo {self.get_tipo_conteudo_display()}"
 
     class Meta:
-        verbose_name = "Banner da Página de Notícias"
-        verbose_name_plural = "0. Banners da Página de Notícias"
+        verbose_name = "Artifício de Apresentação do Módulo"
+        verbose_name_plural = "Artifícios de Apresentação do Módulo"

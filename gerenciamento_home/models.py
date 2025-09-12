@@ -9,8 +9,8 @@ class HeaderLogo(models.Model):
         return self.descricao
 
     class Meta:
-        verbose_name = "Logotipo do Cabeçalho"
-        verbose_name_plural = "1. Manutenção Logotipos (Cabeçalho)"
+        verbose_name = "Logotipo da SEADI"
+        verbose_name_plural = "Logotipos da SEADI"
 
 class ImagemApresentacao(models.Model):
     TIPO_CHOICES = [
@@ -27,8 +27,8 @@ class ImagemApresentacao(models.Model):
         return f"{self.get_tipo_display()} - {self.descricao}"
 
     class Meta:
-        verbose_name = "Imagem de Apresentação"
-        verbose_name_plural = "2. Manutenção Imagens (Fundo e Hero)"
+        verbose_name = "Imagem"
+        verbose_name_plural = "Imagens para Fundo Global e Carrossel de Apresentação"
         ordering = ['ordem']
 
 class PartnerLogo(models.Model):
@@ -41,6 +41,6 @@ class PartnerLogo(models.Model):
         return self.nome_parceiro
 
     class Meta:
-        verbose_name = "Logotipo de Parceiro"
-        verbose_name_plural = "3. Manutenção Logotipos (Parceiros)"
+        verbose_name = "Logotipo do Parceiro Institucional"
+        verbose_name_plural = "Logotipos dos Parceiros Institucionais"
         ordering = ['ordem']

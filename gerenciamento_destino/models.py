@@ -23,5 +23,5 @@ class ConteudoApresentacaoDestino(models.Model):
         return self.descricao
 
     class Meta:
-        verbose_name = "Conteúdo de Apresentação (Destino)"
-        verbose_name_plural = "5. Conteúdos de Apresentação (Destino)"
+        verbose_name = "Artifício de Apresentação do Módulo"
+        verbose_name_plural = "Artifícios de Apresentação do Módulo"

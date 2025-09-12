@@ -26,8 +26,8 @@ class ConteudoInteligencia(models.Model):
         return self.titulo_card
 
     class Meta:
-        verbose_name = "Conteúdo de Inteligência"
-        verbose_name_plural = "1. Conteúdos de Inteligência"
+        verbose_name = "Publicação"
+        verbose_name_plural = "Publicações"
         ordering = ['categoria', 'titulo_card']
 
 class Grafico(models.Model):
@@ -61,7 +61,7 @@ class Grafico(models.Model):
 
     class Meta:
         verbose_name = "Gráfico"
-        verbose_name_plural = "2. Gráficos para Conteúdos"
+        verbose_name_plural = "Gráficos"
 
 class TermoGlossario(models.Model):
     termo = models.CharField(max_length=100, unique=True, verbose_name="Termo")
@@ -74,6 +74,6 @@ class TermoGlossario(models.Model):
         return self.termo
 
     class Meta:
-        verbose_name = "Termo do Glossário"
-        verbose_name_plural = "3. Glossário de Termos"
+        verbose_name = "Termo"
+        verbose_name_plural = "Termos"
         ordering = ['termo']

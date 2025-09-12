@@ -50,5 +50,5 @@ class ConteudoApresentacaoAprenda(models.Model):
         return self.descricao
 
     class Meta:
-        verbose_name = "Conteúdo de Apresentação (Aprenda Comex)"
-        verbose_name_plural = "1. Conteúdos de Apresentação (Aprenda Comex)"
+        verbose_name = "Artifício de Apresentação do Módulo"
+        verbose_name_plural = "Artifícios de Apresentação do Módulo"
