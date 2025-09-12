@@ -2,15 +2,22 @@
 {% load static %}
 {% block titulo %}Notícias sobre {{ categoria.nome }} | Roraima Trade Hub{% endblock %}
 {% block css_pagina %}
-    <link rel="stylesheet" href="{% static 'gerenciamento_noticias/css/noticias.css' %}">
+<link rel="stylesheet" href="{% static 'gerenciamento_noticias/css/noticias.css' %}">
 {% endblock %}
 {% block conteudo %}
 <div class="container-conteudo">
-    <div class="cabecalho-listagem">
+    <nav class="breadcrumb-container" aria-label="breadcrumb">
+        <ol class="breadcrumb-list">
+            <li class="breadcrumb-item"><a href="{% url 'gerenciamento_home:home' %}" class="breadcrumb-link">Início</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'noticias:lista_noticias' %}" class="breadcrumb-link">Notícias</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ categoria.nome }}</li>
+        </ol>
+    </nav>
+    <div class="cabecalho-listagem" style="padding: 20px 40px 40px; text-align: center;">
         <h1>Notícias sobre: <strong>{{ categoria.nome }}</strong></h1>
     </div>
     <div class="noticias-grid">
         {% include 'gerenciamento_noticias/html/partials/noticia_card.html' with noticias=noticias %}
     </div>
-    </div>
+</div>
 {% endblock %}

@@ -415,3 +415,86 @@
 .lista-categorias::-webkit-scrollbar-thumb:hover {
     background-color: rgba(228, 248, 255, 0.8);
 }
+
+.breadcrumb-container {
+    padding: 10px 15px;
+    margin-bottom: 25px;
+    background-color: rgba(20, 74, 93, 0.5);
+    border-radius: 20px;
+    border: 1px solid var(--cor-borda-card);
+}
+
+.breadcrumb-list {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.breadcrumb-item {
+    display: flex;
+    align-items: center;
+}
+
+.breadcrumb-item:not(:last-child)::after {
+    content: '>';
+    margin: 0 0.8em;
+    color: rgba(228, 248, 255, 0.5);
+}
+
+.breadcrumb-link {
+    color: var(--cor-texto-claro);
+    text-decoration: none;
+    transition: color 0.2s ease-in-out;
+}
+
+.breadcrumb-link:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+
+.breadcrumb-item.active {
+    color: rgba(228, 248, 255, 0.7);
+}
+
+.noticia-compartilhamento {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(20, 74, 93, 0.1);
+}
+
+.noticia-compartilhamento h4 {
+    margin: 0 0 15px 0;
+    font-size: 1.2rem;
+    color: var(--cor-principal);
+    text-align: center;
+}
+
+.botoes-compartilhamento {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.share-button {
+    padding: 10px 20px;
+    border-radius: 25px;
+    text-decoration: none;
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.share-button:hover {
+    transform: translateY(-3px);
+    opacity: 0.9;
+}
+
+.share-button.whatsapp { background-color: #25D366; }
+.share-button.facebook { background-color: #1877F2; }
+.share-button.twitter { background-color: #1DA1F2; }
+.share-button.linkedin { background-color: #0A66C2; }

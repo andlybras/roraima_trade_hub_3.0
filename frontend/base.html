@@ -5,6 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block titulo %}Roraima Trade Hub{% endblock %}</title>
+    
+    {# NOVO BLOCO PARA AS META TAGS DE SEO #}
+    {% block meta_tags %}{% endblock meta_tags %}
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@400;600;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
@@ -35,26 +39,30 @@
             </div>
         </header>
         {% endblock %}
+        
         <main>
             {% block conteudo %}
             {% endblock %}
+
             {% block parceiros %}
             <section class="secao-parceiros">
-                <div class="container-parceiros"> <h2>Nossos Parceiros</h2>
+                <div class="container-parceiros">
+                    <h2>Nossos Parceiros</h2>
                     <div class="carrossel-infinito" data-animacao="true">
                         <div class="carrossel-infinito-faixa">
                             {% for logo in partner_logos %}
                             <a href="{{ logo.link_url|default:'#' }}" target="_blank" class="parceiro-logo">
                                 <img src="{{ logo.imagem.url }}" alt="{{ logo.nome_parceiro }}">
                             </a>
-                            {% endfor %}           
-                            </div>
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
             </section>
             {% endblock parceiros %}
         </main>
     </div>
+
     {% block footer %}
     <footer class="rodape-site">
         <div class="rodape-creditos">
@@ -63,6 +71,7 @@
         </div>
     </footer>
     {% endblock footer %}
+    
     <script src="{% static 'gerenciamento_home/js/scroller.js' %}"></script>
     <script src="{% static 'gerenciamento_home/js/header.js' %}"></script>
     {% block js_pagina %}
