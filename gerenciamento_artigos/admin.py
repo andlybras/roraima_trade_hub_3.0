@@ -16,15 +16,15 @@ class ArtigoAdmin(admin.ModelAdmin):
             'fields': ('categoria', 'titulo', 'slug', 'subtitulo', 'imagem_card')
         }),
         ('Conteúdo Principal', {
-            'description': "Escolha o tipo de conteúdo e preencha o campo correspondente abaixo.",
-            'fields': ('tipo_conteudo', 'corpo_conteudo', 'arquivo_pdf')
+            'description': "Escolha o tipo de conteúdo e preencha os campos correspondentes abaixo.",
+            # CAMPO 'resumo_destaque' ADICIONADO AQUI
+            'fields': ('resumo_destaque', 'tipo_conteudo', 'corpo_conteudo', 'arquivo_pdf')
         }),
         ('Publicação', {
             'fields': ('status', 'data_publicacao')
         }),
-        # --- NOVA SEÇÃO DE SEO ADICIONADA ABAIXO ---
         ('SEO (Otimização para Buscadores)', {
-            'classes': ('collapse',), # Faz a seção ser "recolhível"
+            'classes': ('collapse',),
             'fields': ('meta_descricao', 'palavras_chave'),
         }),
     )

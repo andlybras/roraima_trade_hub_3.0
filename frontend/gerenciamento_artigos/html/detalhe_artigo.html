@@ -35,6 +35,12 @@
             </p>
         </div>
 
+        {% if artigo.resumo_destaque %}
+            <div class="artigo-resumo-destaque">
+                {{ artigo.resumo_destaque|safe }}
+            </div>
+        {% endif %}
+
         <hr class="separador-titulo" style="background-color: rgba(20, 74, 93, 0.1);">
 
         {% if artigo.tipo_conteudo == 'PDF' %}
@@ -69,7 +75,6 @@
     {% if artigo.tipo_conteudo == 'PDF' %}
         <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js"></script>
         <script>
-            // O JavaScript do PDF.js continua o mesmo aqui...
             document.addEventListener('DOMContentLoaded', function() {
                 const container = document.getElementById('pdf-viewer');
                 if (!container) return;
