@@ -1,9 +1,19 @@
 {% extends 'base.html' %}
 {% load static %}
+
 {% block titulo %}{{ artigo.titulo }}{% endblock %}
+{% block meta_tags %}
+    {% if artigo.meta_descricao %}
+    <meta name="description" content="{{ artigo.meta_descricao }}">
+    {% endif %}
+    {% if artigo.palavras_chave %}
+    <meta name="keywords" content="{{ artigo.palavras_chave }}">
+    {% endif %}
+{% endblock meta_tags %}
 {% block css_pagina %}
     <link rel="stylesheet" href="{% static 'gerenciamento_artigos/css/artigos.css' %}">
 {% endblock %}
+
 {% block conteudo %}
 <div class="container-conteudo">
     <div style="padding: 0 15px 25px 15px;">
@@ -12,18 +22,37 @@
             <span>Voltar</span>
         </a>
     </div>
+
     <div class="painel-detalhe-artigo">
         <div class="artigo-cabecalho">
             <h1>{{ artigo.titulo }}</h1>
             {% if artigo.subtitulo %}
             <h2>{{ artigo.subtitulo }}</h2>
             {% endif %}
+
+            <p class="artigo-meta">
+                Publicado em: {{ artigo.data_publicacao|date:"d \d\e F \d\e Y, H:i" }}
+                {% if artigo.data_atualizacao|timesince != artigo.data_criacao|timesince %}
+                    <br>(Atualizado em: {{ artigo.data_atualizacao|date:"d/m/Y, H:i" }})
+                {% endif %}
+            </p>
+
         </div>
+
         <hr class="separador-titulo" style="background-color: rgba(20, 74, 93, 0.1);">
+
         {% if artigo.tipo_conteudo == 'PDF' %}
-            <div class="pdf-viewer-container">
-                <embed src="{{ artigo.arquivo_pdf.url }}" type="application/pdf" width="100%" height="100%" />
+            
+            <div class="pdf-actions-container">
+                <a href="{{ artigo.arquivo_pdf.url }}" class="botao-download-pdf" download>
+                    Baixar PDF
+                </a>
             </div>
+
+            <div id="pdf-viewer" class="pdf-viewer-js-container" data-url="{{ artigo.arquivo_pdf.url }}">
+                <p style="text-align: center; padding: 20px;">Carregando PDF...</p>
+            </div>
+
         {% else %}
             <div class="artigo-corpo">
                 {{ artigo.corpo_conteudo|safe }}
@@ -31,4 +60,41 @@
         {% endif %}
     </div>
 </div>
+{% endblock %}
+
+{% block js_pagina %}
+{% if artigo.tipo_conteudo == 'PDF' %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const container = document.getElementById('pdf-viewer');
+        const url = container.dataset.url;
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.worker.min.js';
+        container.innerHTML = '';
+
+        const loadingTask = pdfjsLib.getDocument(url);
+        loadingTask.promise.then(function(pdf) {
+            for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+                pdf.getPage(pageNum).then(function(page) {
+                    const scale = 1.8;
+                    const viewport = page.getViewport({ scale: scale });
+                    const canvas = document.createElement('canvas');
+                    const context = canvas.getContext('2d');
+                    canvas.height = viewport.height;
+                    canvas.width = viewport.width;
+                    container.appendChild(canvas);
+                    const renderContext = {
+                        canvasContext: context,
+                        viewport: viewport
+                    };
+                    page.render(renderContext);
+                });
+            }
+        }, function (reason) {
+            console.error(reason);
+            container.innerHTML = '<p style="text-align: center; color: red;">Erro ao carregar o PDF. Verifique o console para mais detalhes.</p>';
+        });
+    });
+</script>
+{% endif %}
 {% endblock %}

@@ -1,3 +1,5 @@
+/* frontend/gerenciamento_artigos/css/artigos.css */
+
 .painel-listagem-artigos {
     background-color: rgba(20, 74, 93, 0.3);
     backdrop-filter: blur(10px);
@@ -104,7 +106,7 @@
 .artigo-corpo {
     font-size: 1.1rem;
     line-height: 1.8;
-    overflow-wrap: break-word; 
+    overflow-wrap: break-word;
     word-wrap: break-word;
 }
 
@@ -114,18 +116,27 @@
     border-radius: 20px;
 }
 
-.pdf-viewer-container {
+/* ESTILOS PARA O NOVO VISUALIZADOR PDF.JS */
+.pdf-viewer-js-container {
     width: 100%;
-    height: 80vh;
     border-radius: 20px;
-    overflow: hidden;
-    border: 2px solid rgba(20, 74, 93, 0.1);
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: #d0e0e8; /* Fundo um pouco mais escuro para o contêiner */
+    max-height: 80vh;
+    overflow-y: auto; /* Adiciona barra de rolagem se o PDF for muito grande */
 }
 
-.pdf-viewer-container embed {
-    width: 100%;
-    height: 100%;
+.pdf-viewer-js-container canvas {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto 10px auto; /* Centraliza a página e dá um espaço entre elas */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
 }
+
+/* Adicionar ao final de frontend/gerenciamento_home/css/global.css */
 
 .botao-voltar-branco {
     display: inline-flex;
@@ -147,4 +158,38 @@
 
 .botao-voltar-branco img {
     height: 18px;
+}
+
+.pdf-actions-container {
+    display: flex;
+    justify-content: flex-end; /* Alinha o botão à direita */
+    margin-bottom: 20px; /* Espaço entre o botão e o visualizador de PDF */
+}
+
+.botao-download-pdf {
+    display: inline-block;
+    background-color: #144A5D; /* Cor principal escura */
+    color: #E4F8FF; /* Cor de texto clara */
+    font-weight: 700;
+    padding: 12px 30px;
+    border-radius: 25px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.botao-download-pdf:hover {
+    background-color: #0d2f3b; /* Tom mais escuro no hover */
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.artigo-meta {
+    font-size: 0.95rem;
+    color: #4A6E7F;
+    margin-bottom: 25px;
+    border-left: 3px solid #b1c9d2;
+    padding-left: 15px;
 }

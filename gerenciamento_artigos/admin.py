@@ -1,3 +1,5 @@
+# gerenciamento_artigos/admin.py
+
 from django.contrib import admin
 from .models import Artigo
 
@@ -19,6 +21,11 @@ class ArtigoAdmin(admin.ModelAdmin):
         }),
         ('Publicação', {
             'fields': ('status', 'data_publicacao')
+        }),
+        # --- NOVA SEÇÃO DE SEO ADICIONADA ABAIXO ---
+        ('SEO (Otimização para Buscadores)', {
+            'classes': ('collapse',), # Faz a seção ser "recolhível"
+            'fields': ('meta_descricao', 'palavras_chave'),
         }),
     )
 
