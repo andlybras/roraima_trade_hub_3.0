@@ -38,7 +38,6 @@ class Noticia(models.Model):
     slug = models.SlugField(max_length=255, unique=True, blank=True, help_text="Preenchido automaticamente a partir do título.")
     subtitulo = models.CharField(max_length=255, blank=True, null=True, verbose_name="Subtítulo (Opcional)")
     
-    # NOVOS CAMPOS DE IMAGEM
     imagem_card = models.ImageField(
         upload_to='noticias/cards/', 
         verbose_name="Imagem do Card", 
@@ -58,7 +57,6 @@ class Noticia(models.Model):
     
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='RASCUNHO', verbose_name="Status")
     
-    # NOVOS CAMPOS DE SEO
     meta_descricao = models.TextField(
         max_length=160, 
         blank=True, 
@@ -85,11 +83,9 @@ class Noticia(models.Model):
         if not self.slug:
             self.slug = slugify(self.titulo)
         
-        # Otimização da imagem do card
         if self.imagem_card:
             self._redimensionar_imagem(self.imagem_card, 800)
         
-        # Otimização da imagem de destaque
         if self.imagem_destaque:
             self._redimensionar_imagem(self.imagem_destaque, 1200)
             
@@ -97,12 +93,18 @@ class Noticia(models.Model):
 
     def _redimensionar_imagem(self, imagem_field, largura_max):
         img = Image.open(imagem_field)
+        
+        # === A CORREÇÃO ESTÁ AQUI ===
+        # Converte a imagem para RGB se ela tiver um canal Alpha (transparência)
+        if img.mode != 'RGB':
+            img = img.convert('RGB')
+        # ============================
+
         if img.width > largura_max:
             ratio = largura_max / float(img.width)
             altura = int(float(img.height) * float(ratio))
             img_redimensionada = img.resize((largura_max, altura), Image.Resampling.LANCZOS)
             
-            # Salvar a imagem otimizada de volta no mesmo campo
             buffer = io.BytesIO()
             img_redimensionada.save(buffer, format='JPEG', quality=85)
             buffer.seek(0)

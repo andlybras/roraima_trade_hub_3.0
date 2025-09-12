@@ -498,3 +498,33 @@
 .share-button.facebook { background-color: #1877F2; }
 .share-button.twitter { background-color: #1DA1F2; }
 .share-button.linkedin { background-color: #0A66C2; }
+
+.listagem-cabecalho-container {
+    background-color: var(--cor-fundo-card);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--cor-borda-card);
+    border-radius: 40px;
+    padding: 30px 40px;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.listagem-cabecalho-container h1 {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2.2rem;
+    color: var(--cor-texto-claro);
+}
+
+.listagem-cabecalho-container h1 strong {
+    color: #fff;
+}
+
+@media (max-width: 768px) {
+    .listagem-cabecalho-container h1 {
+        font-size: 1.8rem;
+    }
+    .listagem-cabecalho-container {
+        padding: 25px 20px;
+    }
+}
