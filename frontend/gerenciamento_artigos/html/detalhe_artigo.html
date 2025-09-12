@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block titulo %}{{ artigo.titulo }}{% endblock %}
+{% block css_pagina %}
+    <link rel="stylesheet" href="{% static 'gerenciamento_artigos/css/artigos.css' %}">
+{% endblock %}
+{% block conteudo %}
+<div class="container-conteudo">
+    <div style="padding: 0 15px 25px 15px;">
+        <a href="{{ request.META.HTTP_REFERER|default:'/' }}" class="botao-voltar-branco">
+            <img src="{% static 'gerenciamento_inteligencia_mercado/icons/icone-voltar.svg' %}" alt="icone de seta">
+            <span>Voltar</span>
+        </a>
+    </div>
+    <div class="painel-detalhe-artigo">
+        <div class="artigo-cabecalho">
+            <h1>{{ artigo.titulo }}</h1>
+            {% if artigo.subtitulo %}
+            <h2>{{ artigo.subtitulo }}</h2>
+            {% endif %}
+        </div>
+        <hr class="separador-titulo" style="background-color: rgba(20, 74, 93, 0.1);">
+        {% if artigo.tipo_conteudo == 'PDF' %}
+            <div class="pdf-viewer-container">
+                <embed src="{{ artigo.arquivo_pdf.url }}" type="application/pdf" width="100%" height="100%" />
+            </div>
+        {% else %}
+            <div class="artigo-corpo">
+                {{ artigo.corpo_conteudo|safe }}
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

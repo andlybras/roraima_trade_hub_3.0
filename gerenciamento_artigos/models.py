@@ -5,31 +5,15 @@ from django.utils.text import slugify
 from django.core.exceptions import ValidationError
 from tinymce.models import HTMLField
 
-class CategoriaArtigo(models.Model):
-    MODULO_CHOICES = (
-        ('ACORDOS', 'Acordos e Regulamentos'),
-        ('OPORTUNIDADES', 'Oportunidades'),
-    )
-    
-    nome = models.CharField(max_length=100, unique=True, verbose_name="Nome da Categoria/Subárea")
-    slug = models.SlugField(max_length=120, unique=True, blank=True, help_text="Este campo é preenchido automaticamente.")
-    modulo = models.CharField(max_length=20, choices=MODULO_CHOICES, verbose_name="Módulo Principal")
-
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.nome)
-        super().save(*args, **kwargs)
-
-    def __str__(self):
-        return f"[{self.get_modulo_display()}] {self.nome}"
-
-    class Meta:
-        verbose_name = "Categoria de Artigo"
-        verbose_name_plural = "Categorias de Artigos"
-        ordering = ['modulo', 'nome']
-
-
 class Artigo(models.Model):
+    CATEGORIA_CHOICES = (
+        ('legislacao-fiscal-e-aduaneira', 'Legislações Fiscal e Aduaneira'),
+        ('acordos-comerciais', 'Acordos Comerciais'),
+        ('regulamentos-internacionais', 'Regulamentos Internacionais'),
+        ('invista-em-roraima', 'Invista em Roraima'),
+        ('prospeccao-de-mercados', 'Prospecção de Mercados'),
+    )
+
     TIPO_CONTEUDO_CHOICES = (
         ('TEXTO', 'Artigo de Texto'),
         ('PDF', 'Documento PDF'),
@@ -39,7 +23,7 @@ class Artigo(models.Model):
         ('PUBLICADO', 'Publicado'),
     )
 
-    categoria = models.ForeignKey(CategoriaArtigo, on_delete=models.PROTECT, related_name='artigos', verbose_name="Categoria/Subárea")
+    categoria = models.CharField(max_length=100, choices=CATEGORIA_CHOICES, verbose_name="Categoria/Subárea")
     
     titulo = models.CharField(max_length=200, unique=True, verbose_name="Título")
     subtitulo = models.CharField(max_length=255, blank=True, null=True, verbose_name="Subtítulo (Opcional)")

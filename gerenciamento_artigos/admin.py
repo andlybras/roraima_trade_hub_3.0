@@ -1,17 +1,10 @@
 from django.contrib import admin
-from .models import Artigo, CategoriaArtigo
-
-@admin.register(CategoriaArtigo)
-class CategoriaArtigoAdmin(admin.ModelAdmin):
-    list_display = ('nome', 'modulo')
-    list_filter = ('modulo',)
-    search_fields = ('nome',)
-    prepopulated_fields = {'slug': ('nome',)}
+from .models import Artigo
 
 @admin.register(Artigo)
 class ArtigoAdmin(admin.ModelAdmin):
     list_display = ('titulo', 'categoria', 'tipo_conteudo', 'status', 'data_publicacao', 'autor')
-    list_filter = ('status', 'categoria__modulo', 'categoria', 'tipo_conteudo') 
+    list_filter = ('status', 'categoria', 'tipo_conteudo')
     search_fields = ('titulo', 'subtitulo')
     prepopulated_fields = {'slug': ('titulo',)}
     date_hierarchy = 'data_publicacao'
@@ -30,6 +23,6 @@ class ArtigoAdmin(admin.ModelAdmin):
     )
 
     def save_model(self, request, obj, form, change):
-        if not obj.pk: 
+        if not obj.pk:
             obj.autor = request.user
         super().save_model(request, obj, form, change)

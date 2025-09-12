@@ -1,9 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
+
 {% block titulo %}Oportunidades | Roraima Trade Hub{% endblock %}
+
 {% block css_pagina %}
     <link rel="stylesheet" href="{% static 'gerenciamento_oportunidades/css/pagina_inicial_oportunidades.css' %}">
 {% endblock %}
+
 {% block conteudo %}
 <div class="container-conteudo layout-oportunidades">
     <div class="oportunidades-coluna-principal">
@@ -28,12 +31,12 @@
     </div>
     <aside class="oportunidades-coluna-lateral">
         <nav class="oportunidades-navegacao-lateral">
-            <a href="#" class="oportunidades-nav-card card-investa">
+            <a href="{% url 'oportunidades:lista_por_categoria' 'invista-em-roraima' %}" class="oportunidades-nav-card card-investa">
                 <img src="{% static 'gerenciamento_oportunidades/icons/icone-oportunidades-investa.svg' %}" alt="">
                 <span>Invista em Roraima</span>
             </a>
-            <a href="#" class="oportunidades-nav-card card-prospeccao">
-                <img src="{% static 'gerenciamento_oportunidades/icons/icone-oportunidades-prospeccao.svg' %}" alt="">
+            <a href="{% url 'oportunidades:lista_por_categoria' 'prospeccao-de-mercados' %}" class="oportunidades-nav-card card-prospeccao">
+                <img src="{% static 'gerenciamento_oportunidades/icons/icone-oportunidades-prospeccao.svg'%}" alt="">
                 <span>Prospecção de Mercados</span>
             </a>
         </nav>

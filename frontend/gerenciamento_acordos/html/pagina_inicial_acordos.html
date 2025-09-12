@@ -1,9 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
+
 {% block titulo %}Acordos e Regulamentos | Roraima Trade Hub{% endblock %}
+
 {% block css_pagina %}
     <link rel="stylesheet" href="{% static 'gerenciamento_acordos/css/pagina_inicial_acordos.css' %}">
 {% endblock %}
+
 {% block conteudo %}
 <div class="container-conteudo layout-acordos">
     <div class="acordos-coluna-principal">
@@ -32,15 +35,15 @@
     </div>
     <aside class="acordos-coluna-lateral">
         <nav class="acordos-navegacao-lateral">
-            <a href="#" class="acordos-nav-card card-legislacao">
+            <a href="{% url 'acordos:lista_por_categoria' 'legislacao-fiscal-e-aduaneira' %}" class="acordos-nav-card card-legislacao">
                 <img src="{% static 'gerenciamento_acordos/icons/icone-acordos-legislacao.svg' %}" alt="">
                 <span>Legislações Fiscal e Aduaneira</span>
             </a>
-            <a href="#" class="acordos-nav-card card-acordos-comerciais">
+            <a href="{% url 'acordos:lista_por_categoria' 'acordos-comerciais' %}" class="acordos-nav-card card-acordos-comerciais">
                 <img src="{% static 'gerenciamento_acordos/icons/icone-acordos-comerciais.svg' %}" alt="">
                 <span>Acordos Comerciais</span>
             </a>
-            <a href="#" class="acordos-nav-card card-regulamentos-int">
+            <a href="{% url 'acordos:lista_por_categoria' 'regulamentos-internacionais' %}" class="acordos-nav-card card-regulamentos-int">
                 <img src="{% static 'gerenciamento_acordos/icons/icone-acordos-regulamentos.svg' %}" alt="">
                 <span>Regulamentos Internacionais</span>
             </a>

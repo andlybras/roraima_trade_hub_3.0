@@ -124,3 +124,5 @@ MEDIA_ROOT = BASE_DIR / 'media'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 TAGGIT_STRIP_UNICODE_WHEN_SLUGIFYING = True
+
+X_FRAME_OPTIONS = 'SAMEORIGIN'
