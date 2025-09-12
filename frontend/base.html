@@ -5,8 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block titulo %}Roraima Trade Hub{% endblock %}</title>
-    
-    {# NOVO BLOCO PARA AS META TAGS DE SEO #}
     {% block meta_tags %}{% endblock meta_tags %}
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -41,7 +39,7 @@
             </div>
         </header>
         {% endblock %}
-        
+    
         <main>
             {% block conteudo %}
             {% endblock %}
@@ -64,7 +62,6 @@
             {% endblock parceiros %}
         </main>
     </div>
-
     {% block footer %}
     <footer class="rodape-site">
         <div class="rodape-creditos">
@@ -73,7 +70,6 @@
         </div>
     </footer>
     {% endblock footer %}
-    
     <script src="{% static 'gerenciamento_home/js/scroller.js' %}"></script>
     <script src="{% static 'gerenciamento_home/js/header.js' %}"></script>
     {% block js_pagina %}
