@@ -1,5 +1,3 @@
-# gerenciamento_artigos/admin.py
-
 from django.contrib import admin
 from .models import Artigo
 
@@ -17,7 +15,6 @@ class ArtigoAdmin(admin.ModelAdmin):
         }),
         ('Conteúdo Principal', {
             'description': "Escolha o tipo de conteúdo e preencha os campos correspondentes abaixo.",
-            # CAMPO 'resumo_destaque' ADICIONADO AQUI
             'fields': ('resumo_destaque', 'tipo_conteudo', 'corpo_conteudo', 'arquivo_pdf')
         }),
         ('Publicação', {

@@ -1,12 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block titulo %}{{ categoria_nome }} | {{ modulo_display }}{% endblock %}
-
 {% block css_pagina %}
     <link rel="stylesheet" href="{% static 'gerenciamento_artigos/css/artigos.css' %}">
 {% endblock %}
-
 {% block conteudo %}
 <div class="container-conteudo">
     {% include 'gerenciamento_artigos/html/partials/breadcrumbs.html' %}
@@ -19,7 +16,6 @@
             <h1 class="titulo-pagina-artigos">{{ categoria_nome }}</h1>
         </div>
         <hr class="separador-titulo">
-
         {% if artigos %}
             <div class="container-cards-artigos">
                 {% for artigo in artigos %}

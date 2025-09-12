@@ -1,5 +1,3 @@
-# gerenciamento_artigos/models.py
-
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
@@ -8,7 +6,6 @@ from django.core.exceptions import ValidationError
 from tinymce.models import HTMLField
 
 class Artigo(models.Model):
-    # ... (as CHOICES continuam as mesmas)
     CATEGORIA_CHOICES = (
         ('legislacao-fiscal-e-aduaneira', 'Legislações Fiscal e Aduaneira'),
         ('acordos-comerciais', 'Acordos Comerciais'),
@@ -24,8 +21,6 @@ class Artigo(models.Model):
     subtitulo = models.CharField(max_length=255, blank=True, null=True, verbose_name="Subtítulo (Opcional)")
     slug = models.SlugField(max_length=255, unique=True, blank=True, help_text="Este campo é preenchido automaticamente a partir do título.")
     imagem_card = models.ImageField(upload_to='artigos/cards/', verbose_name="Imagem do Card", help_text="Imagem que aparecerá na listagem principal. Tamanho ideal: 800x600 pixels.")
-    
-    # --- NOVO CAMPO ADICIONADO ABAIXO ---
     resumo_destaque = HTMLField(blank=True, null=True, verbose_name="Resumo / Pontos-Chave (Opcional)", help_text="Conteúdo a ser exibido em uma caixa de destaque no topo do artigo.")
 
     tipo_conteudo = models.CharField(max_length=10, choices=TIPO_CONTEUDO_CHOICES, default='TEXTO', verbose_name="Tipo de Conteúdo")
@@ -42,7 +37,6 @@ class Artigo(models.Model):
     data_criacao = models.DateTimeField(auto_now_add=True)
     data_atualizacao = models.DateTimeField(auto_now=True)
 
-    # ... (o restante dos métodos e da classe Meta continuam iguais)
     def clean(self):
         super().clean()
         if self.tipo_conteudo == 'TEXTO' and not self.corpo_conteudo:

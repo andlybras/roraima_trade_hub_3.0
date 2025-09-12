@@ -1,8 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block titulo %}{{ artigo.titulo }}{% endblock %}
-
 {% block meta_tags %}
     {% if artigo.meta_descricao %}
     <meta name="description" content="{{ artigo.meta_descricao }}">
@@ -11,16 +9,12 @@
     <meta name="keywords" content="{{ artigo.palavras_chave }}">
     {% endif %}
 {% endblock meta_tags %}
-
 {% block css_pagina %}
     <link rel="stylesheet" href="{% static 'gerenciamento_artigos/css/artigos.css' %}">
 {% endblock %}
-
 {% block conteudo %}
 <div class="container-conteudo">
-
     {% include 'gerenciamento_artigos/html/partials/breadcrumbs.html' %}
-
     <article class="painel-detalhe-artigo">
         <div class="artigo-cabecalho">
             <h1>{{ artigo.titulo }}</h1>
@@ -34,15 +28,12 @@
                 {% endif %}
             </p>
         </div>
-
         {% if artigo.resumo_destaque %}
             <div class="artigo-resumo-destaque">
                 {{ artigo.resumo_destaque|safe }}
             </div>
         {% endif %}
-
         <hr class="separador-titulo" style="background-color: rgba(20, 74, 93, 0.1);">
-
         {% if artigo.tipo_conteudo == 'PDF' %}
             <div class="pdf-actions-container">
                 <a href="{{ artigo.arquivo_pdf.url }}" class="botao-download-pdf" download>
@@ -57,7 +48,6 @@
                 {{ artigo.corpo_conteudo|safe }}
             </div>
         {% endif %}
-
         <div class="artigo-compartilhamento">
             <h4>Compartilhe este conteúdo:</h4>
             <div class="botoes-compartilhamento">
@@ -70,7 +60,6 @@
     </article>
 </div>
 {% endblock %}
-
 {% block js_pagina %}
     {% if artigo.tipo_conteudo == 'PDF' %}
         <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js"></script>

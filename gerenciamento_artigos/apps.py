@@ -1,5 +1,3 @@
-# gerenciamento_artigos/apps.py
-
 from django.apps import AppConfig
 
 class GerenciamentoArtigosConfig(AppConfig):
