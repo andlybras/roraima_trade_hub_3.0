@@ -24,8 +24,8 @@
             <img src="{% static 'gerenciamento_home/icons/home.svg' %}" alt="icone para acesso a página Home">
         </a>
 
-        {# NOVO ÍCONE "MEU ROTEIRO" #}
-        <a href="#" class="roteiro-link" aria-label="Acesso ao seu roteiro">
+        {# ATUALIZAÇÃO: O link agora aponta para a página do roteiro #}
+        <a href="{% url 'destino:meu_roteiro' %}" class="roteiro-link" aria-label="Acesso ao seu roteiro">
             <img src="{% static 'gerenciamento_home/icons/roteiro.svg' %}" alt="icone para acesso ao seu roteiro">
             <span id="roteiro-contador" class="roteiro-contador">0</span>
         </a>

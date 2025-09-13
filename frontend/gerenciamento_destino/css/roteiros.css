@@ -1,0 +1,153 @@
+/* frontend/gerenciamento_destino/css/roteiros.css */
+
+.painel-roteiros {
+    background-color: rgba(20, 74, 93, 0.3);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(228, 248, 255, 0.2);
+    border-radius: 40px;
+    padding: 30px 40px;
+}
+
+.roteiros-cabecalho h1 {
+    font-family: 'Montserrat', sans-serif;
+    color: #E4F8FF;
+    text-align: right;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid rgba(228, 248, 255, 0.3);
+}
+
+.roteiros-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 30px;
+}
+
+.roteiro-card {
+    background-color: #FEFBF5;
+    border-radius: 20px;
+    text-decoration: none;
+    color: #264653;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.roteiro-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.roteiro-card-imagem img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+}
+
+.roteiro-card-conteudo {
+    padding: 20px 25px;
+}
+
+.roteiro-card-conteudo h3 {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    font-size: 1.4rem;
+}
+
+/* Detalhe do Roteiro */
+
+.painel-detalhe-roteiro {
+    background-color: #FEFBF5;
+    color: #264653;
+    border-radius: 40px;
+    padding: 40px 50px;
+}
+
+.roteiro-detalhe-cabecalho h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 3rem;
+    color: #2A9D8F;
+    text-align: center;
+}
+
+.roteiro-detalhe-descricao {
+    text-align: center;
+    max-width: 800px;
+    margin: -10px auto 40px auto;
+    font-size: 1.1rem;
+    line-height: 1.7;
+}
+
+.roteiro-layout-principal {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: flex-start;
+}
+
+#mapa-roteiro {
+    width: 100%;
+    height: 60vh;
+    border-radius: 20px;
+    position: sticky;
+    top: 100px;
+}
+
+.roteiro-paradas-lista h2 {
+    font-family: 'Montserrat', sans-serif;
+    color: #2A9D8F;
+    margin-top: 0;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.parada-item {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.parada-numero {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #E76F51;
+}
+
+.parada-conteudo h4 {
+    margin: 0 0 5px 0;
+    font-size: 1.2rem;
+}
+
+.parada-conteudo p {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.parada-conteudo a {
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #2A9D8F;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 8px;
+}
+
+.parada-conteudo a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 900px) {
+    .roteiro-layout-principal {
+        grid-template-columns: 1fr;
+    }
+    #mapa-roteiro {
+        position: static;
+        height: 50vh;
+        order: -1; /* Coloca o mapa em cima na versão mobile */
+        margin-bottom: 30px;
+    }
+}

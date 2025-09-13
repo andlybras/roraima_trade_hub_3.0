@@ -27,16 +27,21 @@
         </div>
     </div>
     <aside class="destino-coluna-lateral">
-        <nav class="destino-navegacao-lateral">
-            <a href="{% url 'destino:belezas_da_natureza' %}" class="destino-nav-card card-natureza">
-                <img src="{% static 'gerenciamento_destino/icons/icone-destino-natureza.svg' %}" alt="">
-                <span>Belezas da Natureza</span>
-            </a>
-            <a href="{% url 'destino:cultura_e_tradicoes' %}" class="destino-nav-card card-cultura">
-                <img src="{% static 'gerenciamento_destino/icons/icone-destino-cultura.svg' %}" alt="">
-                <span>Cultura e Tradições</span>
-            </a>
-            </nav>
-    </aside>
+    <nav class="destino-navegacao-lateral">
+        <a href="{% url 'destino:belezas_da_natureza' %}" class="destino-nav-card card-natureza">
+            <img src="{% static 'gerenciamento_destino/icons/icone-destino-natureza.svg' %}" alt="">
+            <span>Belezas da Natureza</span>
+        </a>
+        <a href="{% url 'destino:cultura_e_tradicoes' %}" class="destino-nav-card card-cultura">
+            <img src="{% static 'gerenciamento_destino/icons/icone-destino-cultura.svg' %}" alt="">
+            <span>Cultura e Tradições</span>
+        </a>
+        {# NOVO CARD ADICIONADO #}
+        <a href="{% url 'destino:lista_roteiros' %}" class="destino-nav-card card-suporte">
+            <img src="{% static 'gerenciamento_destino/icons/icone-destino-roteiro.svg' %}" alt="">
+            <span>Roteiros Temáticos</span>
+        </a>
+    </nav>
+</aside>
 </div>
 {% endblock %}
