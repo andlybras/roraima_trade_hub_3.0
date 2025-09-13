@@ -217,3 +217,31 @@ body::before {
     border-radius: 5px; 
     padding: 0px 5px;
 }
+
+/* Estilos para o novo ícone e contador do "Meu Roteiro" no cabeçalho */
+.roteiro-link {
+    position: relative;
+}
+
+.roteiro-contador {
+    position: absolute;
+    top: -5px;
+    right: -8px;
+    background-color: #E76F51; /* Laranja Queimado */
+    color: white;
+    font-weight: 700;
+    font-size: 0.75rem;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #144A5D;
+    transform: scale(0); /* Começa invisível */
+    transition: transform 0.2s ease-in-out;
+}
+
+.roteiro-contador.visible {
+    transform: scale(1); /* Fica visível quando tem itens */
+}

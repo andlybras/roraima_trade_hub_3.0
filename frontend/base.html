@@ -19,25 +19,32 @@
     <div class="container-geral">
         {% block header %}
         <header class="cabecalho-principal">
-            <nav class="cabecalho-nav">
-                <a href="{% url 'gerenciamento_home:home' %}" aria-label="Acesso à página Home">
-                    <img src="{% static 'gerenciamento_home/icons/home.svg' %}" alt="icone para acesso a página Home">
-                </a>
-                <a href="#" aria-label="Acesso à conta do usuário (desativado)">
-                    <img src="{% static 'gerenciamento_home/icons/user.svg' %}" alt="icone para acesso à conta do usuário">
-                </a>
-                <a href="/admin/" aria-label="Acesso ao painel administrativo" target="_blank">
-                    <img src="{% static 'gerenciamento_home/icons/admin.svg' %}" alt="icone para acesso ao painel administrativo">
-                </a>
-            </nav>
-            <div class="cabecalho-logos">
-                {% for logo in header_logos %}
-                <a href="{{ logo.link_url|default:'#' }}" target="_blank" rel="noopener noreferrer">
-                    <img src="{{ logo.imagem.url }}" alt="{{ logo.descricao }}">
-                </a>
-                {% endfor %}
-            </div>
-        </header>
+    <nav class="cabecalho-nav">
+        <a href="{% url 'gerenciamento_home:home' %}" aria-label="Acesso à página Home">
+            <img src="{% static 'gerenciamento_home/icons/home.svg' %}" alt="icone para acesso a página Home">
+        </a>
+
+        {# NOVO ÍCONE "MEU ROTEIRO" #}
+        <a href="#" class="roteiro-link" aria-label="Acesso ao seu roteiro">
+            <img src="{% static 'gerenciamento_home/icons/roteiro.svg' %}" alt="icone para acesso ao seu roteiro">
+            <span id="roteiro-contador" class="roteiro-contador">0</span>
+        </a>
+
+        <a href="#" aria-label="Acesso à conta do usuário (desativado)">
+            <img src="{% static 'gerenciamento_home/icons/user.svg' %}" alt="icone para acesso à conta do usuário">
+        </a>
+        <a href="/admin/" aria-label="Acesso ao painel administrativo" target="_blank">
+            <img src="{% static 'gerenciamento_home/icons/admin.svg' %}" alt="icone para acesso ao painel administrativo">
+        </a>
+    </nav>
+    <div class="cabecalho-logos">
+        {% for logo in header_logos %}
+        <a href="{{ logo.link_url|default:'#' }}" target="_blank" rel="noopener noreferrer">
+            <img src="{{ logo.imagem.url }}" alt="{{ logo.descricao }}">
+        </a>
+        {% endfor %}
+    </div>
+</header>
         {% endblock %}
     
         <main>
@@ -72,6 +79,8 @@
     {% endblock footer %}
     <script src="{% static 'gerenciamento_home/js/scroller.js' %}"></script>
     <script src="{% static 'gerenciamento_home/js/header.js' %}"></script>
+    <script src="{% static 'gerenciamento_destino/js/roteiro.js' %}"></script>
+    
     {% block js_pagina %}
     {% endblock %}
 </body>

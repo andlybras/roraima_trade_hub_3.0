@@ -1,20 +1,26 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block titulo %}{{ categoria.nome }} | Destino Roraima{% endblock %}
+{% block titulo %}{{ titulo_pagina }} | Destino Roraima{% endblock %}
 
 {% block css_pagina %}
-    {% if tem_pontos %}
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha26-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
-    {% endif %}
+    {# ADIÇÃO: Link para o CSS compartilhado que estiliza o breadcrumb #}
+    <link rel="stylesheet" href="{% static 'gerenciamento_destino/css/destino_shared.css' %}">
     <link rel="stylesheet" href="{% static 'gerenciamento_destino/css/mapa_interativo.css' %}">
+    {% if tem_pontos %}
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    {% endif %}
 {% endblock %}
 
 {% block conteudo %}
 <div class="container-conteudo">
+
+    {# ADIÇÃO: Inclui o molde do breadcrumb na página #}
+    {% include 'gerenciamento_destino/html/partials/breadcrumb.html' %}
+
     <div class="mapa-container">
         <div class="mapa-cabecalho">
-            <h1>{{ categoria.nome }}</h1>
+            <h1>{{ titulo_pagina }}</h1> 
         </div>
         
         {% if tem_pontos %}
@@ -23,7 +29,7 @@
         {% else %}
             <div class="sem-pontos-container">
                 <h2>Em Breve</h2>
-                <p>Ainda não há locais cadastrados para a categoria "{{ categoria.nome }}".</p>
+                <p>Ainda não há locais cadastrados para "{{ titulo_pagina }}".</p>
                 <a href="{% url 'destino:pagina_inicial' %}">Voltar para Destino Roraima</a>
             </div>
         {% endif %}
@@ -35,29 +41,30 @@
 
 {% block js_pagina %}
     {% if tem_pontos %}
-        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 const pontosDataElement = document.getElementById('pontos-data');
                 const pontosData = JSON.parse(pontosDataElement.textContent);
-                
                 const mapa = L.map('mapa').setView([2.8235, -60.6758], 9);
 
-                setTimeout(function() {
-                    mapa.invalidateSize();
-                }, 100);
+                setTimeout(function() { mapa.invalidateSize(); }, 100);
 
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    maxZoom: 18,
-                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                }).addTo(mapa);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' }).addTo(mapa);
 
                 if (pontosData.features && pontosData.features.length > 0) {
+                    // Pega o roteiro atual UMA VEZ antes de criar os pinos
+                    const roteiroAtual = JSON.parse(localStorage.getItem('meuRoteiroDestinoRR') || '[]');
+
                     L.geoJSON(pontosData, {
                         onEachFeature: function(feature, layer) {
                             const props = feature.properties;
-                            // CORRIGIDO: Removido o comentário de dentro do texto
+
+                            // Verifica se o ponto já está salvo para definir o estado inicial do botão
+                            const isSaved = roteiroAtual.includes(props.slug);
+                            const buttonText = isSaved ? 'Remover do Roteiro' : 'Adicionar ao Roteiro';
+                            const buttonClass = isSaved ? 'btn-add-roteiro active' : 'btn-add-roteiro';
+
                             let popupContent = `
                                 <div class="popup-ponto-interesse">
                                     ${props.imagem_url ? `<img src="${props.imagem_url}" alt="${props.titulo}">` : ''}
@@ -65,6 +72,7 @@
                                         <h3>${props.titulo}</h3>
                                         <p>${props.descricao_curta}</p>
                                         <a href="${props.detalhe_url}">Ver Detalhes</a>
+                                        <a href="#" class="${buttonClass}" data-slug="${props.slug}">${buttonText}</a>
                                     </div>
                                 </div>
                             `;

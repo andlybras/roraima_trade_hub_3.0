@@ -4,14 +4,20 @@
 {% block titulo %}{{ ponto.titulo }} | Destino Roraima{% endblock %}
 
 {% block css_pagina %}
+    <link rel="stylesheet" href="{% static 'gerenciamento_destino/css/destino_shared.css' %}">
     <link rel="stylesheet" href="{% static 'gerenciamento_destino/css/detalhe_ponto.css' %}">
 {% endblock %}
 
 {% block conteudo %}
 <div class="container-conteudo">
+
+    {# ADIÇÃO: Inclui o molde do breadcrumb na página #}
+    {% include 'gerenciamento_destino/html/partials/breadcrumb.html' %}
+    
     <article class="painel-detalhe">
         <header class="detalhe-cabecalho">
             <h1>{{ ponto.titulo }}</h1>
+            <a href="#" class="btn-add-roteiro" data-slug="{{ ponto.slug }}">Adicionar ao Roteiro</a>
         </header>
 
         <section class="imagem-principal-container">
