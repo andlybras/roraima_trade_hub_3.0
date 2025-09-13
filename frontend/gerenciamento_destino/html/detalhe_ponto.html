@@ -11,9 +11,8 @@
 {% block conteudo %}
 <div class="container-conteudo">
 
-    {# ADIÇÃO: Inclui o molde do breadcrumb na página #}
     {% include 'gerenciamento_destino/html/partials/breadcrumb.html' %}
-    
+
     <article class="painel-detalhe">
         <header class="detalhe-cabecalho">
             <h1>{{ ponto.titulo }}</h1>
@@ -28,7 +27,7 @@
             <section class="descricao-completa">
                 {{ ponto.descricao_completa|safe }}
             </section>
-            
+
             <aside class="informacoes-praticas">
                 <h3>Dicas para o Visitante</h3>
                 {{ ponto.informacoes_praticas|safe }}
@@ -40,17 +39,30 @@
             <h2>Galeria de Fotos</h2>
             <div class="galeria-grid">
                 {% for imagem in ponto.galeria_imagens.all %}
-                    <img src="{{ imagem.imagem.url }}" alt="{{ imagem.legenda|default:ponto.titulo }}">
+                    {# Adicionamos a classe 'galeria-imagem' para o JS encontrar #}
+                    <img class="galeria-imagem" src="{{ imagem.imagem.url }}" alt="{{ imagem.legenda|default:ponto.titulo }}">
                 {% endfor %}
             </div>
         </section>
         {% endif %}
 
         <div class="voltar-container">
-            <a href="javascript:history.back()" class="botao-voltar">Voltar para o Mapa</a>
+            <a href="javascript:history.back()" class="botao-voltar">Voltar</a>
         </div>
     </article>
 </div>
+
+<div id="lightbox" class="lightbox">
+    <span id="lightbox-close" class="lightbox-close">&times;</span>
+    <img id="lightbox-image" class="lightbox-content">
+    <a id="lightbox-prev" class="lightbox-prev">&#10094;</a>
+    <a id="lightbox-next" class="lightbox-next">&#10095;</a>
+</div>
+
 {% endblock %}
 
 {% block parceiros %}{% endblock parceiros %}
+
+{% block js_pagina %}
+    <script src="{% static 'gerenciamento_destino/js/galeria_lightbox.js' %}"></script>
+{% endblock %}

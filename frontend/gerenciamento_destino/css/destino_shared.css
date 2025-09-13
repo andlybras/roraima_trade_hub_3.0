@@ -71,3 +71,77 @@
 .btn-add-roteiro.active {
     background-color: #E76F51; /* Laranja quando ativo */
 }
+
+/* Estilos para os filtros da página do mapa */
+.filtros-mapa-container {
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(228, 248, 255, 0.2);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+}
+.filtro-mapa-btn {
+    background-color: transparent;
+    border: 2px solid #E4F8FF;
+    color: #E4F8FF;
+    padding: 8px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s ease-in-out;
+}
+.filtro-mapa-btn:hover {
+    background-color: rgba(228, 248, 255, 0.2);
+}
+.filtro-mapa-btn.active {
+    background-color: #E4F8FF;
+    color: #144A5D;
+}
+
+/* Estilos para a Galeria Lightbox */
+.lightbox {
+    display: none;
+    position: fixed;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    justify-content: center;
+    align-items: center;
+}
+.lightbox-content {
+    max-width: 90%;
+    max-height: 80%;
+}
+.lightbox-close, .lightbox-prev, .lightbox-next {
+    position: absolute;
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    user-select: none;
+    transition: color 0.2s;
+}
+.lightbox-close:hover, .lightbox-prev:hover, .lightbox-next:hover {
+    color: #bbb;
+}
+.lightbox-close {
+    top: 20px;
+    right: 35px;
+}
+.lightbox-prev, .lightbox-next {
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 16px;
+}
+.lightbox-prev {
+    left: 10px;
+}
+.lightbox-next {
+    right: 10px;
+}

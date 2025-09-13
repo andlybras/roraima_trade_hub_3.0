@@ -4,7 +4,6 @@
 {% block titulo %}{{ titulo_pagina }} | Destino Roraima{% endblock %}
 
 {% block css_pagina %}
-    {# ADIÇÃO: Link para o CSS compartilhado que estiliza o breadcrumb #}
     <link rel="stylesheet" href="{% static 'gerenciamento_destino/css/destino_shared.css' %}">
     <link rel="stylesheet" href="{% static 'gerenciamento_destino/css/mapa_interativo.css' %}">
     {% if tem_pontos %}
@@ -15,15 +14,23 @@
 {% block conteudo %}
 <div class="container-conteudo">
 
-    {# ADIÇÃO: Inclui o molde do breadcrumb na página #}
     {% include 'gerenciamento_destino/html/partials/breadcrumb.html' %}
 
     <div class="mapa-container">
         <div class="mapa-cabecalho">
             <h1>{{ titulo_pagina }}</h1> 
         </div>
-        
+
         {% if tem_pontos %}
+            {% if categorias_filtros %}
+            <div class="filtros-mapa-container">
+                <button class="filtro-mapa-btn active" data-categoria-slug="todos">Mostrar Todos</button>
+                {% for categoria in categorias_filtros %}
+                    <button class="filtro-mapa-btn" data-categoria-slug="{{ categoria.slug }}">{{ categoria.nome }}</button>
+                {% endfor %}
+            </div>
+            {% endif %}
+
             <div id="mapa"></div>
             {{ pontos_geojson|json_script:"pontos-data" }}
         {% else %}
@@ -43,44 +50,80 @@
     {% if tem_pontos %}
         <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
         <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const pontosDataElement = document.getElementById('pontos-data');
-                const pontosData = JSON.parse(pontosDataElement.textContent);
-                const mapa = L.map('mapa').setView([2.8235, -60.6758], 9);
+        document.addEventListener('DOMContentLoaded', function() {
+            const pontosDataElement = document.getElementById('pontos-data');
+            const pontosData = JSON.parse(pontosDataElement.textContent);
+            const mapa = L.map('mapa').setView([2.8235, -60.6758], 9);
 
-                setTimeout(function() { mapa.invalidateSize(); }, 100);
+            setTimeout(function() { mapa.invalidateSize(); }, 100);
 
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' }).addTo(mapa);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 18,
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(mapa);
 
-                if (pontosData.features && pontosData.features.length > 0) {
-                    // Pega o roteiro atual UMA VEZ antes de criar os pinos
-                    const roteiroAtual = JSON.parse(localStorage.getItem('meuRoteiroDestinoRR') || '[]');
+            let markersLayer = new L.FeatureGroup(); // Camada para guardar os marcadores
 
-                    L.geoJSON(pontosData, {
-                        onEachFeature: function(feature, layer) {
-                            const props = feature.properties;
+            // Função para criar um ícone personalizado
+            function createIcon(iconUrl) {
+                return L.icon({
+                    iconUrl: iconUrl,
+                    iconSize: [38, 38], // Tamanho do ícone
+                    iconAnchor: [19, 38], // Ponto do ícone que corresponde à localização
+                    popupAnchor: [0, -42] // Ponto onde o popup deve abrir
+                });
+            }
 
-                            // Verifica se o ponto já está salvo para definir o estado inicial do botão
-                            const isSaved = roteiroAtual.includes(props.slug);
-                            const buttonText = isSaved ? 'Remover do Roteiro' : 'Adicionar ao Roteiro';
-                            const buttonClass = isSaved ? 'btn-add-roteiro active' : 'btn-add-roteiro';
-
-                            let popupContent = `
-                                <div class="popup-ponto-interesse">
-                                    ${props.imagem_url ? `<img src="${props.imagem_url}" alt="${props.titulo}">` : ''}
-                                    <div class="popup-ponto-interesse-conteudo">
-                                        <h3>${props.titulo}</h3>
-                                        <p>${props.descricao_curta}</p>
-                                        <a href="${props.detalhe_url}">Ver Detalhes</a>
-                                        <a href="#" class="${buttonClass}" data-slug="${props.slug}">${buttonText}</a>
-                                    </div>
-                                </div>
-                            `;
-                            layer.bindPopup(popupContent);
-                        }
-                    }).addTo(mapa);
+            pontosData.features.forEach(feature => {
+                const props = feature.properties;
+                let markerOptions = {};
+                // Usa ícone personalizado se existir, senão usa o padrão do Leaflet
+                if (props.icone_url) {
+                    markerOptions.icon = createIcon(props.icone_url);
                 }
+
+                const marker = L.marker([feature.geometry.coordinates[1], feature.geometry.coordinates[0]], markerOptions);
+
+                marker.feature = feature; // Anexa os dados ao marcador
+
+                let popupContent = `
+                    <div class="popup-ponto-interesse">
+                        ${props.imagem_url ? `<img src="${props.imagem_url}" alt="${props.titulo}">` : ''}
+                        <div class="popup-ponto-interesse-conteudo">
+                            <h3>${props.titulo}</h3>
+                            <p>${props.descricao_curta}</p>
+                            <a href="${props.detalhe_url}">Ver Detalhes</a>
+                            <a href="#" class="btn-add-roteiro" data-slug="${props.slug}">Adicionar ao Roteiro</a>
+                        </div>
+                    </div>
+                `;
+                marker.bindPopup(popupContent);
+                markersLayer.addLayer(marker);
             });
+
+            markersLayer.addTo(mapa);
+            if (markersLayer.getLayers().length > 0) {
+                mapa.fitBounds(markersLayer.getBounds(), { padding: [50, 50] });
+            }
+
+            // Lógica dos Filtros
+            const filtroBotoes = document.querySelectorAll('.filtro-mapa-btn');
+            filtroBotoes.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    filtroBotoes.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    const categoriaSlug = this.dataset.categoriaSlug;
+
+                    markersLayer.eachLayer(function(layer) {
+                        if (categoriaSlug === 'todos' || layer.feature.properties.categoria_slug === categoriaSlug) {
+                            layer.getElement().style.display = ''; // Mostra o marcador
+                        } else {
+                            layer.getElement().style.display = 'none'; // Esconde o marcador
+                        }
+                    });
+                });
+            });
+        });
         </script>
     {% endif %}
 {% endblock %}
