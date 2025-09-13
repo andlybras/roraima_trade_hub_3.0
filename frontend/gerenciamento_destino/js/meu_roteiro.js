@@ -1,6 +1,7 @@
 // frontend/gerenciamento_destino/js/meu_roteiro.js
 
 document.addEventListener('DOMContentLoaded', function() {
+    // ... (código existente no topo)
     const ROTEIRO_KEY = 'meuRoteiroDestinoRR';
     const slugsSalvos = JSON.parse(localStorage.getItem(ROTEIRO_KEY) || '[]');
 
@@ -10,20 +11,21 @@ document.addEventListener('DOMContentLoaded', function() {
     const viewRoteiroVazio = document.getElementById('roteiro-vazio-view');
     const listaParadasContainer = document.getElementById('lista-paradas-container');
     const btnLimparRoteiro = document.querySelector('.btn-limpar-roteiro');
+    const btnImprimirRoteiro = document.querySelector('.btn-imprimir-roteiro'); // Pega o novo botão
 
     if (slugsSalvos.length === 0) {
-        // Se não há slugs, mostra a mensagem de roteiro vazio
+        // ... (código existente, sem alterações)
         painelCarregando.style.display = 'none';
         painelConteudo.style.display = 'block';
         viewRoteiroCheio.style.display = 'none';
         viewRoteiroVazio.style.display = 'block';
     } else {
-        // Se há slugs, busca os dados no servidor
+        // ... (código existente, sem alterações)
         fetch('/destino-roraima/api/dados-roteiro/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRFToken': getCookie('csrftoken'), // Necessário para segurança do Django
+                'X-CSRFToken': getCookie('csrftoken'),
             },
             body: JSON.stringify({ slugs: slugsSalvos })
         })
@@ -39,6 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function renderRoteiro(pontos) {
+        // ... (código existente, sem alterações)
         painelCarregando.style.display = 'none';
         painelConteudo.style.display = 'block';
 
@@ -51,8 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
         viewRoteiroCheio.style.display = 'block';
         viewRoteiroVazio.style.display = 'none';
 
-        // Renderiza a lista de paradas
-        listaParadasContainer.innerHTML = ''; // Limpa a lista
+        listaParadasContainer.innerHTML = '';
         pontos.forEach((ponto, index) => {
             const paradaHTML = `
                 <div class="parada-item">
@@ -67,7 +69,6 @@ document.addEventListener('DOMContentLoaded', function() {
             listaParadasContainer.innerHTML += paradaHTML;
         });
 
-        // Renderiza o mapa
         const mapa = L.map('mapa-meu-roteiro');
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -92,22 +93,32 @@ document.addEventListener('DOMContentLoaded', function() {
             if(pontosLayer.getBounds().isValid()) {
                 mapa.fitBounds(pontosLayer.getBounds(), { padding: [50, 50] });
             } else {
-                mapa.setView([2.82, -60.67], 9); // Fallback para o centro de RR
+                mapa.setView([2.82, -60.67], 9);
             }
         }, 200);
     }
 
+    // Lógica do botão de Limpar (sem alterações)
     btnLimparRoteiro.addEventListener('click', function() {
         if (confirm('Você tem certeza que deseja limpar todo o seu roteiro?')) {
             localStorage.removeItem(ROTEIRO_KEY);
-            // Atualiza o contador no header (requer que a função esteja acessível globalmente ou que o script do roteiro seja unificado)
-            // Por agora, simplesmente recarregamos a página para refletir o estado vazio.
             window.location.reload();
         }
     });
 
-    // Função auxiliar para pegar o CSRF token para o POST
+    // NOVA LÓGICA PARA O BOTÃO DE IMPRIMIR
+    if (btnImprimirRoteiro) {
+        // Primeiro, estilizamos o botão para ter a mesma aparência do "Limpar"
+        btnImprimirRoteiro.classList.add('btn-limpar-roteiro');
+        btnImprimirRoteiro.style.backgroundColor = '#2A9D8F'; // Cor Verde
+
+        btnImprimirRoteiro.addEventListener('click', function() {
+            window.print(); // O comando mágico que abre a janela de impressão
+        });
+    }
+
     function getCookie(name) {
+        // ... (código existente, sem alterações)
         let cookieValue = null;
         if (document.cookie && document.cookie !== '') {
             const cookies = document.cookie.split(';');

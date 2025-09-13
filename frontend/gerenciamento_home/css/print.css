@@ -1,0 +1,84 @@
+/* frontend/gerenciamento_home/css/print.css */
+
+@media print {
+    /* Esconde elementos globais */
+    .cabecalho-principal,
+    .rodape-site,
+    .breadcrumb-container,
+    .roteiro-acoes,
+    .btn-add-roteiro,
+    .voltar-container,
+    .secao-parceiros {
+        display: none !important;
+    }
+
+    /* Esconde os mapas */
+    #mapa-meu-roteiro,
+    #mapa-roteiro,
+    #mapa {
+        display: none !important;
+    }
+    
+    /* Configurações gerais da página */
+    body, html {
+        background-color: #ffffff !important;
+        color: #000000 !important;
+    }
+
+    /* Remove fundos e bordas dos painéis */
+    .painel-meu-roteiro,
+    .painel-detalhe-roteiro,
+    .painel-detalhe,
+    .mapa-container {
+        width: 100%;
+        box-shadow: none;
+        border: none;
+        padding: 0;
+        margin: 0;
+        background: none;
+    }
+
+    /* Estiliza o layout principal do roteiro para impressão */
+    .roteiro-layout-principal {
+        display: block; /* Muda de grid para bloco simples */
+    }
+
+    .roteiro-cabecalho h1 {
+        font-size: 24pt !important;
+        text-align: left !important;
+        color: #000000 !important;
+        border-bottom: 2px solid #000000;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+    }
+
+    .roteiro-paradas-lista h2 {
+        font-size: 18pt !important;
+        color: #000000 !important;
+    }
+    
+    /* Garante que um item da lista não seja cortado entre duas páginas */
+    .parada-item {
+        page-break-inside: avoid;
+        margin-bottom: 20px;
+        border-bottom: 1px dotted #ccc;
+        padding-bottom: 15px;
+    }
+
+    .parada-numero {
+        font-size: 20pt !important;
+        color: #333333 !important;
+    }
+
+    .parada-conteudo h4 {
+        font-size: 14pt !important;
+        color: #000000 !important;
+    }
+    
+    .parada-conteudo p,
+    .parada-conteudo a {
+        font-size: 11pt !important;
+        color: #000000 !important;
+        text-decoration: none;
+    }
+}
