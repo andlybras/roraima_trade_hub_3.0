@@ -1,12 +1,9 @@
-# gerenciamento_destino/admin.py
-
 from django.contrib import admin
 from .models import (
     ConteudoApresentacaoDestino, Categoria, 
     PontoDeInteresse, ImagemGaleria, 
     Roteiro, OrdemPontoRoteiro
 )
-# O import de ServicoTuristico foi removido
 
 @admin.register(ConteudoApresentacaoDestino)
 class ConteudoApresentacaoDestinoAdmin(admin.ModelAdmin):
@@ -36,7 +33,6 @@ class PontoDeInteresseAdmin(admin.ModelAdmin):
     inlines = [ImagemGaleriaInline]
     autocomplete_fields = ['categoria']
 
-# O registro do ServicoTuristicoAdmin foi completamente removido
 
 class OrdemPontoRoteiroInline(admin.TabularInline):
     model = OrdemPontoRoteiro

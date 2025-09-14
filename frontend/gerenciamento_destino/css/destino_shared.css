@@ -1,5 +1,3 @@
-/* frontend/gerenciamento_destino/css/destino_shared.css */
-
 .breadcrumb-container {
     padding: 10px 15px;
     margin-bottom: 25px;
@@ -22,7 +20,6 @@
     align-items: center;
 }
 
-/* Adiciona o separador '>' entre os itens */
 .breadcrumb-item:not(:last-child)::after {
     content: '>';
     margin: 0 0.8em;
@@ -46,7 +43,6 @@
     padding: 2px 8px;
 }
 
-/* Estilos para o botão "Adicionar ao Roteiro" */
 .btn-add-roteiro {
     display: inline-flex;
     align-items: center;
@@ -69,10 +65,9 @@
 }
 
 .btn-add-roteiro.active {
-    background-color: #E76F51; /* Laranja quando ativo */
+    background-color: #E76F51;
 }
 
-/* Estilos para os filtros da página do mapa */
 .filtros-mapa-container {
     margin-bottom: 20px;
     padding-bottom: 20px;
@@ -82,6 +77,7 @@
     gap: 15px;
     justify-content: center;
 }
+
 .filtro-mapa-btn {
     background-color: transparent;
     border: 2px solid #E4F8FF;
@@ -93,15 +89,16 @@
     font-size: 0.9rem;
     transition: all 0.2s ease-in-out;
 }
+
 .filtro-mapa-btn:hover {
     background-color: rgba(228, 248, 255, 0.2);
 }
+
 .filtro-mapa-btn.active {
     background-color: #E4F8FF;
     color: #144A5D;
 }
 
-/* Estilos para a Galeria Lightbox */
 .lightbox {
     display: none;
     position: fixed;
@@ -114,10 +111,12 @@
     justify-content: center;
     align-items: center;
 }
+
 .lightbox-content {
     max-width: 90%;
     max-height: 80%;
 }
+
 .lightbox-close, .lightbox-prev, .lightbox-next {
     position: absolute;
     color: white;
@@ -127,21 +126,26 @@
     user-select: none;
     transition: color 0.2s;
 }
+
 .lightbox-close:hover, .lightbox-prev:hover, .lightbox-next:hover {
     color: #bbb;
 }
+
 .lightbox-close {
     top: 20px;
     right: 35px;
 }
+
 .lightbox-prev, .lightbox-next {
     top: 50%;
     transform: translateY(-50%);
     padding: 16px;
 }
+
 .lightbox-prev {
     left: 10px;
 }
+
 .lightbox-next {
     right: 10px;
 }

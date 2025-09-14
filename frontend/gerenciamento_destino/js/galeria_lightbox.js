@@ -38,7 +38,6 @@ document.addEventListener('DOMContentLoaded', function() {
     lightboxPrev.addEventListener('click', showPrev);
     lightboxNext.addEventListener('click', showNext);
 
-    // Fecha com a tecla Esc
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') closeLightbox();
     });

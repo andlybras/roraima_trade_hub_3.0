@@ -1,10 +1,7 @@
-// frontend/gerenciamento_destino/js/roteiro.js
-
 document.addEventListener('DOMContentLoaded', function() {
     const ROTEIRO_KEY = 'meuRoteiroDestinoRR';
     const contadorElement = document.getElementById('roteiro-contador');
 
-    // --- Funções Auxiliares (sem alterações) ---
     function getRoteiro() {
         const roteiroSalvo = localStorage.getItem(ROTEIRO_KEY);
         return roteiroSalvo ? JSON.parse(roteiroSalvo) : [];
@@ -13,7 +10,6 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.setItem(ROTEIRO_KEY, JSON.stringify(roteiro));
     }
 
-    // --- Funções Principais (sem alterações) ---
     function atualizarContador() {
         if (!contadorElement) return;
         const roteiro = getRoteiro();
@@ -26,7 +22,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Função para atualizar a aparência de TODOS os botões visíveis na página
     function atualizarTodosOsBotoesVisiveis() {
         const roteiro = getRoteiro();
         const botoesAdicionar = document.querySelectorAll('.btn-add-roteiro');
@@ -42,11 +37,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // --- LÓGICA DE EVENTOS COM DELEGAÇÃO ---
-    // O "Gerente" (document) ouve todos os cliques
     document.addEventListener('click', function(event) {
         
-        // Verifica se o alvo do clique é um botão de roteiro
         if (event.target.matches('.btn-add-roteiro')) {
             event.preventDefault(); 
             
@@ -63,13 +55,10 @@ document.addEventListener('DOMContentLoaded', function() {
             saveRoteiro(roteiro);
             atualizarContador();
             
-            // Atualiza a aparência de todos os botões, incluindo o que foi clicado
-            // e outros botões para o mesmo ponto que possam estar na página.
             atualizarTodosOsBotoesVisiveis();
         }
     });
 
-    // --- Inicialização ---
     atualizarContador();
     atualizarTodosOsBotoesVisiveis();
 });

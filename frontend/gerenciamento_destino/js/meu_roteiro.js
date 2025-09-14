@@ -1,7 +1,5 @@
-// frontend/gerenciamento_destino/js/meu_roteiro.js
-
 document.addEventListener('DOMContentLoaded', function() {
-    // ... (código existente no topo)
+    
     const ROTEIRO_KEY = 'meuRoteiroDestinoRR';
     const slugsSalvos = JSON.parse(localStorage.getItem(ROTEIRO_KEY) || '[]');
 
@@ -14,13 +12,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const btnImprimirRoteiro = document.querySelector('.btn-imprimir-roteiro'); // Pega o novo botão
 
     if (slugsSalvos.length === 0) {
-        // ... (código existente, sem alterações)
         painelCarregando.style.display = 'none';
         painelConteudo.style.display = 'block';
         viewRoteiroCheio.style.display = 'none';
         viewRoteiroVazio.style.display = 'block';
     } else {
-        // ... (código existente, sem alterações)
         fetch('/destino-roraima/api/dados-roteiro/', {
             method: 'POST',
             headers: {
@@ -41,7 +37,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function renderRoteiro(pontos) {
-        // ... (código existente, sem alterações)
         painelCarregando.style.display = 'none';
         painelConteudo.style.display = 'block';
 
@@ -98,7 +93,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 200);
     }
 
-    // Lógica do botão de Limpar (sem alterações)
     btnLimparRoteiro.addEventListener('click', function() {
         if (confirm('Você tem certeza que deseja limpar todo o seu roteiro?')) {
             localStorage.removeItem(ROTEIRO_KEY);
@@ -106,19 +100,16 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // NOVA LÓGICA PARA O BOTÃO DE IMPRIMIR
     if (btnImprimirRoteiro) {
-        // Primeiro, estilizamos o botão para ter a mesma aparência do "Limpar"
         btnImprimirRoteiro.classList.add('btn-limpar-roteiro');
         btnImprimirRoteiro.style.backgroundColor = '#2A9D8F'; // Cor Verde
 
         btnImprimirRoteiro.addEventListener('click', function() {
-            window.print(); // O comando mágico que abre a janela de impressão
+            window.print();
         });
     }
 
     function getCookie(name) {
-        // ... (código existente, sem alterações)
         let cookieValue = null;
         if (document.cookie && document.cookie !== '') {
             const cookies = document.cookie.split(';');

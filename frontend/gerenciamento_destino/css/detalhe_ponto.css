@@ -1,9 +1,7 @@
-/* frontend/gerenciamento_destino/css/detalhe_ponto.css */
-
 :root {
-    --cor-fundo-destino: #FEFBF5;    /* Areia / Bege Claro */
-    --cor-texto-destino: #264653;    /* Cinza Escuro */
-    --cor-principal-destino: #2A9D8F; /* Verde Musgo */
+    --cor-fundo-destino: #FEFBF5;   
+    --cor-texto-destino: #264653;   
+    --cor-principal-destino: #2A9D8F;
 }
 
 .painel-detalhe {
@@ -49,12 +47,12 @@
 }
 
 .informacoes-praticas {
-    background-color: #f0f8f6; /* Verde bem claro */
+    background-color: #f0f8f6;
     border-radius: 20px;
     padding: 25px;
     border-left: 5px solid var(--cor-principal-destino);
     position: sticky;
-    top: 100px; /* Gruda abaixo do header */
+    top: 100px; 
 }
 
 .informacoes-praticas h3 {
@@ -117,14 +115,12 @@
     transform: translateY(-3px);
 }
 
-
-/* Responsividade */
 @media (max-width: 900px) {
     .conteudo-principal {
         grid-template-columns: 1fr;
     }
     .informacoes-praticas {
-        position: static; /* Desativa o 'grudar' em telas menores */
+        position: static;
     }
 }
 

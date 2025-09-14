@@ -1,5 +1,3 @@
-# gerenciamento_destino/urls.py
-
 from django.urls import path
 from . import views
 
@@ -12,8 +10,6 @@ urlpatterns = [
     path('ponto/<slug:ponto_slug>/', views.detalhe_ponto_view, name='detalhe_ponto'),
     path('roteiros/', views.lista_roteiros_view, name='lista_roteiros'),
     path('roteiros/<slug:roteiro_slug>/', views.detalhe_roteiro_view, name='detalhe_roteiro'),
-
-    # NOVAS ROTAS PARA O "MEU ROTEIRO"
     path('meu-roteiro/', views.meu_roteiro_view, name='meu_roteiro'),
     path('api/dados-roteiro/', views.dados_roteiro_api_view, name='dados_roteiro_api'),
 ]

@@ -1,7 +1,4 @@
-/* frontend/gerenciamento_home/css/print.css */
-
 @media print {
-    /* Esconde elementos globais */
     .cabecalho-principal,
     .rodape-site,
     .breadcrumb-container,
@@ -12,20 +9,17 @@
         display: none !important;
     }
 
-    /* Esconde os mapas */
     #mapa-meu-roteiro,
     #mapa-roteiro,
     #mapa {
         display: none !important;
     }
     
-    /* Configurações gerais da página */
     body, html {
         background-color: #ffffff !important;
         color: #000000 !important;
     }
 
-    /* Remove fundos e bordas dos painéis */
     .painel-meu-roteiro,
     .painel-detalhe-roteiro,
     .painel-detalhe,
@@ -38,9 +32,8 @@
         background: none;
     }
 
-    /* Estiliza o layout principal do roteiro para impressão */
     .roteiro-layout-principal {
-        display: block; /* Muda de grid para bloco simples */
+        display: block; 
     }
 
     .roteiro-cabecalho h1 {
@@ -57,7 +50,6 @@
         color: #000000 !important;
     }
     
-    /* Garante que um item da lista não seja cortado entre duas páginas */
     .parada-item {
         page-break-inside: avoid;
         margin-bottom: 20px;

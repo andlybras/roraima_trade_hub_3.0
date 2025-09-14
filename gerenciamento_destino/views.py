@@ -1,12 +1,9 @@
-# gerenciamento_destino/views.py
-
 from django.shortcuts import render, get_object_or_404
 from .models import ConteudoApresentacaoDestino, Categoria, PontoDeInteresse, Roteiro
 from django.urls import reverse
 from django.http import JsonResponse
 import json
 
-# ... (as views pagina_inicial_destino e as de roteiros/detalhes permanecem inalteradas)
 def pagina_inicial_destino(request):
     conteudo_ativo = ConteudoApresentacaoDestino.objects.filter(em_exibicao=True).first()
     context = {'conteudo_apresentacao': conteudo_ativo}
@@ -58,12 +55,8 @@ def dados_roteiro_api_view(request):
             return JsonResponse({'erro': 'JSON inválido'}, status=400)
     return JsonResponse({'erro': 'Apenas requisições POST são permitidas'}, status=405)
 
-
-# --- VIEWS ATUALIZADAS ---
-
 def belezas_da_natureza_view(request):
     pontos = PontoDeInteresse.objects.filter(publicado=True, categoria__grupo='NATUREZA')
-    # NOVO: Busca as categorias do grupo Natureza para os filtros
     categorias_filtros = Categoria.objects.filter(grupo='NATUREZA')
     
     breadcrumbs = [
@@ -80,7 +73,6 @@ def belezas_da_natureza_view(request):
              "imagem_url": p.imagem_principal.url if p.imagem_principal else '', 
              "detalhe_url": reverse('destino:detalhe_ponto', args=[p.slug]), 
              "slug": p.slug,
-             # NOVO: Adiciona o slug da categoria e a URL do ícone
              "categoria_slug": p.categoria.slug,
              "icone_url": p.categoria.icone.url if p.categoria.icone else None
             }
@@ -91,14 +83,12 @@ def belezas_da_natureza_view(request):
         'pontos_geojson': pontos_geojson,
         'tem_pontos': pontos.exists(),
         'breadcrumbs': breadcrumbs,
-        # NOVO: Envia as categorias para o template
         'categorias_filtros': categorias_filtros
     }
     return render(request, 'gerenciamento_destino/html/mapa_interativo.html', context)
 
 def cultura_e_tradicoes_view(request):
     pontos = PontoDeInteresse.objects.filter(publicado=True, categoria__grupo='CULTURA')
-    # NOVO: Busca as categorias do grupo Cultura para os filtros
     categorias_filtros = Categoria.objects.filter(grupo='CULTURA')
 
     breadcrumbs = [
@@ -115,7 +105,6 @@ def cultura_e_tradicoes_view(request):
              "imagem_url": p.imagem_principal.url if p.imagem_principal else '', 
              "detalhe_url": reverse('destino:detalhe_ponto', args=[p.slug]), 
              "slug": p.slug,
-             # NOVO: Adiciona o slug da categoria e a URL do ícone
              "categoria_slug": p.categoria.slug,
              "icone_url": p.categoria.icone.url if p.categoria.icone else None
             }
@@ -126,7 +115,6 @@ def cultura_e_tradicoes_view(request):
         'pontos_geojson': pontos_geojson,
         'tem_pontos': pontos.exists(),
         'breadcrumbs': breadcrumbs,
-        # NOVO: Envia as categorias para o template
         'categorias_filtros': categorias_filtros
     }
     return render(request, 'gerenciamento_destino/html/mapa_interativo.html', context)

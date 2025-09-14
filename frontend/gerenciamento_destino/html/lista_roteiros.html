@@ -1,22 +1,17 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block titulo %}Roteiros Temáticos | Destino Roraima{% endblock %}
-
 {% block css_pagina %}
     <link rel="stylesheet" href="{% static 'gerenciamento_destino/css/destino_shared.css' %}">
     <link rel="stylesheet" href="{% static 'gerenciamento_destino/css/roteiros.css' %}">
 {% endblock %}
-
 {% block conteudo %}
 <div class="container-conteudo">
     {% include 'gerenciamento_destino/html/partials/breadcrumb.html' %}
-
     <div class="painel-roteiros">
         <header class="roteiros-cabecalho">
             <h1>Roteiros Temáticos</h1>
         </header>
-
         {% if roteiros %}
             <div class="roteiros-grid">
                 {% for roteiro in roteiros %}
@@ -36,5 +31,4 @@
     </div>
 </div>
 {% endblock %}
-
 {% block parceiros %}{% endblock parceiros %}

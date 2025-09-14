@@ -1,8 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block titulo %}{{ titulo_pagina }} | Destino Roraima{% endblock %}
-
 {% block css_pagina %}
     <link rel="stylesheet" href="{% static 'gerenciamento_destino/css/destino_shared.css' %}">
     <link rel="stylesheet" href="{% static 'gerenciamento_destino/css/mapa_interativo.css' %}">
@@ -10,17 +8,13 @@
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
     {% endif %}
 {% endblock %}
-
 {% block conteudo %}
 <div class="container-conteudo">
-
     {% include 'gerenciamento_destino/html/partials/breadcrumb.html' %}
-
     <div class="mapa-container">
         <div class="mapa-cabecalho">
             <h1>{{ titulo_pagina }}</h1> 
         </div>
-
         {% if tem_pontos %}
             {% if categorias_filtros %}
             <div class="filtros-mapa-container">
@@ -30,7 +24,6 @@
                 {% endfor %}
             </div>
             {% endif %}
-
             <div id="mapa"></div>
             {{ pontos_geojson|json_script:"pontos-data" }}
         {% else %}
@@ -43,9 +36,7 @@
     </div>
 </div>
 {% endblock %}
-
 {% block parceiros %}{% endblock parceiros %}
-
 {% block js_pagina %}
     {% if tem_pontos %}
         <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -62,29 +53,28 @@
                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             }).addTo(mapa);
 
-            let markersLayer = new L.FeatureGroup(); // Camada para guardar os marcadores
+            let markersLayer = new L.FeatureGroup();
 
-            // Função para criar um ícone personalizado
             function createIcon(iconUrl) {
                 return L.icon({
                     iconUrl: iconUrl,
-                    iconSize: [38, 38], // Tamanho do ícone
-                    iconAnchor: [19, 38], // Ponto do ícone que corresponde à localização
-                    popupAnchor: [0, -42] // Ponto onde o popup deve abrir
+                    iconSize: [38, 38], 
+                    iconAnchor: [19, 38], 
+                    popupAnchor: [0, -42] 
                 });
             }
 
             pontosData.features.forEach(feature => {
                 const props = feature.properties;
                 let markerOptions = {};
-                // Usa ícone personalizado se existir, senão usa o padrão do Leaflet
+                
                 if (props.icone_url) {
                     markerOptions.icon = createIcon(props.icone_url);
                 }
 
                 const marker = L.marker([feature.geometry.coordinates[1], feature.geometry.coordinates[0]], markerOptions);
 
-                marker.feature = feature; // Anexa os dados ao marcador
+                marker.feature = feature; 
 
                 let popupContent = `
                     <div class="popup-ponto-interesse">
@@ -106,7 +96,6 @@
                 mapa.fitBounds(markersLayer.getBounds(), { padding: [50, 50] });
             }
 
-            // Lógica dos Filtros
             const filtroBotoes = document.querySelectorAll('.filtro-mapa-btn');
             filtroBotoes.forEach(btn => {
                 btn.addEventListener('click', function() {

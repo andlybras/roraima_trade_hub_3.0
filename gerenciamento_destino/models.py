@@ -1,11 +1,8 @@
-# gerenciamento_destino/models.py
-
 from django.db import models
 from django.utils.text import slugify
 from tinymce.models import HTMLField
 
 class ConteudoApresentacaoDestino(models.Model):
-    # ... (esta classe permanece sem alterações)
     TIPO_CHOICES = [('IMAGEM', 'Imagem Estática'), ('VIDEO', 'Vídeo (YouTube)')]
     descricao = models.CharField(max_length=200, verbose_name="Descrição Interna")
     tipo_conteudo = models.CharField(max_length=10, choices=TIPO_CHOICES, default='IMAGEM', verbose_name="Tipo de Conteúdo")
@@ -29,7 +26,6 @@ class ConteudoApresentacaoDestino(models.Model):
 
 
 class Categoria(models.Model):
-    # REMOVEMOS A OPÇÃO 'SERVICO' DOS GRUPOS
     GRUPOS = [
         ('NATUREZA', 'Belezas da Natureza'),
         ('CULTURA', 'Cultura e Tradições'),
@@ -51,7 +47,6 @@ class Categoria(models.Model):
 
 
 class PontoDeInteresse(models.Model):
-    # ... (esta classe permanece sem alterações)
     titulo = models.CharField(max_length=200, unique=True, verbose_name="Título do Ponto de Interesse")
     slug = models.SlugField(max_length=255, unique=True, blank=True, help_text="Preenchido automaticamente a partir do título.")
     categoria = models.ForeignKey(Categoria, on_delete=models.PROTECT, verbose_name="Categoria")
@@ -75,7 +70,6 @@ class PontoDeInteresse(models.Model):
 
 
 class ImagemGaleria(models.Model):
-    # ... (esta classe permanece sem alterações)
     ponto_de_interesse = models.ForeignKey(PontoDeInteresse, related_name='galeria_imagens', on_delete=models.CASCADE, verbose_name="Ponto de Interesse")
     imagem = models.ImageField(upload_to='destino/galerias/', verbose_name="Imagem")
     legenda = models.CharField(max_length=150, blank=True, verbose_name="Legenda (Opcional)")
@@ -85,10 +79,7 @@ class ImagemGaleria(models.Model):
         verbose_name = "Imagem da Galeria"
         verbose_name_plural = "Imagens da Galeria"
 
-# O MODELO ServicoTuristico FOI COMPLETAMENTE REMOVIDO
-
 class Roteiro(models.Model):
-    # ... (esta classe permanece sem alterações)
     titulo = models.CharField(max_length=200, unique=True, verbose_name="Título do Roteiro")
     slug = models.SlugField(max_length=255, unique=True, blank=True, help_text="Preenchido automaticamente a partir do título.")
     descricao = HTMLField(verbose_name="Descrição do Roteiro")
@@ -107,7 +98,6 @@ class Roteiro(models.Model):
 
 
 class OrdemPontoRoteiro(models.Model):
-    # ... (esta classe permanece sem alterações)
     roteiro = models.ForeignKey(Roteiro, on_delete=models.CASCADE)
     ponto_de_interesse = models.ForeignKey(PontoDeInteresse, on_delete=models.CASCADE)
     ordem = models.PositiveIntegerField(default=0)

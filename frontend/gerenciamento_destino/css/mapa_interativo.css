@@ -1,10 +1,8 @@
-/* frontend/gerenciamento_destino/css/mapa_interativo.css */
-
 :root {
-    --cor-principal-destino: #2A9D8F; /* Verde Musgo */
-    --cor-destaque-destino: #E76F51; /* Laranja Queimado */
-    --cor-fundo-destino: #FEFBF5;    /* Areia / Bege Claro */
-    --cor-texto-destino: #264653;    /* Cinza Escuro */
+    --cor-principal-destino: #2A9D8F; 
+    --cor-destaque-destino: #E76F51; 
+    --cor-fundo-destino: #FEFBF5;  
+    --cor-texto-destino: #264653; 
 }
 
 .mapa-container {
@@ -13,7 +11,7 @@
     border: 1px solid rgba(228, 248, 255, 0.2);
     border-radius: 40px;
     padding: 30px;
-    min-height: 75vh; /* Garante uma altura mínima para o container */
+    min-height: 75vh;
 }
 
 .mapa-cabecalho {
@@ -33,12 +31,11 @@
 
 #mapa {
     width: 100%;
-    height: 65vh; /* O mapa ocupará 65% da altura da tela */
+    height: 65vh; 
     border-radius: 20px;
     border: 2px solid rgba(228, 248, 255, 0.3);
 }
 
-/* --- Estilização da Janela Pop-up do Mapa --- */
 .leaflet-popup .leaflet-popup-content-wrapper {
     background-color: var(--cor-fundo-destino);
     color: var(--cor-texto-destino);
@@ -47,9 +44,9 @@
 }
 
 .leaflet-popup .leaflet-popup-content {
-    margin: 0; /* Remove a margem padrão para a imagem colar nas bordas */
+    margin: 0; 
     line-height: 1.5;
-    width: 250px !important; /* Define uma largura fixa para o pop-up */
+    width: 250px !important; 
 }
 
 .leaflet-popup .leaflet-popup-tip {
@@ -59,8 +56,8 @@
 .popup-ponto-interesse img {
     width: 100%;
     height: 120px;
-    object-fit: cover; /* Faz a imagem cobrir o espaço, cortando excessos */
-    border-top-left-radius: 12px; /* Arredonda os cantos superiores */
+    object-fit: cover;
+    border-top-left-radius: 12px;
     border-top-right-radius: 12px;
     display: block;
 }
@@ -94,15 +91,14 @@
 }
 
 .popup-ponto-interesse-conteudo a:hover {
-    background-color: #d85f41; /* Tom mais escuro do Laranja */
+    background-color: #d85f41; 
 }
 
-/* --- Estilo para o container "Em Breve" --- */
 .sem-pontos-container {
     text-align: center;
     padding: 60px 40px;
     color: #E4F8FF;
-    background-color: rgba(20, 74, 93, 0.5); /* Fundo translúcido */
+    background-color: rgba(20, 74, 93, 0.5); 
     border-radius: 20px;
     margin-top: 20px;
 }
@@ -119,7 +115,6 @@
     opacity: 0.9;
 }
 
-/* Estilo para o botão "Voltar" */
 .sem-pontos-container a {
     display: inline-block;
     background-color: #E4F8FF;

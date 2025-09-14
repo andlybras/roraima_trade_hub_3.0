@@ -1,12 +1,10 @@
-/* frontend/gerenciamento_destino/css/meu_roteiro.css */
-/* Estilos são muito parecidos com os da página de detalhe de roteiro */
-
 .painel-meu-roteiro {
     background-color: #FEFBF5;
     color: #264653;
     border-radius: 40px;
     padding: 40px 50px;
 }
+
 .roteiro-cabecalho {
     display: flex;
     justify-content: space-between;
@@ -17,12 +15,14 @@
     padding-bottom: 20px;
     border-bottom: 2px solid #e0e0e0;
 }
+
 .roteiro-cabecalho h1 {
     font-family: 'Montserrat', sans-serif;
     font-size: 3rem;
     color: #2A9D8F;
     margin: 0;
 }
+
 .roteiro-acoes .btn-limpar-roteiro {
     background-color: #E76F51;
     color: white;
@@ -33,15 +33,18 @@
     font-weight: bold;
     transition: background-color 0.2s;
 }
+
 .roteiro-acoes .btn-limpar-roteiro:hover {
     background-color: #d85f41;
 }
+
 .roteiro-layout-principal {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 40px;
     align-items: flex-start;
 }
+
 #mapa-meu-roteiro {
     width: 100%;
     height: 70vh;
@@ -49,6 +52,7 @@
     position: sticky;
     top: 100px;
 }
+
 .roteiro-paradas-lista h2 {
     font-family: 'Montserrat', sans-serif;
     color: #2A9D8F;
@@ -57,26 +61,31 @@
     border-bottom: 2px solid #e0e0e0;
     margin-bottom: 25px;
 }
+
 .parada-item {
     display: flex;
     gap: 20px;
     margin-bottom: 25px;
 }
+
 .parada-numero {
     font-family: 'Montserrat', sans-serif;
     font-size: 2rem;
     font-weight: 700;
     color: #E76F51;
 }
+
 .parada-conteudo h4 {
     margin: 0 0 5px 0;
     font-size: 1.2rem;
 }
+
 .parada-conteudo p {
     margin: 0;
     font-size: 0.95rem;
     line-height: 1.6;
 }
+
 .parada-conteudo a {
     font-size: 0.9rem;
     font-weight: bold;
@@ -85,10 +94,12 @@
     display: inline-block;
     margin-top: 8px;
 }
+
 #roteiro-vazio-msg {
     text-align: center;
     padding: 60px 20px;
 }
+
 #roteiro-vazio-msg h2 {
     font-family: 'Montserrat', sans-serif;
     font-size: 2rem;

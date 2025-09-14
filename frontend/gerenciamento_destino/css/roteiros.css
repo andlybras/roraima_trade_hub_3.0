@@ -1,5 +1,3 @@
-/* frontend/gerenciamento_destino/css/roteiros.css */
-
 .painel-roteiros {
     background-color: rgba(20, 74, 93, 0.3);
     backdrop-filter: blur(10px);
@@ -55,8 +53,6 @@
     margin: 0;
     font-size: 1.4rem;
 }
-
-/* Detalhe do Roteiro */
 
 .painel-detalhe-roteiro {
     background-color: #FEFBF5;
@@ -147,7 +143,7 @@
     #mapa-roteiro {
         position: static;
         height: 50vh;
-        order: -1; /* Coloca o mapa em cima na versão mobile */
+        order: -1;
         margin-bottom: 30px;
     }
 }
