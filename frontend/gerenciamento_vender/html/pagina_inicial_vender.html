@@ -37,13 +37,13 @@
     </div>
     <aside class="vender-coluna-lateral">
         <nav class="vender-navegacao-lateral">
-            <a href="#" class="vender-nav-card card-criar-perfil">
-                <img src="{% static 'gerenciamento_vender/icons/icone-vender-perfil.svg' %}" alt="Ícone de perfil empresarial">
-                <span>Cadastre seu Produto</span>
+            <a href="{% url 'vender:criar_perfil_empresarial' %}" class="vender-nav-card card-criar-perfil">
+                <img src="{% static 'gerenciamento_vender/icons/icone-vender-perfil.svg' %}" alt="Ícone de um documento de perfil">
+                <span>Crie seu Perfil Empresarial</span>
             </a>
-            <a href="#" class="vender-nav-card card-acessar-ambiente">
-                <img src="{% static 'gerenciamento_vender/icons/icone-vender-ambiente.svg' %}" alt="Ícone de ambiente empresarial">
-                <span>Encontre Compradores</span>
+            <a href="{% url 'vender:acessar_ambiente_empresarial' %}" class="vender-nav-card card-acessar-ambiente">
+                <img src="{% static 'gerenciamento_vender/icons/icone-vender-ambiente.svg' %}" alt="Ícone de uma porta de entrada">
+                <span>Acesse seu Ambiente Empresarial</span>
             </a>
             <a href="#" class="vender-nav-card card-outras-opcoes">
                 <img src="{% static 'gerenciamento_vender/icons/icone-vender-faq.svg' %}" alt="Ícone de perguntas frequentes">

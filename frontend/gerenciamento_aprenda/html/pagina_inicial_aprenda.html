@@ -37,17 +37,17 @@
     </div>
     <aside class="aprenda-coluna-lateral">
         <nav class="aprenda-navegacao-lateral">
-            <a href="#" class="aprenda-nav-card card-criar-perfil">
+            <a href="{% url 'aprenda:cursos_e_trilhas' %}" class="aprenda-nav-card card-criar-perfil">
                 <img src="{% static 'gerenciamento_aprenda/icons/icone-aprenda-perfil.svg' %}" alt="Ícone de perfil de usuário">
-                <span>Cursos e Materiais</span>
+                <span>Cursos e Trilhas de Aprendizagem</span>
             </a>
-            <a href="#" class="aprenda-nav-card card-acessar-ambiente">
+            <a href="{% url 'aprenda:ambiente_aprendizagem' %}" class="aprenda-nav-card card-acessar-ambiente">
                 <img src="{% static 'gerenciamento_aprenda/icons/icone-aprenda-ambiente.svg' %}" alt="Ícone de ambiente educacional">
-                <span>Trilhas de Aprendizagem</span>
+                <span>Acesse o Ambiente de Aprendizagem</span>
             </a>
-            <a href="#" class="aprenda-nav-card card-outras-opcoes">
+            <a href="{% url 'aprenda:links_uteis' %}" class="aprenda-nav-card card-outras-opcoes">
                 <img src="{% static 'gerenciamento_aprenda/icons/icone-aprenda-opcoes.svg' %}" alt="icone de opções">
-                <span>Conheça outras Opções</span>
+                <span>Links Úteis</span>
             </a>
         </nav>
     </aside>
