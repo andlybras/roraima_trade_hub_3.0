@@ -12,8 +12,9 @@
     <div class="dashboard-container">
         <nav class="dashboard-nav">
             <div class="profile-section">
+                <div class="profile-section">
                 <img src="{% static 'gerenciamento_home/icons/user.svg' %}" alt="Foto do perfil" class="profile-picture">
-                <span class="profile-name">Nome da Empresa</span>
+                <span class="profile-name">{{ dados_empresa.nome_fantasia|default:request.user.email }}</span>
             </div>
             <hr class="nav-separator">
             <ul class="nav-list">
@@ -23,7 +24,14 @@
                 <li class="nav-item"><a href="#" class="nav-link">Vitrine</a></li>
                 <li class="nav-item"><a href="#" class="nav-link">Suporte e Consultoria</a></li>
                 <li class="nav-item"><a href="#" class="nav-link">Autenticação e Segurança</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">Sair</a></li>
+                <li class="nav-item">
+                    <form method="post" action="{% url 'vender:logout' %}" style="margin: 0;">
+                        {% csrf_token %}
+                        <button type="submit" class="nav-link" style="width: 100%; border: none; background: none; text-align: left; cursor: pointer; padding: 15px 20px;">
+                            Sair
+                        </button>
+                    </form>
+                </li>
             </ul>
         </nav>
 
@@ -36,14 +44,13 @@
 
 {% block js_pagina %}
 <script>
+// ... (O bloco de script permanece o mesmo da etapa anterior) ...
 document.addEventListener('DOMContentLoaded', function() {
     const contentArea = document.getElementById('dashboard-content-area');
     const navLinks = document.querySelectorAll('.dashboard-nav .nav-link');
 
-    // Função para carregar conteúdo via AJAX (GET)
     function loadContent(url, setActiveLink = null) {
         contentArea.innerHTML = '<p>Carregando...</p>';
-        
         fetch(url)
             .then(response => response.text())
             .then(html => {
@@ -59,18 +66,16 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     }
 
-    // Event listener para os links da navegação principal
     navLinks.forEach(link => {
         link.addEventListener('click', function(event) {
-            event.preventDefault();
             const url = this.dataset.url;
             if (url) {
+                event.preventDefault();
                 loadContent(url, this);
             }
         });
     });
 
-    // Event Delegation: Observa a área de conteúdo para eventos
     contentArea.addEventListener('click', function(event) {
         const link = event.target.closest('a.ajax-link');
         if (link) {
@@ -82,11 +87,9 @@ document.addEventListener('DOMContentLoaded', function() {
     contentArea.addEventListener('submit', function(event) {
         const form = event.target.closest('#multi-step-form');
         if (form) {
-            event.preventDefault(); // Impede o recarregamento da página
-            
+            event.preventDefault();
             const formData = new FormData(form);
             contentArea.innerHTML = '<p>Salvando e avançando...</p>';
-
             fetch(form.action, {
                 method: 'POST',
                 body: formData,
@@ -94,16 +97,12 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .then(response => response.text())
             .then(html => {
-                contentArea.innerHTML = html; // Carrega a próxima etapa ou a página de sucesso
+                contentArea.innerHTML = html;
             })
-            .catch(error => {
-                console.error('Erro ao enviar o formulário:', error);
-                contentArea.innerHTML = '<p style="color: red;">Erro ao enviar os dados. Tente novamente.</p>';
-            });
+            .catch(error => console.error('Erro ao enviar o formulário:', error));
         }
     });
 
-    // Carrega a primeira aba ("Visão Geral") por padrão
     const initialLink = document.querySelector('.dashboard-nav .nav-link[data-url]');
     if (initialLink) {
         loadContent(initialLink.dataset.url, initialLink);

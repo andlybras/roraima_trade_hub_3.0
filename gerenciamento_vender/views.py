@@ -1,8 +1,7 @@
-# gerenciamento_vender/views.py
-
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.models import User 
+from django.contrib.auth.decorators import login_required
 from .models import ConteudoApresentacaoVender, PerguntaFrequente, PerguntaUsuario, DadosEmpresariais
 from .forms import DadosEmpresaForm, DadosResponsavelForm, DadosComplementaresForm, UserRegistrationForm
 from django.db.models import Q
@@ -11,7 +10,7 @@ from django.urls import reverse
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
-from django.template.loader import render_to_string # Importado apenas uma vez
+from django.template.loader import render_to_string
 from .tokens import account_activation_token
 
 def pagina_inicial_vender(request):
@@ -69,7 +68,6 @@ def ver_resposta_view(request, identificador):
 def cadastro_sucesso_view(request):
     return render(request, 'gerenciamento_vender/html/cadastro_sucesso.html')
 
-# --- FUNÇÃO CORRIGIDA ---
 def criar_perfil_empresarial_view(request):
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
@@ -95,11 +93,9 @@ def criar_perfil_empresarial_view(request):
             
             DadosEmpresariais.objects.create(usuario=novo_usuario)
             return redirect('vender:cadastro_sucesso')
-        # Se o formulário NÃO for válido, a função continua e renderiza o template com o formulário preenchido e os erros
     else:
         form = UserRegistrationForm()
-        
-    # Esta linha agora é executada para GET requests E para POST requests inválidos
+
     return render(request, 'gerenciamento_vender/html/cadastro.html', {'form': form})
 
 def ativar_conta_view(request, uidb64, token):
@@ -119,32 +115,45 @@ def ativar_conta_view(request, uidb64, token):
 def acessar_ambiente_empresarial_view(request):
     return HttpResponse("<h1>Página de Acesso ao Ambiente Empresarial (Em Construção)</h1>")
 
+@login_required
 def dashboard_view(request):
     return render(request, 'gerenciamento_vender/html/dashboard.html')
 
+@login_required
 def dashboard_visao_geral(request):
-    # ... (código existente da Visão Geral) ...
-    status_reg = 'PENDENTE'
+    dados_empresa, created = DadosEmpresariais.objects.get_or_create(usuario=request.user)
+    status_reg_display = dict(DadosEmpresariais.STATUS_CHOICES).get(dados_empresa.status)
     status_vit = 'INATIVA'
-    status_reg_display = {'ATIVO': 'REGISTRO ATIVO', 'PENDENTE': 'PENDENTE DE DADOS', 'ANALISE': 'EM ANÁLISE'}.get(status_reg, 'INDEFINIDO')
     status_vit_display = {'PÚBLICA': 'VITRINE PÚBLICA', 'INATIVA': 'VITRINE INATIVA'}.get(status_vit, 'INDEFINIDO')
-    context = { 'status_registro': status_reg, 'status_registro_display': status_reg_display, 'status_vitrine': status_vit, 'status_vitrine_display': status_vit_display, 'selos': [{'nome': 'Empresa Roraimense', 'icone': 'gerenciamento_vender/icons/selo-roraimense.svg', 'conquistado': True}, {'nome': 'Pronta para Exportar', 'icone': 'gerenciamento_vender/icons/selo-exportador.svg', 'conquistado': True}, {'nome': 'Selo Verde', 'icone': 'gerenciamento_vender/icons/selo-roraimense.svg', 'conquistado': False}], 'notificacoes': ['Sua vitrine foi publicada com sucesso!', 'Um novo documento de suporte foi adicionado.', 'Seu registro foi ativado em 14/09/2025.'], 'historico': ['15/09/2025 - Vitrine publicada.', '14/09/2025 - Registro da empresa ativado.', '12/09/2025 - Dados empresariais enviados para análise.', '10/09/2025 - Conta criada.']}
+    context = {
+        'status_registro': dados_empresa.status,
+        'status_registro_display': status_reg_display,
+        'status_vitrine': status_vit,
+        'status_vitrine_display': status_vit_display,
+        'selos': [
+            {'nome': 'Empresa Roraimense', 'icone': 'gerenciamento_vender/icons/selo-roraimense.svg', 'conquistado': True},
+            {'nome': 'Pronta para Exportar', 'icone': 'gerenciamento_vender/icons/selo-exportador.svg', 'conquistado': True},
+            {'nome': 'Selo Verde', 'icone': 'gerenciamento_vender/icons/selo-roraimense.svg', 'conquistado': False},
+        ],
+        'notificacoes': ['Bem-vindo(a) ao seu painel!', 'Para começar, preencha seus dados empresariais.'],
+        'historico': [f"{dados_empresa.data_criacao.strftime('%d/%m/%Y')} - Conta criada."]
+    }
     return render(request, 'gerenciamento_vender/html/dashboard_partials/visao_geral.html', context)
 
+@login_required
 def dashboard_dados_empresariais(request):
-    # ... (código existente) ...
-    cadastro_rascunho = DadosEmpresariais.objects.create()
-    request.session['cadastro_id'] = cadastro_rascunho.id
+    dados_empresa, created = DadosEmpresariais.objects.get_or_create(usuario=request.user)
+    request.session['cadastro_id'] = dados_empresa.id
     return redirect('vender:dados_empresariais_form', etapa=1)
 
+@login_required
 def dados_empresariais_form_view(request, etapa):
-    # ... (código existente) ...
     forms = { 1: DadosEmpresaForm, 2: DadosResponsavelForm, 3: DadosComplementaresForm }
     form_class = forms.get(etapa)
     cadastro_id = request.session.get('cadastro_id')
     if not cadastro_id:
         return redirect('vender:dashboard_dados_empresariais')
-    cadastro = get_object_or_404(DadosEmpresariais, id=cadastro_id)
+    cadastro = get_object_or_404(DadosEmpresariais, id=cadastro_id, usuario=request.user) # Mais segurança
     if request.method == 'POST':
         form = form_class(request.POST, request.FILES, instance=cadastro)
         if form.is_valid():
