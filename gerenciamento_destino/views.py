@@ -20,11 +20,35 @@ def detalhe_ponto_view(request, ponto_slug):
     context = {'ponto': ponto, 'breadcrumbs': breadcrumbs}
     return render(request, 'gerenciamento_destino/html/detalhe_ponto.html', context)
 
-def lista_roteiros_view(request):
-    roteiros = Roteiro.objects.filter(publicado=True)
-    breadcrumbs = [{'nome': 'Início', 'url': reverse('gerenciamento_home:home')},{'nome': 'Destino Roraima', 'url': reverse('destino:pagina_inicial')},{'nome': 'Roteiros Temáticos', 'url': ''}]
-    context = {'roteiros': roteiros, 'breadcrumbs': breadcrumbs}
-    return render(request, 'gerenciamento_destino/html/lista_roteiros.html', context)
+def detalhe_roteiro_view(request, roteiro_slug):
+    roteiro = get_object_or_404(Roteiro, slug=roteiro_slug, publicado=True)
+    pontos_ordenados = roteiro.pontos_de_interesse.order_by('ordempontoroteiro__ordem')
+
+    breadcrumbs = [
+        {'nome': 'Início', 'url': reverse('gerenciamento_home:home')},
+        {'nome': 'Destino Roraima', 'url': reverse('destino:pagina_inicial')},
+        {'nome': 'Roteiros Temáticos', 'url': reverse('destino:lista_roteiros')},
+        {'nome': roteiro.titulo, 'url': ''},
+    ]
+    
+    # ATUALIZADO: GeoJSON simplificado, enviando apenas o necessário
+    pontos_geojson = {"type": "FeatureCollection", "features": [
+        {"type": "Feature",
+         "geometry": {"type": "Point", "coordinates": [p.longitude, p.latitude]},
+         "properties": {
+             "titulo": p.titulo,
+             "detalhe_url": reverse('destino:detalhe_ponto', args=[p.slug]),
+         }
+        } for p in pontos_ordenados
+    ]}
+    
+    context = {
+        'roteiro': roteiro,
+        'pontos': pontos_ordenados,
+        'pontos_geojson': pontos_geojson,
+        'breadcrumbs': breadcrumbs
+    }
+    return render(request, 'gerenciamento_destino/html/detalhe_roteiro.html', context)
 
 def detalhe_roteiro_view(request, roteiro_slug):
     roteiro = get_object_or_404(Roteiro, slug=roteiro_slug, publicado=True)
@@ -141,3 +165,18 @@ def cultura_e_tradicoes_view(request):
         'categorias_filtros': categorias_filtros
     }
     return render(request, 'gerenciamento_destino/html/mapa_interativo.html', context)
+
+def lista_roteiros_view(request):
+    roteiros = Roteiro.objects.filter(publicado=True).order_by('titulo')
+    
+    breadcrumbs = [
+        {'nome': 'Início', 'url': reverse('gerenciamento_home:home')},
+        {'nome': 'Destino Roraima', 'url': reverse('destino:pagina_inicial')},
+        {'nome': 'Roteiros Temáticos', 'url': ''},
+    ]
+
+    context = {
+        'roteiros': roteiros,
+        'breadcrumbs': breadcrumbs,
+    }
+    return render(request, 'gerenciamento_destino/html/lista_roteiros.html', context)

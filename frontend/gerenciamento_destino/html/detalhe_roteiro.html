@@ -59,42 +59,37 @@
 
 {{ pontos_geojson|json_script:"pontos-data-roteiro" }}
 {% endblock %}
+
 {% block parceiros %}{% endblock parceiros %}
+
 {% block js_pagina %}
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const pontosDataElement = document.getElementById('pontos-data-roteiro');
-            if (!pontosDataElement) return;
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const pontosDataElement = document.getElementById('pontos-data-roteiro');
+    if (!pontosDataElement) return;
 
-            const pontosData = JSON.parse(pontosDataElement.textContent);
-            if (pontosData.features.length === 0) return;
+    const pontosData = JSON.parse(pontosDataElement.textContent);
+    if (pontosData.features.length === 0) return;
 
-            const mapa = L.map('mapa-roteiro');
+    const mapa = L.map('mapa-roteiro');
+    setTimeout(function() { mapa.invalidateSize(); }, 100);
 
-            setTimeout(function() { mapa.invalidateSize(); }, 100);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 18,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(mapa);
 
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                maxZoom: 18,
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            }).addTo(mapa);
+    const pontosLayer = L.geoJSON(pontosData, {
+        onEachFeature: function(feature, layer) {
+            // ATUALIZADO: Removido o link "Ver Detalhes"
+            const props = feature.properties;
+            let popupContent = `<b>${props.titulo}</b>`;
+            layer.bindPopup(popupContent);
+        }
+    }).addTo(mapa);
 
-            const pontosLayer = L.geoJSON(pontosData, {
-                onEachFeature: function(feature, layer) {
-                    const props = feature.properties;
-                    let popupContent = `
-                        <div class="popup-ponto-interesse" style="width: 200px;">
-                            <div class="popup-ponto-interesse-conteudo" style="padding: 10px;">
-                                <h3 style="font-size: 1rem;">${props.titulo}</h3>
-                                <a href="${props.detalhe_url}">Ver Detalhes</a>
-                            </div>
-                        </div>
-                    `;
-                    layer.bindPopup(popupContent);
-                }
-            }).addTo(mapa);
-
-            mapa.fitBounds(pontosLayer.getBounds(), { padding: [50, 50] });
-        });
-    </script>
+    mapa.fitBounds(pontosLayer.getBounds(), { padding: [50, 50] });
+});
+</script>
 {% endblock %}

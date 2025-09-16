@@ -85,14 +85,22 @@
 .popup-ponto-interesse-conteudo a {
     display: inline-block;
     background-color: var(--cor-destaque-destino);
-    color: white;
-    padding: 6px 12px;
+    color: white; /* Cor base */
+    padding: 8px 16px; /* Aumentado um pouco o padding */
     border-radius: 20px;
     text-decoration: none;
     font-weight: 600;
-    font-size: 0.8rem;
+    font-size: 0.9rem; /* Aumentado um pouco a fonte */
     transition: background-color 0.2s;
+    margin: 5px; /* Adicionado espaçamento */
 }
+
+.popup-ponto-interesse-conteudo a,
+.popup-ponto-interesse-conteudo a:link,
+.popup-ponto-interesse-conteudo a:visited {
+    color: white !important; 
+}
+
 
 .popup-ponto-interesse-conteudo a:hover {
     background-color: #d85f41;
