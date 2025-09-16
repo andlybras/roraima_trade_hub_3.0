@@ -1,31 +1,37 @@
 {% extends 'base.html' %}
 {% load static %}
+
 {% block titulo %}{{ titulo_pagina }} | Destino Roraima{% endblock %}
+
 {% block css_pagina %}
-    <link rel="stylesheet" href="{% static 'gerenciamento_destino/css/destino_shared.css' %}">
-    <link rel="stylesheet" href="{% static 'gerenciamento_destino/css/mapa_interativo.css' %}">
-    {% if tem_pontos %}
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
-    {% endif %}
+<link rel="stylesheet" href="{% static 'gerenciamento_destino/css/destino_shared.css' %}">
+<link rel="stylesheet" href="{% static 'gerenciamento_destino/css/mapa_interativo.css' %}">
+{% if tem_pontos %}
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+{% endif %}
 {% endblock %}
+
 {% block conteudo %}
 <div class="container-conteudo">
     {% include 'gerenciamento_destino/html/partials/breadcrumb.html' %}
     <div class="mapa-container">
         <div class="mapa-cabecalho">
-            <h1>{{ titulo_pagina }}</h1> 
+            <h1>{{ titulo_pagina }}</h1>
         </div>
+
         {% if tem_pontos %}
             {% if categorias_filtros %}
-            <div class="filtros-mapa-container">
-                <button class="filtro-mapa-btn active" data-categoria-slug="todos">Mostrar Todos</button>
-                {% for categoria in categorias_filtros %}
-                    <button class="filtro-mapa-btn" data-categoria-slug="{{ categoria.slug }}">{{ categoria.nome }}</button>
-                {% endfor %}
-            </div>
+                <div class="filtros-mapa-container">
+                    <button class="filtro-mapa-btn active" data-categoria-slug="todos">Mostrar Todos</button>
+                    {% for categoria in categorias_filtros %}
+                        <button class="filtro-mapa-btn" data-categoria-slug="{{ categoria.slug }}">{{ categoria.nome }}</button>
+                    {% endfor %}
+                </div>
             {% endif %}
+            
             <div id="mapa"></div>
             {{ pontos_geojson|json_script:"pontos-data" }}
+            
         {% else %}
             <div class="sem-pontos-container">
                 <h2>Em Breve</h2>
@@ -36,83 +42,12 @@
     </div>
 </div>
 {% endblock %}
+
 {% block parceiros %}{% endblock parceiros %}
+
 {% block js_pagina %}
-    {% if tem_pontos %}
-        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-        <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const pontosDataElement = document.getElementById('pontos-data');
-            const pontosData = JSON.parse(pontosDataElement.textContent);
-            const mapa = L.map('mapa').setView([2.8235, -60.6758], 9);
-
-            setTimeout(function() { mapa.invalidateSize(); }, 100);
-
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                maxZoom: 18,
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            }).addTo(mapa);
-
-            let markersLayer = new L.FeatureGroup();
-
-            function createIcon(iconUrl) {
-                return L.icon({
-                    iconUrl: iconUrl,
-                    iconSize: [38, 38], 
-                    iconAnchor: [19, 38], 
-                    popupAnchor: [0, -42] 
-                });
-            }
-
-            pontosData.features.forEach(feature => {
-                const props = feature.properties;
-                let markerOptions = {};
-                
-                if (props.icone_url) {
-                    markerOptions.icon = createIcon(props.icone_url);
-                }
-
-                const marker = L.marker([feature.geometry.coordinates[1], feature.geometry.coordinates[0]], markerOptions);
-
-                marker.feature = feature; 
-
-                let popupContent = `
-                    <div class="popup-ponto-interesse">
-                        ${props.imagem_url ? `<img src="${props.imagem_url}" alt="${props.titulo}">` : ''}
-                        <div class="popup-ponto-interesse-conteudo">
-                            <h3>${props.titulo}</h3>
-                            <p>${props.descricao_curta}</p>
-                            <a href="${props.detalhe_url}">Ver Detalhes</a>
-                            <a href="#" class="btn-add-roteiro" data-slug="${props.slug}">Adicionar ao Roteiro</a>
-                        </div>
-                    </div>
-                `;
-                marker.bindPopup(popupContent);
-                markersLayer.addLayer(marker);
-            });
-
-            markersLayer.addTo(mapa);
-            if (markersLayer.getLayers().length > 0) {
-                mapa.fitBounds(markersLayer.getBounds(), { padding: [50, 50] });
-            }
-
-            const filtroBotoes = document.querySelectorAll('.filtro-mapa-btn');
-            filtroBotoes.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    filtroBotoes.forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-                    const categoriaSlug = this.dataset.categoriaSlug;
-
-                    markersLayer.eachLayer(function(layer) {
-                        if (categoriaSlug === 'todos' || layer.feature.properties.categoria_slug === categoriaSlug) {
-                            layer.getElement().style.display = ''; // Mostra o marcador
-                        } else {
-                            layer.getElement().style.display = 'none'; // Esconde o marcador
-                        }
-                    });
-                });
-            });
-        });
-        </script>
-    {% endif %}
+{% if tem_pontos %}
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="{% static 'gerenciamento_destino/js/mapa_interativo.js' %}"></script>
+{% endif %}
 {% endblock %}
