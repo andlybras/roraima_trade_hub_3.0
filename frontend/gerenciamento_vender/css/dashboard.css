@@ -71,6 +71,10 @@
 .dashboard-nav .nav-link:hover { background-color: rgba(228, 248, 255, 0.1); }
 .dashboard-nav .nav-link.active { background-color: #E4F8FF; color: #144A5D; font-weight: 700; }
 
+/* frontend/gerenciamento_vender/css/dashboard.css */
+
+/* ... (O início do arquivo permanece o mesmo) ... */
+
 /* Coluna da Direita: Conteúdo */
 .dashboard-content {
     flex-grow: 1;
@@ -80,59 +84,74 @@
     color: #144A5D;
 }
 
-.dashboard-content > * {
-    animation: fadeIn 0.5s ease-in-out;
-}
-
+/* ... (Animação fadeIn permanece a mesma) ... */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* --- ESTILOS CORRIGIDOS PARA A ABA VISÃO GERAL --- */
+
+/* --- VERSÃO FINAL: Layout em Grade 2x2 Corrigido --- */
 .dashboard-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr; /* CORREÇÃO: Força as duas linhas a terem a mesma altura */
+    gap: 30px;
+    min-height: 550px; /* Garante uma altura mínima em telas menores */
+}
+
+/* Células da grade */
+.status-cards-container { grid-area: 1 / 1 / 2 / 2; }
+.card-notificacoes { grid-area: 1 / 2 / 2 / 3; }
+.card-selos { grid-area: 2 / 1 / 3 / 2; }
+.card-historico { grid-area: 2 / 2 / 3 / 3; }
+
+.status-cards-container {
+    display: flex;
+    flex-direction: column;
     gap: 30px;
 }
 
-/* Card base será branco com sombra, como na sua imagem de referência */
 .summary-card {
-    background-color: #FFFFFF;
     border-radius: 20px;
     padding: 25px;
-    box-shadow: 0 4px 20px rgba(20, 74, 93, 0.08);
-    transition: transform 0.3s ease;
+    color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
 }
 
-.summary-card:hover {
-    transform: translateY(-5px);
-}
-
-/* Classes de cores para os cards que precisam */
-.summary-card.card-green { background-color: #2A9D8F; color: #FFFFFF; }
-.summary-card.card-orange { background-color: #E76F51; color: #FFFFFF; }
-.summary-card.card-dark-teal { background-color: #264653; color: #FFFFFF; }
+/* Classes de Cores */
+.summary-card.card-green { background-color: #2A9D8F; }
+.summary-card.card-orange { background-color: #E76F51; }
+.summary-card.card-dark-teal { background-color: #264653; }
 
 .summary-card h3 {
     font-family: 'Montserrat', sans-serif;
     font-size: 1.3rem;
-    color: #144A5D; /* Título escuro para cards brancos */
+    color: #144A5D;
     margin-top: 0;
     margin-bottom: 20px;
     border-bottom: 1px solid #eef3f6;
     padding-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-/* Ajuste para títulos em cards coloridos */
 .summary-card.card-green h3,
 .summary-card.card-orange h3,
 .summary-card.card-dark-teal h3 {
     color: #FFFFFF;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    border-bottom-color: rgba(255, 255, 255, 0.3);
 }
 
-/* Card de Status: Indicador interno colorido */
+/* Card de Status */
+.status-card {
+    background-color: #FFFFFF;
+    box-shadow: 0 4px 20px rgba(20, 74, 93, 0.08);
+    flex-grow: 1;
+}
+
 .status-indicator {
     display: flex;
     align-items: center;
@@ -140,42 +159,61 @@
     padding: 20px;
     border-radius: 15px;
     font-weight: 700;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     text-align: center;
+    flex-grow: 1;
 }
-
-/* Cores CORRIGIDAS para os indicadores, com texto branco */
 .status-indicator.ativo { background-color: #2A9D8F; color: #FFFFFF; }
 .status-indicator.pendente { background-color: #f4a261; color: #FFFFFF; }
 .status-indicator.analise { background-color: #264653; color: #FFFFFF; }
 
-
-/* Card de Selos e Listas */
-.seals-container, .seal-item {
-    display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;
+.notification-icon {
+    width: 12px;
+    height: 12px;
+    background-color: #FFFFFF;
+    border-radius: 50%;
 }
-.seal-item { text-align: center; flex-direction: column; }
-.seal-item img { width: 60px; height: 60px; transition: filter 0.3s ease; }
+
+.info-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex-grow: 1; /* Faz a lista ocupar o espaço vertical */
+    overflow-y: auto; /* Adiciona rolagem se o conteúdo for maior */
+    padding-right: 10px;
+}
+
+/* Selos */
+.seals-container {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-grow: 1; /* Força o container de selos a preencher o espaço vertical */
+}
+.seal-item { text-align: center; }
+.seal-item img { width: 60px; height: 60px; }
 .seal-item.inactive img { filter: grayscale(100%) opacity(0.4); }
 .seal-item span {
     display: block; font-size: 0.8rem; margin-top: 5px; font-weight: 600;
 }
+.summary-card.card-dark-teal .seal-item span { color: #FFFFFF; }
 
-/* Ajuste para texto dos selos em cards coloridos */
-.summary-card.card-dark-teal .seal-item span {
-    color: #FFFFFF;
+/* Barra de Rolagem Personalizada */
+.info-list::-webkit-scrollbar {
+    width: 8px;
 }
-
-.info-list {
-    list-style: none; padding: 0; margin: 0; max-height: 200px; overflow-y: auto;
+.info-list::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
 }
-.info-list li {
-    padding: 10px 5px; border-bottom: 1px solid #eef3f6; font-size: 0.95rem;
+.info-list::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 10px;
+    border: 2px solid transparent;
+    background-clip: content-box;
 }
-/* Ajuste para texto das listas em cards coloridos */
-.summary-card.card-green .info-list li,
-.summary-card.card-orange .info-list li {
-    color: #FFFFFF;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+.info-list::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.8);
 }
-.info-list li:last-child { border-bottom: none; }
