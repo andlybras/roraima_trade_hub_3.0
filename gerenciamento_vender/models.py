@@ -113,3 +113,68 @@ class PerguntaUsuario(models.Model):
         verbose_name = "Pergunta de Usuário"
         verbose_name_plural = "Perguntas de Usuários"
         ordering = ['-data_envio']
+        
+class DadosEmpresariais(models.Model):
+    STATUS_CHOICES = [
+        ('PENDENTE', 'Pendente de preenchimento'),
+        ('EM_ANALISE', 'Em Análise'),
+        ('APROVADO', 'Aprovado'),
+        ('REAVALIACAO', 'Aprovado (em Reavaliação)'),
+    ]
+
+    # Relacionamento com o usuário (será ajustado quando tivermos autenticação)
+    # Por enquanto, este campo não é obrigatório para podermos testar.
+    usuario = models.OneToOneField(
+        'auth.User', 
+        on_delete=models.CASCADE, 
+        verbose_name="Usuário",
+        null=True, blank=True 
+    )
+
+    status = models.CharField(
+        max_length=20, 
+        choices=STATUS_CHOICES, 
+        default='PENDENTE', 
+        verbose_name="Status do Cadastro"
+    )
+
+    # Etapa 1: Dados da Empresa
+    nome_fantasia = models.CharField(max_length=255, verbose_name="Nome Fantasia")
+    razao_social = models.CharField(max_length=255, verbose_name="Razão Social")
+    cnpj = models.CharField(max_length=18, verbose_name="CNPJ")
+    inscricao_estadual = models.CharField(max_length=20, verbose_name="Inscrição Estadual")
+    atividade_principal = models.TextField(verbose_name="Atividade Comercial Principal")
+    atividades_secundarias = models.TextField(verbose_name="Atividades Comerciais Secundárias", blank=True)
+    documento_comprobatorio_empresa = models.FileField(
+        upload_to='documentos/empresa/', 
+        verbose_name="Documento Comprobatório da Empresa"
+    )
+
+    # Etapa 2: Dados do Responsável
+    nome_responsavel = models.CharField(max_length=255, verbose_name="Nome Completo do Responsável")
+    cpf_responsavel = models.CharField(max_length=14, verbose_name="CPF do Responsável")
+    cargo_responsavel = models.CharField(max_length=100, verbose_name="Cargo do Responsável")
+    email_responsavel = models.EmailField(verbose_name="E-mail para Contato Direto")
+    telefone_responsavel = models.CharField(max_length=20, verbose_name="Telefone/WhatsApp para Contato")
+    documento_vinculo_responsavel = models.FileField(
+        upload_to='documentos/responsavel/', 
+        verbose_name="Documento Comprobatório do Vínculo"
+    )
+
+    # Etapa 3: Dados Complementares
+    endereco = models.TextField(verbose_name="Endereço Completo")
+    telefone_institucional = models.CharField(max_length=20, blank=True, verbose_name="Telefone Institucional")
+    email_institucional = models.EmailField(blank=True, verbose_name="E-mail Institucional")
+    website = models.URLField(blank=True, verbose_name="Website")
+    apresentacao_empresa = models.TextField(blank=True, verbose_name="Apresentação da Empresa")
+
+    # Datas de controle
+    data_criacao = models.DateTimeField(auto_now_add=True)
+    data_atualizacao = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.nome_fantasia or self.razao_social
+
+    class Meta:
+        verbose_name = "Dados Empresariais"
+        verbose_name_plural = "Dados Empresariais"

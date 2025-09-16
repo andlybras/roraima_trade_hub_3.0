@@ -11,7 +11,6 @@
 <div class="container-conteudo">
     <div class="dashboard-container">
         <nav class="dashboard-nav">
-
             <div class="profile-section">
                 <img src="{% static 'gerenciamento_home/icons/user.svg' %}" alt="Foto do perfil" class="profile-picture">
                 <span class="profile-name">Nome da Empresa</span>
@@ -41,13 +40,18 @@ document.addEventListener('DOMContentLoaded', function() {
     const contentArea = document.getElementById('dashboard-content-area');
     const navLinks = document.querySelectorAll('.dashboard-nav .nav-link');
 
-    // Função para carregar conteúdo via AJAX
-    function loadContent(url) {
+    // Função para carregar conteúdo via AJAX (GET)
+    function loadContent(url, setActiveLink = null) {
         contentArea.innerHTML = '<p>Carregando...</p>';
+        
         fetch(url)
             .then(response => response.text())
             .then(html => {
                 contentArea.innerHTML = html;
+                if (setActiveLink) {
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    setActiveLink.classList.add('active');
+                }
             })
             .catch(error => {
                 console.error('Erro ao carregar o conteúdo:', error);
@@ -55,26 +59,54 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     }
 
-    // Adiciona o evento de clique a cada link da navegação
+    // Event listener para os links da navegação principal
     navLinks.forEach(link => {
         link.addEventListener('click', function(event) {
             event.preventDefault();
-            
             const url = this.dataset.url;
-            if (!url) return;
-
-            navLinks.forEach(l => l.classList.remove('active'));
-            this.classList.add('active');
-
-            loadContent(url);
+            if (url) {
+                loadContent(url, this);
+            }
         });
+    });
+
+    // Event Delegation: Observa a área de conteúdo para eventos
+    contentArea.addEventListener('click', function(event) {
+        const link = event.target.closest('a.ajax-link');
+        if (link) {
+            event.preventDefault();
+            loadContent(link.href);
+        }
+    });
+
+    contentArea.addEventListener('submit', function(event) {
+        const form = event.target.closest('#multi-step-form');
+        if (form) {
+            event.preventDefault(); // Impede o recarregamento da página
+            
+            const formData = new FormData(form);
+            contentArea.innerHTML = '<p>Salvando e avançando...</p>';
+
+            fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: { 'X-CSRFToken': form.querySelector('[name=csrfmiddlewaretoken]').value },
+            })
+            .then(response => response.text())
+            .then(html => {
+                contentArea.innerHTML = html; // Carrega a próxima etapa ou a página de sucesso
+            })
+            .catch(error => {
+                console.error('Erro ao enviar o formulário:', error);
+                contentArea.innerHTML = '<p style="color: red;">Erro ao enviar os dados. Tente novamente.</p>';
+            });
+        }
     });
 
     // Carrega a primeira aba ("Visão Geral") por padrão
     const initialLink = document.querySelector('.dashboard-nav .nav-link[data-url]');
     if (initialLink) {
-        initialLink.classList.add('active');
-        loadContent(initialLink.dataset.url);
+        loadContent(initialLink.dataset.url, initialLink);
     }
 });
 </script>

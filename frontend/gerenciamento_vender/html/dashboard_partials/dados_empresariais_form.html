@@ -1,0 +1,52 @@
+{% load static %}
+
+{% if etapa == 1 %}
+    <h1>Dados Empresariais</h1>
+    <p>Para ter acesso a todas as funcionalidades da plataforma, por favor, preencha os dados da sua empresa. As informações passarão por uma breve análise de nossa equipe.</p>
+{% endif %}
+
+<div style="margin-top: 30px;">
+    
+    <div style="margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid #e1eef2;">
+        <h3 style="font-family: 'Montserrat', sans-serif; font-size: 1.3rem; color: #144A5D;">
+            Etapa {{ etapa }} de {{ total_etapas }}: 
+            {% if etapa == 1 %}Dados da Empresa
+            {% elif etapa == 2 %}Dados do Responsável
+            {% elif etapa == 3 %}Dados Complementares
+            {% endif %}
+        </h3>
+    </div>
+
+    <form id="multi-step-form" method="post" action="{% url 'vender:dados_empresariais_form' etapa=etapa %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}{% if field.field.required %} <span style="color: red;">*</span>{% endif %}</label>
+                {{ field }}
+                {% if field.help_text %}
+                    <small style="color: #4A6E7F; padding-left: 15px;">{{ field.help_text }}</small>
+                {% endif %}
+                {% if field.errors %}
+                    <div style="color: #D8000C; padding-left: 15px; font-size: 0.9rem;">{{ field.errors.as_text }}</div>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        <div style="display: flex; justify-content: space-between; margin-top: 30px;">
+            {% if etapa > 1 %}
+                <a href="{% url 'vender:dados_empresariais_form' etapa=etapa|add:'-1' %}" class="botao-voltar-branco ajax-link" style="background-color: #d1ecf1;">&larr; Etapa Anterior</a>
+            {% else %}
+                <span></span> {# Apenas para alinhar o botão da direita #}
+            {% endif %}
+
+            <button type="submit" class="botao-voltar-branco form-button">
+                {% if etapa == 3 %}
+                    Enviar para Análise
+                {% else %}
+                    Próximo Passo &rarr;
+                {% endif %}
+            </button>
+        </div>
+    </form>
+</div>

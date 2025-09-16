@@ -1,8 +1,7 @@
-# gerenciamento_vender/views.py
-
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
-from .models import ConteudoApresentacaoVender, PerguntaFrequente, PerguntaUsuario
+from .models import ConteudoApresentacaoVender, PerguntaFrequente, PerguntaUsuario, DadosEmpresariais
+from .forms import DadosEmpresaForm, DadosResponsavelForm, DadosComplementaresForm
 from django.db.models import Q
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
@@ -85,46 +84,72 @@ def acessar_ambiente_empresarial_view(request):
 # Adicione estas novas funções no final de gerenciamento_vender/views.py
 
 def dashboard_view(request):
-    """
-    Renderiza a "casca" principal do dashboard.
-    """
     return render(request, 'gerenciamento_vender/html/dashboard.html')
 
-# Em gerenciamento_vender/views.py, substitua a função dashboard_visao_geral
-
 def dashboard_visao_geral(request):
-    """
-    Renderiza APENAS o conteúdo da aba "Visão Geral" com dados provisórios.
-    """
-    # Estes dados são provisórios. No futuro, virão do banco de dados.
-    context = {
-        'status_registro': 'ATIVO', # Mude para 'PENDENTE' ou 'ANALISE' para testar
-        'status_vitrine': 'PÚBLICA', # Mude para 'INATIVA' para testar
-        'selos': [
-            {'nome': 'Empresa Roraimense', 'icone': 'gerenciamento_vender/icons/selo-roraimense.svg', 'conquistado': True},
-            {'nome': 'Pronta para Exportar', 'icone': 'gerenciamento_vender/icons/selo-exportador.svg', 'conquistado': True},
-            {'nome': 'Selo Verde', 'icone': 'gerenciamento_vender/icons/selo-roraimense.svg', 'conquistado': False},
-        ],
-        'notificacoes': [
-            'Sua vitrine foi publicada com sucesso!',
-            'Um novo documento de suporte foi adicionado.',
-            'Seu registro foi ativado em 14/09/2025.'
-        ],
-        'historico': [
-            '15/09/2025 - Vitrine publicada.',
-            '14/09/2025 - Registro da empresa ativado.',
-            '12/09/2025 - Dados empresariais enviados para análise.',
-            '10/09/2025 - Conta criada.',
-        ]
-    }
+    # (código existente da Visão Geral, sem alterações)
+    status_reg = 'PENDENTE'
+    status_vit = 'INATIVA'
+    status_reg_display = {'ATIVO': 'REGISTRO ATIVO', 'PENDENTE': 'PENDENTE DE DADOS', 'ANALISE': 'EM ANÁLISE'}.get(status_reg, 'INDEFINIDO')
+    status_vit_display = {'PÚBLICA': 'VITRINE PÚBLICA', 'INATIVA': 'VITRINE INATIVA'}.get(status_vit, 'INDEFINIDO')
+    context = { 'status_registro': status_reg, 'status_registro_display': status_reg_display, 'status_vitrine': status_vit, 'status_vitrine_display': status_vit_display, 'selos': [{'nome': 'Empresa Roraimense', 'icone': 'gerenciamento_vender/icons/selo-roraimense.svg', 'conquistado': True}, {'nome': 'Pronta para Exportar', 'icone': 'gerenciamento_vender/icons/selo-exportador.svg', 'conquistado': True}, {'nome': 'Selo Verde', 'icone': 'gerenciamento_vender/icons/selo-roraimense.svg', 'conquistado': False}], 'notificacoes': ['Sua vitrine foi publicada com sucesso!', 'Um novo documento de suporte foi adicionado.', 'Seu registro foi ativado em 14/09/2025.'], 'historico': ['15/09/2025 - Vitrine publicada.', '14/09/2025 - Registro da empresa ativado.', '12/09/2025 - Dados empresariais enviados para análise.', '10/09/2025 - Conta criada.']}
     return render(request, 'gerenciamento_vender/html/dashboard_partials/visao_geral.html', context)
 
-def dashboard_dados_empresariais(request):
-    """
-    Renderiza APENAS o conteúdo da aba "Dados Empresariais".
-    """
-    # Por enquanto, podemos reutilizar um template genérico
-    return render(request, 'gerenciamento_vender/html/dashboard_partials/em_construcao.html', {'aba': 'Dados Empresariais'})
 
-# Restante do seu arquivo views.py...
-# ...
+def dashboard_dados_empresariais(request):
+    # Lógica inicial: Tenta encontrar um cadastro em andamento ou cria um novo "rascunho".
+    # No futuro, isso será ligado ao `request.user`. Por enquanto, criamos um novo a cada vez.
+    cadastro_rascunho = DadosEmpresariais.objects.create()
+    request.session['cadastro_id'] = cadastro_rascunho.id
+    
+    return redirect('vender:dados_empresariais_form', etapa=1)
+
+
+# Em gerenciamento_vender/views.py
+
+def dados_empresariais_form_view(request, etapa):
+    forms = { 1: DadosEmpresaForm, 2: DadosResponsavelForm, 3: DadosComplementaresForm }
+    form_class = forms.get(etapa)
+    
+    cadastro_id = request.session.get('cadastro_id')
+    if not cadastro_id:
+        return redirect('vender:dashboard_dados_empresariais')
+        
+    cadastro = get_object_or_404(DadosEmpresariais, id=cadastro_id)
+
+    if request.method == 'POST':
+        form = form_class(request.POST, request.FILES, instance=cadastro)
+        if form.is_valid():
+            form.save()
+
+            proxima_etapa = etapa + 1
+            if proxima_etapa > len(forms):
+                # Finalizou a última etapa
+                cadastro.status = 'EM_ANALISE'
+                cadastro.save()
+                del request.session['cadastro_id']
+                # Retorna o template de sucesso para o AJAX
+                return render(request, 'gerenciamento_vender/html/dashboard_partials/dados_empresariais_sucesso.html')
+            else:
+                # Prepara o formulário da PRÓXIMA etapa para o AJAX
+                proximo_form = forms.get(proxima_etapa)(instance=cadastro)
+                context = {
+                    'form': proximo_form,
+                    'etapa': proxima_etapa,
+                    'total_etapas': len(forms),
+                }
+                return render(request, 'gerenciamento_vender/html/dashboard_partials/dados_empresariais_form.html', context)
+    else:
+        # GET request: Mostra o formulário da etapa atual
+        form = form_class(instance=cadastro)
+
+    context = {
+        'form': form,
+        'etapa': etapa,
+        'total_etapas': len(forms),
+    }
+    # Retorna o template da ETAPA ATUAL para o AJAX
+    return render(request, 'gerenciamento_vender/html/dashboard_partials/dados_empresariais_form.html', context)
+
+def criar_perfil_empresarial_view(request):
+    return HttpResponse("<h1>Página para Criação de Perfil Empresarial (Em Construção)</h1>")
