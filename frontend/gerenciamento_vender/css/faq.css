@@ -1,0 +1,226 @@
+/* frontend/gerenciamento_vender/css/faq.css */
+
+/* Estilos de Layout Gerais (para independência do módulo) */
+.painel-listagem-cards {
+    background-color: rgba(20, 74, 93, 0.3);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(228, 248, 255, 0.2);
+    border-radius: 40px;
+    padding: 30px 40px;
+}
+
+.painel-cabecalho {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.botao-voltar-branco {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    background-color: #E4F8FF;
+    color: #144A5D;
+    font-weight: 700;
+    padding: 10px 20px;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+}
+
+.botao-voltar-branco:hover {
+    background-color: #c0e0eb;
+    transform: translateY(-3px);
+}
+
+.botao-voltar-branco img {
+    height: 18px;
+}
+
+.titulo-pagina {
+    font-family: 'Montserrat', sans-serif;
+    color: #E4F8FF;
+    margin: 0;
+    flex-grow: 1;
+    text-align: right;
+    font-size: 2.2rem;
+}
+
+.separador-titulo {
+    border: none;
+    height: 1px;
+    background-color: rgba(228, 248, 255, 0.3);
+    margin: 20px 0;
+}
+
+/* Estilos para o container da busca (agora no cabeçalho) */
+.busca-container {
+    flex-grow: 1;
+    max-width: 400px;
+}
+
+.busca-container form {
+    display: flex;
+    gap: 10px;
+}
+
+.busca-container input[type="search"] {
+    flex-grow: 1;
+    border: 1px solid rgba(228, 248, 255, 0.5);
+    background-color: rgba(20, 74, 93, 0.7);
+    padding: 10px 20px;
+    border-radius: 25px;
+    color: #E4F8FF;
+    font-size: 0.9rem;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.busca-container input[type="search"]::placeholder {
+    color: rgba(228, 248, 255, 0.7);
+}
+
+.busca-container input[type="search"]:focus,
+.busca-container input[type="search"].filled {
+    background-color: #E4F8FF;
+    color: #144A5D;
+    border-color: #E4F8FF;
+}
+
+.busca-container button {
+    background-color: #E4F8FF;
+    color: #144A5D;
+    border: none;
+    padding: 0 25px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 700;
+    transition: background-color 0.3s ease;
+}
+
+.busca-container button:hover {
+    background-color: #c0e0eb;
+}
+
+.resultado-busca-info {
+    color: #E4F8FF;
+    margin: 20px 0 10px;
+    font-size: 1.1rem;
+    text-align: center;
+}
+
+
+/* Estilos específicos para a página de FAQ */
+.secao-letra {
+    margin-bottom: 40px;
+}
+
+.letra-indice {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 3rem;
+    font-weight: 700;
+    color: #E4F8FF;
+    border-bottom: 2px solid rgba(228, 248, 255, 0.3);
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+}
+
+.pergunta-item {
+    margin-bottom: 25px;
+}
+
+.pergunta-titulo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #E4F8FF;
+    margin-bottom: 10px;
+}
+
+.pergunta-resposta {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #144A5D;
+    margin-left: 0;
+    padding: 20px 25px;
+    background-color: #E4F8FF;
+    border-radius: 15px;
+    border-left: 8px solid #37A2FF;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+}
+
+.sem-perguntas {
+    text-align: center;
+    font-size: 1.2rem;
+    padding: 50px;
+    color: #E4F8FF;
+}
+
+/* Estilos para o formulário de envio de pergunta */
+.form-group {
+    margin-bottom: 20px;
+    position: relative; /* Necessário para posicionar a mensagem de erro */
+}
+
+.form-label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #E4F8FF;
+}
+
+.form-input,
+.form-textarea {
+    width: 100%;
+    border: 1px solid rgba(228, 248, 255, 0.5);
+    background-color: rgba(20, 74, 93, 0.7);
+    padding: 12px 20px;
+    border-radius: 25px;
+    color: #E4F8FF;
+    font-size: 1rem;
+    font-family: 'Bai Jamjuree', sans-serif;
+    outline: none;
+    transition: all 0.3s ease;
+    box-sizing: border-box; 
+}
+
+.form-input:focus,
+.form-textarea:focus,
+.form-input.filled,
+.form-textarea.filled {
+    background-color: #E4F8FF;
+    color: #144A5D;
+    border-color: #E4F8FF;
+}
+
+.form-textarea {
+    border-radius: 15px;
+    resize: vertical;
+}
+
+.form-button {
+    border: none;
+    cursor: pointer;
+}
+
+/* === NOVA SEÇÃO: Estilos para Validação de Formulário === */
+.form-error-message {
+    color: #ffc4c4; /* Vermelho claro */
+    font-size: 0.9rem;
+    padding-left: 20px;
+    margin-top: 5px;
+    display: none; /* Começa escondido */
+}
+
+.form-button:disabled {
+    background-color: #5a6a70;
+    color: #aaaaaa;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.form-button:disabled:hover {
+    background-color: #5a6a70;
+    transform: none;
+}

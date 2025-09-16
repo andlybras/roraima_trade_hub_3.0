@@ -128,3 +128,5 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 TAGGIT_STRIP_UNICODE_WHEN_SLUGIFYING = True
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

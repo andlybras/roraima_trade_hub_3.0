@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}{{ titulo_pagina }} | Quero Vender{% endblock %}
+
+{% block css_pagina %}
+<link rel="stylesheet" href="{% static 'gerenciamento_vender/css/faq.css' %}">
+{% endblock %}
+
+{% block conteudo %}
+<div class="container-conteudo">
+    <div class="painel-listagem-cards">
+        <div class="painel-cabecalho">
+            <a href="{% url 'vender:pagina_inicial' %}" class="botao-voltar-branco">
+                <img src="{% static 'gerenciamento_inteligencia_mercado/icons/icone-voltar.svg' %}" alt="icone de seta">
+                <span>Voltar</span>
+            </a>
+            
+            <div class="busca-container">
+                <form method="get" action="{% url 'vender:faq' %}">
+                    <input type="search" id="faq-search-input" name="q" value="{{ query|default:'' }}" placeholder="Busque por palavras-chave...">
+                    <button type="submit">Buscar</button>
+                </form>
+            </div>
+
+            <h1 class="titulo-pagina">{{ titulo_pagina }}</h1>
+        </div>
+        <hr class="separador-titulo">
+
+        {% if query %}
+            <p class="resultado-busca-info">
+                Exibindo {{ total_resultados }} resultado(s) para "<strong>{{ query }}</strong>".
+                <a href="{% url 'vender:faq' %}" style="color: #fff; margin-left: 10px;">Limpar busca</a>
+            </p>
+        {% endif %}
+
+        <div class="conteudo-faq">
+            {% if perguntas_agrupadas %}
+                {% for letra, perguntas in perguntas_agrupadas.items %}
+                    <section class="secao-letra">
+                        <h2 class="letra-indice">{{ letra }}</h2>
+                        <dl>
+                            {% for item in perguntas %}
+                                <div class="pergunta-item">
+                                    <dt class="pergunta-titulo">{{ item.pergunta }}</dt>
+                                    <dd class="pergunta-resposta">{{ item.resposta|safe }}</dd>
+                                </div>
+                            {% endfor %}
+                        </dl>
+                    </section>
+                {% endfor %}
+            {% else %}
+                <p class="sem-perguntas">
+                    {% if query %}
+                        Nenhum resultado encontrado para sua busca.
+                    {% else %}
+                        Ainda não há perguntas frequentes cadastradas.
+                    {% endif %}
+                </p>
+            {% endif %}
+        </div>
+
+        <hr class="separador-titulo">
+        <section class="secao-letra">
+            <h2 class="letra-indice">Ainda tem dúvidas?</h2>
+            <p style="color: #E4F8FF; font-size: 1.1rem; margin-top: -20px;">
+                Envie sua pergunta para nossa equipe. Responderemos diretamente no seu e-mail.
+            </p>
+            <form method="post" action="{% url 'vender:submeter_pergunta' %}" style="margin-top: 30px;">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="email" class="form-label">Seu E-mail:</label>
+                    <input type="email" name="email_usuario" required id="email" class="form-input" style="max-width: 500px;">
+                    <span id="email-error-message" class="form-error-message">Por favor, insira um e-mail válido.</span>
+                </div>
+                <div class="form-group">
+                    <label for="pergunta" class="form-label">Sua Pergunta:</label>
+                    <textarea name="pergunta_usuario" required id="pergunta" rows="5" class="form-textarea" style="max-width: 800px;"></textarea>
+                </div>
+                <button type="submit" id="submit-question-btn" class="botao-voltar-branco form-button" disabled>Enviar Pergunta</button>
+            </form>
+        </section>
+
+    </div>
+</div>
+{% endblock %}
+
+{% block js_pagina %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // --- LÓGICA ANTIGA PARA MANTER CAMPOS BRANCOS (AINDA ÚTIL) ---
+    const inputsToMonitor = document.querySelectorAll('#faq-search-input, #email, #pergunta');
+    if (inputsToMonitor.length > 0) {
+        function checkInputState(inputElement) {
+            if (inputElement.value.length > 0) {
+                inputElement.classList.add('filled');
+            } else {
+                inputElement.classList.remove('filled');
+            }
+        }
+        inputsToMonitor.forEach(function(input) {
+            checkInputState(input);
+            input.addEventListener('input', function() { checkInputState(input); });
+            input.addEventListener('blur', function() { checkInputState(input); });
+        });
+    }
+
+    // --- NOVA LÓGICA PARA VALIDAÇÃO DO FORMULÁRIO DE PERGUNTA ---
+    const emailInput = document.getElementById('email');
+    const questionTextarea = document.getElementById('pergunta');
+    const submitButton = document.getElementById('submit-question-btn');
+    const emailErrorMessage = document.getElementById('email-error-message');
+
+    if (emailInput && questionTextarea && submitButton && emailErrorMessage) {
+        
+        // Função que usa Regex para uma validação simples de e-mail
+        function isEmailValid(email) {
+            const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return regex.test(email);
+        }
+
+        // Função principal que verifica o estado do formulário
+        function validateForm() {
+            const email = emailInput.value.trim();
+            const question = questionTextarea.value.trim();
+
+            const isEmailOk = isEmailValid(email);
+            const isQuestionOk = question !== '';
+
+            // Lógica da mensagem de erro do e-mail
+            if (email.length > 0 && !isEmailOk) {
+                emailErrorMessage.style.display = 'block';
+            } else {
+                emailErrorMessage.style.display = 'none';
+            }
+
+            // Lógica para habilitar/desabilitar o botão
+            if (isEmailOk && isQuestionOk) {
+                submitButton.disabled = false;
+            } else {
+                submitButton.disabled = true;
+            }
+        }
+
+        // Adiciona os "escutadores" de eventos para validar em tempo real
+        emailInput.addEventListener('input', validateForm);
+        questionTextarea.addEventListener('input', validateForm);
+
+        // Executa a validação uma vez no início para garantir que o botão comece desabilitado
+        validateForm();
+    }
+});
+</script>
+{% endblock %}

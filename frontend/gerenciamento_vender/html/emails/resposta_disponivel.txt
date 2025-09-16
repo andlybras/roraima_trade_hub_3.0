@@ -1,0 +1,11 @@
+Olá,
+
+Sua pergunta foi respondida por nossa equipe!
+
+Sua pergunta: "{{ pergunta.pergunta }}"
+
+Para ver a resposta completa e nos dar seu feedback, acesse seu link exclusivo:
+{{ link_resposta }}
+
+Atenciosamente,
+Equipe Roraima Trade Hub

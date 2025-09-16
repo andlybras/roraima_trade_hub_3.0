@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}Sua Pergunta Respondida{% endblock %}
+
+{% block css_pagina %}
+<link rel="stylesheet" href="{% static 'gerenciamento_vender/css/faq.css' %}">
+{% endblock %}
+
+{% block conteudo %}
+<div class="container-conteudo">
+    <div class="painel-listagem-cards">
+        <div class="painel-cabecalho">
+            <h1 class="titulo-pagina" style="text-align: center; width: 100%;">Sua Pergunta</h1>
+        </div>
+        <hr class="separador-titulo">
+
+        <div class="conteudo-faq" style="padding: 0 20px;">
+            <div class="pergunta-item">
+                <dt class="pergunta-titulo">{{ pergunta.pergunta }}</dt>
+                
+                {% if pergunta.status == 'RESPONDIDA' and pergunta.resposta %}
+                    <dd class="pergunta-resposta">{{ pergunta.resposta|safe }}</dd>
+
+                    <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid rgba(228, 248, 255, 0.2); text-align: center;">
+                        {% if pergunta.resposta_foi_util is None %}
+                            <p style="color: #E4F8FF; font-weight: 600;">Esta resposta foi útil?</p>
+                            <form method="post">
+                                {% csrf_token %}
+                                <button type="submit" name="avaliacao" value="util" class="botao-voltar-branco" style="border:none; cursor:pointer;">👍 Sim</button>
+                                <button type="submit" name="avaliacao" value="nao_util" class="botao-voltar-branco" style="border:none; cursor:pointer; background-color: #ffdddd; color: #D8000C;">👎 Não</button>
+                            </form>
+                        {% else %}
+                             <p style="color: #E4F8FF; font-weight: 600;">Obrigado pelo seu feedback!</p>
+                        {% endif %}
+                    </div>
+
+                {% else %}
+                    <dd class="pergunta-resposta" style="background-color: #f0f6f8; border-left-color: #FBC02D;">
+                        Sua pergunta ainda está sendo analisada por nossa equipe. Por favor, volte mais tarde.
+                    </dd>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

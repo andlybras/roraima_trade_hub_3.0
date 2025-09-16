@@ -1,8 +1,68 @@
+# gerenciamento_vender/admin.py
+
 from django.contrib import admin
-from .models import ConteudoApresentacaoVender
+from .models import ConteudoApresentacaoVender, PerguntaFrequente, PerguntaUsuario
+from django.utils import timezone
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.urls import reverse
 
 @admin.register(ConteudoApresentacaoVender)
 class ConteudoApresentacaoVenderAdmin(admin.ModelAdmin):
     list_display = ('descricao', 'tipo_conteudo', 'em_exibicao')
     list_filter = ('tipo_conteudo', 'em_exibicao')
-    search_fields = ('descricao',)
+
+@admin.register(PerguntaFrequente)
+class PerguntaFrequenteAdmin(admin.ModelAdmin):
+    list_display = ('pergunta', 'publicada', 'data_criacao')
+    list_filter = ('publicada',)
+    search_fields = ('pergunta', 'resposta')
+    list_per_page = 20
+
+@admin.register(PerguntaUsuario)
+class PerguntaUsuarioAdmin(admin.ModelAdmin):
+    list_display = ('pergunta_resumida', 'email_usuario', 'status', 'data_envio', 'resposta_foi_util')
+    list_filter = ('status', 'resposta_foi_util', 'data_envio')
+    search_fields = ('pergunta', 'email_usuario', 'resposta')
+    list_per_page = 20
+
+    fieldsets = (
+        ('Informações do Usuário (Não editável)', {
+            'fields': ('email_usuario', 'pergunta', 'data_envio', 'identificador_unico')
+        }),
+        ('Resposta do Administrador', {
+            'fields': ('status', 'resposta')
+        }),
+        ('Feedback do Usuário (Preenchido por ele)', {
+            'classes': ('collapse',),
+            'fields': ('resposta_foi_util', 'data_resposta'),
+        }),
+    )
+    readonly_fields = ('email_usuario', 'pergunta', 'data_envio', 'data_resposta', 'identificador_unico', 'resposta_foi_util')
+
+    def pergunta_resumida(self, obj):
+        return obj.pergunta[:70] + '...' if len(obj.pergunta) > 70 else obj.pergunta
+    pergunta_resumida.short_description = 'Pergunta do Usuário'
+
+    def save_model(self, request, obj, form, change):
+        enviar_email = False
+        if 'resposta' in form.changed_data and obj.resposta and obj.status != 'RESPONDIDA':
+            obj.status = 'RESPONDIDA'
+            obj.data_resposta = timezone.now()
+            enviar_email = True
+
+        super().save_model(request, obj, form, change)
+
+        if enviar_email:
+            link_resposta = request.build_absolute_uri(reverse('vender:ver_resposta', args=[obj.identificador_unico]))
+            contexto_email = {'pergunta': obj, 'link_resposta': link_resposta}
+            
+            corpo_email = render_to_string('gerenciamento_vender/html/emails/resposta_disponivel.txt', contexto_email)
+            
+            send_mail(
+                'Sua pergunta foi respondida! - Roraima Trade Hub',
+                corpo_email,
+                'nao-responda@roraimatradehub.com',
+                [obj.email_usuario],
+                fail_silently=False,
+            )

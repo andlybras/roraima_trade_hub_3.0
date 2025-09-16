@@ -1,0 +1,11 @@
+Olá,
+
+Recebemos sua pergunta e nossa equipe irá respondê-la em breve.
+
+Sua pergunta: "{{ pergunta.pergunta }}"
+
+Você pode acompanhar o status e ver a resposta assim que estiver disponível através do seu link exclusivo:
+{{ link_resposta }}
+
+Atenciosamente,
+Equipe Roraima Trade Hub

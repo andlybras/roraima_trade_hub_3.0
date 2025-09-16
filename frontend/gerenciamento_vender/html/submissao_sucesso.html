@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}Pergunta Enviada com Sucesso{% endblock %}
+
+{% block css_pagina %}
+<link rel="stylesheet" href="{% static 'gerenciamento_vender/css/faq.css' %}">
+{% endblock %}
+
+{% block conteudo %}
+<div class="container-conteudo">
+    <div class="painel-listagem-cards">
+        <div style="text-align: center; padding: 50px 20px;">
+            <h1 style="font-family: 'Montserrat', sans-serif; color: #E4F8FF; font-size: 2.5rem;">Obrigado!</h1>
+            <p style="color: #E4F8FF; font-size: 1.2rem; max-width: 600px; margin: 20px auto;">
+                Sua pergunta foi enviada com sucesso para nossa equipe.
+            </p>
+            <p style="color: #E4F8FF; font-size: 1.2rem; max-width: 600px; margin: 20px auto;">
+                Em breve, você receberá um e-mail de confirmação e, posteriormente, outro e-mail com a resposta.
+            </p>
+            <a href="{% url 'vender:faq' %}" class="botao-voltar-branco" style="margin-top: 30px;">Voltar para as Perguntas Frequentes</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
