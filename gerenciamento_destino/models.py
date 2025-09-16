@@ -3,12 +3,39 @@ from django.utils.text import slugify
 from tinymce.models import HTMLField
 
 class ConteudoApresentacaoDestino(models.Model):
-    TIPO_CHOICES = [('IMAGEM', 'Imagem Estática'), ('VIDEO', 'Vídeo (YouTube)')]
+    TIPO_CHOICES = [
+        ('IMAGEM', 'Imagem Estática'),
+        ('VIDEO', 'Vídeo (YouTube)'),
+        ('ANIMACAO_JS', 'Animação com Código JavaScript')
+    ]
     descricao = models.CharField(max_length=200, verbose_name="Descrição Interna")
-    tipo_conteudo = models.CharField(max_length=10, choices=TIPO_CHOICES, default='IMAGEM', verbose_name="Tipo de Conteúdo")
-    imagem = models.ImageField(upload_to='destino/apresentacao/', blank=True, null=True, verbose_name="Arquivo de Imagem")
-    video_url = models.URLField(blank=True, null=True, verbose_name="URL do Vídeo do YouTube")
-    em_exibicao = models.BooleanField(default=False, verbose_name="Em exibição na página?", help_text="Apenas um conteúdo pode estar em exibição.")
+    tipo_conteudo = models.CharField(
+        max_length=20,
+        choices=TIPO_CHOICES, 
+        default='IMAGEM', 
+        verbose_name="Tipo de Conteúdo"
+    )
+    imagem = models.ImageField(
+        upload_to='destino/apresentacao/', 
+        blank=True, null=True, 
+        verbose_name="Arquivo de Imagem",
+        help_text="Usado apenas para o tipo 'Imagem Estática'."
+    )
+    video_url = models.URLField(
+        blank=True, null=True, 
+        verbose_name="URL do Vídeo do YouTube",
+        help_text="Usado apenas para o tipo 'Vídeo (YouTube)'."
+    )
+    codigo_js = models.TextField(
+        blank=True,
+        verbose_name="Código JavaScript da Animação",
+        help_text="Usado apenas para o tipo 'Animação'. Cole o código JS completo aqui."
+    )
+    em_exibicao = models.BooleanField(
+        default=False, 
+        verbose_name="Em exibição na página?",
+        help_text="Apenas um conteúdo pode estar em exibição."
+    )
     def get_embed_url(self):
         if self.video_url and 'watch?v=' in self.video_url:
             video_id = self.video_url.split('watch?v=')[1].split('&')[0]

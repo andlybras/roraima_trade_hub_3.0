@@ -15,6 +15,7 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
+    min-height: 500px; 
 }
 
 .destino-titulo-pagina {
@@ -34,22 +35,21 @@
 .destino-conteudo-dividido {
     display: flex;
     gap: 30px;
-    align-items: center;
     margin-top: 20px;
-    flex-grow: 1;
-    justify-content: space-between;
+    flex-grow: 1; 
+    align-items: stretch; 
 }
 
 .destino-texto-apresentacao {
-    flex-basis: 45%;
+    flex-basis: 40%; 
     color: #E4F8FF;
     display: flex;
-    align-items: center;
+    align-items: center; 
     height: 100%;
 }
 
 .destino-imagem-apresentacao {
-    flex-basis: 45%;
+    flex-basis: 60%; 
     display: flex;
     align-items: center;
     justify-content: center;
@@ -66,7 +66,7 @@
 .apresentacao-midia {
     width: 100%;
     height: 100%;
-    max-height: 250px;
+    max-height: 100%; 
     object-fit: contain;
     border-radius: 20px;
 }
@@ -74,8 +74,7 @@
 .video-container {
     position: relative;
     width: 100%;
-    padding-top: 56.25%; 
-    height: 0;
+    height: 100%;
 }
 
 .video-container iframe {

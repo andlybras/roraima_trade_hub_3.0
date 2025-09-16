@@ -15,10 +15,27 @@
                     <h2>Explore a beleza única, a cultura vibrante e as experiências inesquecíveis que só Roraima oferece.</h2>
                 </div>
                 <div class="destino-imagem-apresentacao">
-                    {% if conteudo_apresentacao and conteudo_apresentacao.tipo_conteudo == 'IMAGEM' and conteudo_apresentacao.imagem %}
-                        <img src="{{ conteudo_apresentacao.imagem.url }}" alt="{{ conteudo_apresentacao.descricao }}" class="apresentacao-midia">
-                    {% elif conteudo_apresentacao and conteudo_apresentacao.tipo_conteudo == 'VIDEO' and conteudo_apresentacao.video_url %}
-                        <div class="video-container"><iframe src="{{ conteudo_apresentacao.get_embed_url }}" frameborder="0" allowfullscreen></iframe></div>
+                    {% if conteudo_apresentacao %}
+                        {% if conteudo_apresentacao.tipo_conteudo == 'IMAGEM' and conteudo_apresentacao.imagem %}
+                            <img src="{{ conteudo_apresentacao.imagem.url }}" alt="{{ conteudo_apresentacao.descricao }}" class="apresentacao-midia">
+                        {% elif conteudo_apresentacao.tipo_conteudo == 'VIDEO' and conteudo_apresentacao.video_url %}
+                            <div class="video-container">
+                                <iframe src="{{ conteudo_apresentacao.get_embed_url }}" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                        {% elif conteudo_apresentacao.tipo_conteudo == 'ANIMACAO_JS' and conteudo_apresentacao.codigo_js %}
+                            <div id="animacao-container-destino" style="width: 100%; height: 100%;">
+                                </div>
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    const container = document.getElementById('animacao-container-destino');
+                                    if (container) {
+                                        {{ conteudo_apresentacao.codigo_js|safe }}
+                                    }
+                                });
+                            </script>
+                        {% else %}
+                            <p style="color: #fff;">Nenhum conteúdo de apresentação configurado.</p>
+                        {% endif %}
                     {% else %}
                         <p style="color: #fff;">Nenhum conteúdo de apresentação configurado.</p>
                     {% endif %}
