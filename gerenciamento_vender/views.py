@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from .models import ConteudoApresentacaoVender, PerguntaFrequente, PerguntaUsuario, DadosEmpresariais
 from .forms import DadosEmpresaForm, DadosResponsavelForm, DadosComplementaresForm, UserRegistrationForm
+from django.contrib.auth.views import PasswordResetConfirmView
 from django.db.models import Q
 from django.core.mail import send_mail
 from django.urls import reverse
@@ -172,3 +173,18 @@ def dados_empresariais_form_view(request, etapa):
         form = form_class(instance=cadastro)
     context = {'form': form, 'etapa': etapa, 'total_etapas': len(forms)}
     return render(request, 'gerenciamento_vender/html/dashboard_partials/dados_empresariais_form.html', context)
+
+class CustomPasswordResetConfirmView(PasswordResetConfirmView):
+    def form_valid(self, form):
+        # Pega o usuário antes que a senha seja alterada
+        user = form.user
+        
+        # Chama a função original do Django para alterar a senha e obter a resposta
+        response = super().form_valid(form)
+        
+        # Agora, envia o e-mail de notificação
+        mail_subject = 'Sua senha no Roraima Trade Hub foi alterada'
+        message = render_to_string('gerenciamento_vender/html/emails/password_change_notification_email.html')
+        send_mail(mail_subject, message, 'nao-responda@roraimatradehub.com', [user.email])
+        
+        return response
