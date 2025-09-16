@@ -1,0 +1,62 @@
+{% load static %}
+<h1>Visão Geral</h1>
+<p>Bem-vindo(a) ao seu Ambiente Empresarial. Este é o seu centro de controle para gerenciar a presença da sua empresa no Roraima Trade Hub.</p>
+
+<div class="dashboard-grid" style="margin-top: 30px;">
+    
+    <div class="summary-card">
+        <h3>Status do Registro</h3>
+        <div class="status-indicator 
+            {% if status_registro == 'ATIVO' %}ativo
+            {% elif status_registro == 'PENDENTE' %}pendente
+            {% elif status_registro == 'ANALISE' %}analise
+            {% endif %}">
+            {{ status_registro_display }}
+        </div>
+    </div>
+
+    <div class="summary-card">
+        <h3>Status da Vitrine</h3>
+        <div class="status-indicator 
+            {% if status_vitrine == 'PÚBLICA' %}ativo
+            {% else %}pendente
+            {% endif %}">
+            {{ status_vitrine_display }}
+        </div>
+    </div>
+
+    <div class="summary-card card-dark-teal">
+        <h3>Selos da Empresa</h3>
+        <div class="seals-container">
+            {% for selo in selos %}
+                <div class="seal-item {% if not selo.conquistado %}inactive{% endif %}">
+                    <img src="{% static selo.icone %}" alt="{{ selo.nome }}">
+                    <span>{{ selo.nome }}</span>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="summary-card card-green">
+        <h3>Últimas Notificações</h3>
+        <ul class="info-list">
+            {% for notificacao in notificacoes %}
+                <li>{{ notificacao }}</li>
+            {% empty %}
+                <li>Nenhuma notificação nova.</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="summary-card card-orange">
+        <h3>Histórico da Conta</h3>
+        <ul class="info-list">
+            {% for item in historico %}
+                <li>{{ item }}</li>
+            {% empty %}
+                <li>Nenhum histórico para exibir.</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+</div>

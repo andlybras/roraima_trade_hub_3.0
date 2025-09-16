@@ -81,3 +81,50 @@ def criar_perfil_empresarial_view(request):
 
 def acessar_ambiente_empresarial_view(request):
     return HttpResponse("<h1>Página de Acesso ao Ambiente Empresarial (Em Construção)</h1>")
+
+# Adicione estas novas funções no final de gerenciamento_vender/views.py
+
+def dashboard_view(request):
+    """
+    Renderiza a "casca" principal do dashboard.
+    """
+    return render(request, 'gerenciamento_vender/html/dashboard.html')
+
+# Em gerenciamento_vender/views.py, substitua a função dashboard_visao_geral
+
+def dashboard_visao_geral(request):
+    """
+    Renderiza APENAS o conteúdo da aba "Visão Geral" com dados provisórios.
+    """
+    # Estes dados são provisórios. No futuro, virão do banco de dados.
+    context = {
+        'status_registro': 'ATIVO', # Mude para 'PENDENTE' ou 'ANALISE' para testar
+        'status_vitrine': 'PÚBLICA', # Mude para 'INATIVA' para testar
+        'selos': [
+            {'nome': 'Empresa Roraimense', 'icone': 'gerenciamento_vender/icons/selo-roraimense.svg', 'conquistado': True},
+            {'nome': 'Pronta para Exportar', 'icone': 'gerenciamento_vender/icons/selo-exportador.svg', 'conquistado': True},
+            {'nome': 'Selo Verde', 'icone': 'gerenciamento_vender/icons/selo-roraimense.svg', 'conquistado': False},
+        ],
+        'notificacoes': [
+            'Sua vitrine foi publicada com sucesso!',
+            'Um novo documento de suporte foi adicionado.',
+            'Seu registro foi ativado em 14/09/2025.'
+        ],
+        'historico': [
+            '15/09/2025 - Vitrine publicada.',
+            '14/09/2025 - Registro da empresa ativado.',
+            '12/09/2025 - Dados empresariais enviados para análise.',
+            '10/09/2025 - Conta criada.',
+        ]
+    }
+    return render(request, 'gerenciamento_vender/html/dashboard_partials/visao_geral.html', context)
+
+def dashboard_dados_empresariais(request):
+    """
+    Renderiza APENAS o conteúdo da aba "Dados Empresariais".
+    """
+    # Por enquanto, podemos reutilizar um template genérico
+    return render(request, 'gerenciamento_vender/html/dashboard_partials/em_construcao.html', {'aba': 'Dados Empresariais'})
+
+# Restante do seu arquivo views.py...
+# ...

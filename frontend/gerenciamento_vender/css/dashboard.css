@@ -1,0 +1,181 @@
+/* frontend/gerenciamento_vender/css/dashboard.css */
+
+.dashboard-container {
+    background-color: rgba(20, 74, 93, 0.3);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(228, 248, 255, 0.2);
+    border-radius: 40px;
+    padding: 20px;
+    min-height: 70vh;
+    display: flex;
+    gap: 20px;
+}
+
+/* Coluna da Esquerda: Navegação */
+.dashboard-nav {
+    flex: 0 0 250px;
+    background-color: rgba(20, 74, 93, 0.4);
+    border-radius: 30px;
+    padding: 20px;
+}
+
+/* Seção de Perfil */
+.profile-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 0;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.profile-picture {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 3px solid #E4F8FF;
+    object-fit: cover;
+    margin-bottom: 15px;
+}
+
+.profile-name {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.nav-separator {
+    border: none;
+    height: 1px;
+    background-color: rgba(228, 248, 255, 0.2);
+    margin-bottom: 20px;
+}
+
+.dashboard-nav .nav-list, .dashboard-nav .nav-item, .dashboard-nav .nav-link {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.dashboard-nav .nav-item { margin-bottom: 10px; }
+.dashboard-nav .nav-link {
+    display: block;
+    padding: 15px 20px;
+    color: #E4F8FF;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 20px;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+.dashboard-nav .nav-link:hover { background-color: rgba(228, 248, 255, 0.1); }
+.dashboard-nav .nav-link.active { background-color: #E4F8FF; color: #144A5D; font-weight: 700; }
+
+/* Coluna da Direita: Conteúdo */
+.dashboard-content {
+    flex-grow: 1;
+    background-color: #E4F8FF;
+    border-radius: 30px;
+    padding: 40px;
+    color: #144A5D;
+}
+
+.dashboard-content > * {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- ESTILOS CORRIGIDOS PARA A ABA VISÃO GERAL --- */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+/* Card base será branco com sombra, como na sua imagem de referência */
+.summary-card {
+    background-color: #FFFFFF;
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 4px 20px rgba(20, 74, 93, 0.08);
+    transition: transform 0.3s ease;
+}
+
+.summary-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Classes de cores para os cards que precisam */
+.summary-card.card-green { background-color: #2A9D8F; color: #FFFFFF; }
+.summary-card.card-orange { background-color: #E76F51; color: #FFFFFF; }
+.summary-card.card-dark-teal { background-color: #264653; color: #FFFFFF; }
+
+.summary-card h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.3rem;
+    color: #144A5D; /* Título escuro para cards brancos */
+    margin-top: 0;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eef3f6;
+    padding-bottom: 10px;
+}
+
+/* Ajuste para títulos em cards coloridos */
+.summary-card.card-green h3,
+.summary-card.card-orange h3,
+.summary-card.card-dark-teal h3 {
+    color: #FFFFFF;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Card de Status: Indicador interno colorido */
+.status-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    border-radius: 15px;
+    font-weight: 700;
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+/* Cores CORRIGIDAS para os indicadores, com texto branco */
+.status-indicator.ativo { background-color: #2A9D8F; color: #FFFFFF; }
+.status-indicator.pendente { background-color: #f4a261; color: #FFFFFF; }
+.status-indicator.analise { background-color: #264653; color: #FFFFFF; }
+
+
+/* Card de Selos e Listas */
+.seals-container, .seal-item {
+    display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;
+}
+.seal-item { text-align: center; flex-direction: column; }
+.seal-item img { width: 60px; height: 60px; transition: filter 0.3s ease; }
+.seal-item.inactive img { filter: grayscale(100%) opacity(0.4); }
+.seal-item span {
+    display: block; font-size: 0.8rem; margin-top: 5px; font-weight: 600;
+}
+
+/* Ajuste para texto dos selos em cards coloridos */
+.summary-card.card-dark-teal .seal-item span {
+    color: #FFFFFF;
+}
+
+.info-list {
+    list-style: none; padding: 0; margin: 0; max-height: 200px; overflow-y: auto;
+}
+.info-list li {
+    padding: 10px 5px; border-bottom: 1px solid #eef3f6; font-size: 0.95rem;
+}
+/* Ajuste para texto das listas em cards coloridos */
+.summary-card.card-green .info-list li,
+.summary-card.card-orange .info-list li {
+    color: #FFFFFF;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+.info-list li:last-child { border-bottom: none; }
