@@ -1,5 +1,3 @@
-# configuracoes_projeto/settings.py
-
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -77,25 +75,28 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',},
 ]
 
-# --- Configurações de Localização ---
 LANGUAGE_CODE = 'pt-br'
+
 TIME_ZONE = 'America/Boa_Vista'
+
 USE_I18N = True
+
 USE_L10N = False
+
 USE_TZ = True
 
-# --- Configurações de Arquivos Estáticos e de Mídia ---
 STATIC_URL = 'static/'
+
 STATICFILES_DIRS = [
     BASE_DIR / 'frontend',
 ]
 
 MEDIA_URL = '/media/'
+
 MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# --- Configurações de Aplicativos de Terceiros ---
 TINYMCE_DEFAULT_CONFIG = {
     "height": "320px",
     "width": "960px",
@@ -111,11 +112,13 @@ TINYMCE_DEFAULT_CONFIG = {
 }
 
 SILENCED_SYSTEM_CHECKS = ['django_recaptcha.recaptcha_test_key_error']
+
 TAGGIT_STRIP_UNICODE_WHEN_SLUGIFYING = True
+
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 
-# --- Configurações de E-mail e Sessão ---
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 LOGIN_REDIRECT_URL = '/quero-vender/dashboard/' 
+
 LOGIN_URL = '/quero-vender/acessar/'

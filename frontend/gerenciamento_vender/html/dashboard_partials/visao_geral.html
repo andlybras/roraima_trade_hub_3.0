@@ -1,9 +1,7 @@
 {% load static %}
 <h1>Visão Geral</h1>
 <p>Bem-vindo(a) ao seu Ambiente Empresarial. Este é o seu centro de controle para gerenciar a presença da sua empresa no Roraima Trade Hub.</p>
-
 <div class="dashboard-grid" style="margin-top: 30px;">
-    
     <div class="status-cards-container">
         <div class="summary-card status-card">
             <h3>Status do Registro</h3>
@@ -15,7 +13,6 @@
                 {{ status_registro_display }}
             </div>
         </div>
-
         <div class="summary-card status-card">
             <h3>Status da Vitrine</h3>
             <div class="status-indicator 
@@ -26,7 +23,6 @@
             </div>
         </div>
     </div>
-
     <div class="summary-card card-green card-notificacoes">
         <h3>
             <span>Últimas Notificações</span>
@@ -40,7 +36,6 @@
             {% endfor %}
         </ul>
     </div>
-
     <div class="summary-card card-dark-teal card-selos">
         <h3>Selos da Empresa</h3>
         <div class="seals-container">
@@ -54,7 +49,6 @@
             {% endfor %}
         </div>
     </div>
-
     <div class="summary-card card-orange card-historico">
         <h3>
             <span>Histórico da Conta</span>
@@ -69,5 +63,4 @@
             <li>08/09/2025 - Item de teste para rolagem.</li>
         </ul>
     </div>
-
 </div>

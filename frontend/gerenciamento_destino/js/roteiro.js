@@ -1,7 +1,4 @@
-// frontend/gerenciamento_destino/js/roteiro.js
-
 document.addEventListener('DOMContentLoaded', function() {
-    // ATUALIZADO: Seleciona os novos elementos do botão flutuante
     const contadorElement = document.getElementById('roteiro-flutuante-contador');
     const botaoFlutuante = document.getElementById('roteiro-flutuante-btn');
 
@@ -20,16 +17,14 @@ document.addEventListener('DOMContentLoaded', function() {
         const roteiro = getRoteiro();
         const totalItens = roteiro.length;
 
-        // Atualiza o texto do contador
         contadorElement.textContent = totalItens;
 
-        // ATUALIZADO: Controla a visibilidade do contador e do botão
         if (totalItens > 0) {
             contadorElement.classList.add('visible');
-            botaoFlutuante.classList.add('visible'); // Mostra o botão flutuante
+            botaoFlutuante.classList.add('visible'); 
         } else {
             contadorElement.classList.remove('visible');
-            botaoFlutuante.classList.remove('visible'); // Esconde o botão flutuante
+            botaoFlutuante.classList.remove('visible'); 
         }
     }
 
@@ -49,7 +44,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Event listener global para os botões "Adicionar ao Roteiro"
     document.addEventListener('click', function(event) {
         if (event.target.matches('.btn-add-roteiro')) {
             event.preventDefault();
@@ -69,7 +63,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Executa as funções uma vez no carregamento da página para garantir o estado correto
     atualizarContadorEBotao();
     atualizarStatusBotoes();
 });

@@ -1,5 +1,3 @@
-# gerenciamento_vender/admin.py
-
 from django.contrib import admin
 from .models import ConteudoApresentacaoVender, PerguntaFrequente, PerguntaUsuario, DadosEmpresariais
 from django.utils import timezone
@@ -7,7 +5,6 @@ from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.urls import reverse
 
-# --- CONFIGURAÇÕES EXISTENTES (MANTER) ---
 @admin.register(ConteudoApresentacaoVender)
 class ConteudoApresentacaoVenderAdmin(admin.ModelAdmin):
     list_display = ('descricao', 'tipo_conteudo', 'em_exibicao')
@@ -22,7 +19,6 @@ class PerguntaFrequenteAdmin(admin.ModelAdmin):
 
 @admin.register(PerguntaUsuario)
 class PerguntaUsuarioAdmin(admin.ModelAdmin):
-    # (código existente, sem alterações)
     list_display = ('pergunta_resumida', 'email_usuario', 'status', 'data_envio', 'resposta_foi_util')
     list_filter = ('status', 'resposta_foi_util', 'data_envio')
     search_fields = ('pergunta', 'email_usuario', 'resposta')
@@ -49,7 +45,6 @@ class PerguntaUsuarioAdmin(admin.ModelAdmin):
             corpo_email = render_to_string('gerenciamento_vender/html/emails/resposta_disponivel.txt', contexto_email)
             send_mail('Sua pergunta foi respondida! - Roraima Trade Hub', corpo_email, 'nao-responda@roraimatradehub.com', [obj.email_usuario], fail_silently=False)
 
-# --- NOVA CONFIGURAÇÃO PARA DADOS EMPRESARIAIS ---
 @admin.register(DadosEmpresariais)
 class DadosEmpresariaisAdmin(admin.ModelAdmin):
     list_display = ('nome_fantasia', 'cnpj', 'nome_responsavel', 'status', 'data_atualizacao')
@@ -59,7 +54,6 @@ class DadosEmpresariaisAdmin(admin.ModelAdmin):
     
     actions = ['aprovar_cadastro']
 
-    # Organiza o formulário de edição em abas, espelhando o formulário do usuário
     fieldsets = (
         ('Status do Cadastro', {
             'fields': ('status',)
@@ -75,7 +69,7 @@ class DadosEmpresariaisAdmin(admin.ModelAdmin):
         }),
         ('Datas de Controle', {
             'fields': ('data_criacao', 'data_atualizacao'),
-            'classes': ('collapse',) # Começa recolhido
+            'classes': ('collapse',) 
         }),
     )
 

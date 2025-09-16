@@ -1,5 +1,3 @@
-# gerenciamento_vender/tokens.py
-
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 import six
 

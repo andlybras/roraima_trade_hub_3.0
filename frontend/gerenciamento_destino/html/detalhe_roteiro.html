@@ -1,34 +1,27 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block titulo %}{{ roteiro.titulo }} | Destino Roraima{% endblock %}
-
 {% block css_pagina %}
 <link rel="stylesheet" href="{% static 'gerenciamento_destino/css/destino_shared.css' %}">
 <link rel="stylesheet" href="{% static 'gerenciamento_destino/css/roteiros.css' %}">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 {% endblock %}
-
 {% block conteudo %}
 <div class="container-conteudo">
     {% include 'gerenciamento_destino/html/partials/breadcrumb.html' %}
     <div class="painel-detalhe-roteiro">
-
         <div class="print-header">
             <h1 class="print-title">{{ roteiro.titulo }}</h1>
         </div>
-
         <header class="roteiro-detalhe-cabecalho">
             <h1>{{ roteiro.titulo }}</h1>
             <div class="roteiro-acoes">
                 <button onclick="window.print();" class="btn-imprimir-roteiro">Imprimir Roteiro</button>
             </div>
         </header>
-
         <section class="roteiro-detalhe-descricao">
             {{ roteiro.descricao|safe }}
         </section>
-
         <div class="roteiro-layout-principal">
             <div id="mapa-roteiro"></div>
             <section class="roteiro-paradas-lista">
@@ -50,16 +43,13 @@
                 {% endfor %}
             </section>
         </div>
-
         <div class="print-footer">
             Gerado por Roraima Trade Hub - www.roraimatradehub.com.br
         </div>
     </div>
 </div>
-
 {{ pontos_geojson|json_script:"pontos-data-roteiro" }}
 {% endblock %}
-
 {% block js_pagina %}
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>

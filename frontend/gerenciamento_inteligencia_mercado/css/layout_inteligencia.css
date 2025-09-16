@@ -46,7 +46,7 @@
     transition: all 0.3s ease;
 }
 .botao-voltar-branco:hover {
-    background-color: #c0e0eb;
+    background-color: #E4F8FF;
     transform: translateY(-3px);
 }
 .botao-voltar-branco img {
@@ -182,7 +182,7 @@
 }
 
 .corpo-artigo .echarts-container {
-    background-color: #f8fcfd;
+    background-color: #E4F8FF;
     border-radius: 20px;
     padding: 15px;
     margin: 30px auto;

@@ -1,12 +1,9 @@
-/* frontend/gerenciamento_destino/css/detalhe_ponto.css */
-
 .container-conteudo {
-    /* CORREÇÃO DEFINITIVA: Faz este container ocupar todas as colunas da grade do elemento pai. */
     grid-column: 1 / -1;
 }
 
 :root {
-    --cor-fundo-destino: #FEFBF5;
+    --cor-fundo-destino: #E4F8FF;
     --cor-texto-destino: #264653;
     --cor-principal-destino: #2A9D8F;
 }
@@ -16,7 +13,6 @@
     color: var(--cor-texto-destino);
     border-radius: 40px;
     padding: 40px 50px;
-    /* As linhas de width e box-sizing foram removidas daqui pois não são mais necessárias */
 }
 
 .detalhe-cabecalho {
@@ -66,7 +62,7 @@
 }
 
 .informacoes-praticas {
-    background-color: #f0f8f6;
+    background-color: #E4F8FF;
     border-radius: 20px;
     padding: 25px;
     border-left: 5px solid var(--cor-principal-destino);
@@ -83,7 +79,7 @@
 .galeria-container {
     margin-top: 50px;
     padding-top: 30px;
-    border-top: 1px solid #e0e0e0;
+    border-top: 1px solid #E4F8FF;
 }
 
 .galeria-container h2 {
@@ -125,7 +121,7 @@
 .botao-voltar {
     display: inline-block;
     background-color: var(--cor-principal-destino);
-    color: white;
+    color: #E4F8FF;
     font-weight: 700;
     padding: 12px 30px;
     border-radius: 25px;

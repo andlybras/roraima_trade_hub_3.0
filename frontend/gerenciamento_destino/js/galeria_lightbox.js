@@ -1,4 +1,3 @@
-// frontend/gerenciamento_destino/js/galeria_lightbox.js
 document.addEventListener('DOMContentLoaded', function() {
     const galeriaImagens = document.querySelectorAll('.galeria-imagem');
     if (galeriaImagens.length === 0) return;

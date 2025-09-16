@@ -1,7 +1,7 @@
 :root {
     --cor-principal-destino: #2A9D8F;
     --cor-destaque-destino: #E76F51;
-    --cor-fundo-destino: #FEFBF5;
+    --cor-fundo-destino: #E4F8FF;
     --cor-texto-destino: #264653;
 }
 
@@ -85,20 +85,20 @@
 .popup-ponto-interesse-conteudo a {
     display: inline-block;
     background-color: var(--cor-destaque-destino);
-    color: white; /* Cor base */
-    padding: 8px 16px; /* Aumentado um pouco o padding */
+    color: #E4F8FF;
+    padding: 8px 16px;
     border-radius: 20px;
     text-decoration: none;
     font-weight: 600;
-    font-size: 0.9rem; /* Aumentado um pouco a fonte */
+    font-size: 0.9rem;
     transition: background-color 0.2s;
-    margin: 5px; /* Adicionado espaçamento */
+    margin: 5px;
 }
 
 .popup-ponto-interesse-conteudo a,
 .popup-ponto-interesse-conteudo a:link,
 .popup-ponto-interesse-conteudo a:visited {
-    color: white !important; 
+    color: #E4F8FF !important; 
 }
 
 
@@ -145,6 +145,6 @@
 }
 
 .sem-pontos-container a:hover {
-    background-color: #c0e0eb;
+    background-color: #E4F8FF;
     transform: translateY(-3px);
 }

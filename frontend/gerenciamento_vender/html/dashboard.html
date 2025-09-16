@@ -1,12 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block titulo %}Dashboard Empresarial{% endblock %}
-
 {% block css_pagina %}
 <link rel="stylesheet" href="{% static 'gerenciamento_vender/css/dashboard.css' %}">
 {% endblock %}
-
 {% block conteudo %}
 <div class="container-conteudo">
     <div class="dashboard-container">
@@ -34,17 +31,14 @@
                 </li>
             </ul>
         </nav>
-
         <main id="dashboard-content-area" class="dashboard-content">
             <p>Carregando...</p>
         </main>
     </div>
 </div>
 {% endblock %}
-
 {% block js_pagina %}
 <script>
-// ... (O bloco de script permanece o mesmo da etapa anterior) ...
 document.addEventListener('DOMContentLoaded', function() {
     const contentArea = document.getElementById('dashboard-content-area');
     const navLinks = document.querySelectorAll('.dashboard-nav .nav-link');

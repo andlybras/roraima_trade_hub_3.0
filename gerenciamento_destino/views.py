@@ -31,7 +31,6 @@ def detalhe_roteiro_view(request, roteiro_slug):
         {'nome': roteiro.titulo, 'url': ''},
     ]
     
-    # ATUALIZADO: GeoJSON simplificado, enviando apenas o necessário
     pontos_geojson = {"type": "FeatureCollection", "features": [
         {"type": "Feature",
          "geometry": {"type": "Point", "coordinates": [p.longitude, p.latitude]},
@@ -52,8 +51,7 @@ def detalhe_roteiro_view(request, roteiro_slug):
 
 def detalhe_roteiro_view(request, roteiro_slug):
     roteiro = get_object_or_404(Roteiro, slug=roteiro_slug, publicado=True)
-    
-    # CORREÇÃO AQUI: trocando 'roteiro.pontos' por 'roteiro.pontos_de_interesse'
+
     pontos_ordenados = roteiro.pontos_de_interesse.order_by('ordempontoroteiro__ordem')
 
     breadcrumbs = [

@@ -1,8 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block titulo %}{{ titulo_pagina }} | Destino Roraima{% endblock %}
-
 {% block css_pagina %}
 <link rel="stylesheet" href="{% static 'gerenciamento_destino/css/destino_shared.css' %}">
 <link rel="stylesheet" href="{% static 'gerenciamento_destino/css/mapa_interativo.css' %}">
@@ -10,7 +8,6 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 {% endif %}
 {% endblock %}
-
 {% block conteudo %}
 <div class="container-conteudo">
     {% include 'gerenciamento_destino/html/partials/breadcrumb.html' %}
@@ -18,7 +15,6 @@
         <div class="mapa-cabecalho">
             <h1>{{ titulo_pagina }}</h1>
         </div>
-
         {% if tem_pontos %}
             {% if categorias_filtros %}
                 <div class="filtros-mapa-container">
@@ -28,10 +24,8 @@
                     {% endfor %}
                 </div>
             {% endif %}
-            
             <div id="mapa"></div>
             {{ pontos_geojson|json_script:"pontos-data" }}
-            
         {% else %}
             <div class="sem-pontos-container">
                 <h2>Em Breve</h2>
@@ -42,9 +36,7 @@
     </div>
 </div>
 {% endblock %}
-
 {% block parceiros %}{% endblock parceiros %}
-
 {% block js_pagina %}
 {% if tem_pontos %}
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>

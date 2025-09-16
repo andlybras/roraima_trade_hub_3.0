@@ -12,7 +12,7 @@
             <hr class="aprenda-separador">
             <div class="aprenda-conteudo-dividido">
                 <div class="aprenda-texto-apresentacao">
-                    <h2>Capacite-se para o mercado global. Explore nossos cursos e materiais sobre comércio exterior.</h2>
+                    <h2>Capacite-se para o mercado global. Explore nossos cursos e materiais sobre comércio exterior</h2>
                 </div>
                 <div class.="aprenda-imagem-apresentacao">
                     {% if conteudo_apresentacao %}
@@ -29,7 +29,7 @@
                             </div>
                         {% endif %}
                     {% else %}
-                        <p style="color: #fff;">Nenhum conteúdo de apresentação configurado.</p>
+                        <p style="color: #E4F8FF;">Nenhum conteúdo de apresentação configurado.</p>
                     {% endif %}
                 </div>
             </div>
@@ -39,7 +39,7 @@
         <nav class="aprenda-navegacao-lateral">
             <a href="{% url 'aprenda:cursos_e_trilhas' %}" class="aprenda-nav-card card-criar-perfil">
                 <img src="{% static 'gerenciamento_aprenda/icons/icone-aprenda-perfil.svg' %}" alt="Ícone de perfil de usuário">
-                <span>Cursos e Trilhas de Aprendizagem</span>
+                <span>Catálago de Cursos e Trilhas de Aprendizagem</span>
             </a>
             <a href="{% url 'aprenda:ambiente_aprendizagem' %}" class="aprenda-nav-card card-acessar-ambiente">
                 <img src="{% static 'gerenciamento_aprenda/icons/icone-aprenda-ambiente.svg' %}" alt="Ícone de ambiente educacional">

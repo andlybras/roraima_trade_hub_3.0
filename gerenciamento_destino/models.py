@@ -51,7 +51,6 @@ class ConteudoApresentacaoDestino(models.Model):
         verbose_name = "Artifício de Apresentação do Módulo"
         verbose_name_plural = "Artifícios de Apresentação do Módulo"
 
-
 class Categoria(models.Model):
     GRUPOS = [
         ('NATUREZA', 'Belezas da Natureza'),
@@ -71,7 +70,6 @@ class Categoria(models.Model):
         verbose_name = "Categoria (para Filtros)"
         verbose_name_plural = "Categorias (para Filtros)"
         ordering = ['grupo', 'nome']
-
 
 class PontoDeInteresse(models.Model):
     titulo = models.CharField(max_length=200, unique=True, verbose_name="Título do Ponto de Interesse")
@@ -94,7 +92,6 @@ class PontoDeInteresse(models.Model):
         verbose_name = "Ponto de Interesse"
         verbose_name_plural = "Pontos de Interesse"
         ordering = ['titulo']
-
 
 class ImagemGaleria(models.Model):
     ponto_de_interesse = models.ForeignKey(PontoDeInteresse, related_name='galeria_imagens', on_delete=models.CASCADE, verbose_name="Ponto de Interesse")
@@ -122,7 +119,6 @@ class Roteiro(models.Model):
     class Meta:
         verbose_name = "Roteiro Temático"
         verbose_name_plural = "Roteiros Temáticos"
-
 
 class OrdemPontoRoteiro(models.Model):
     roteiro = models.ForeignKey(Roteiro, on_delete=models.CASCADE)

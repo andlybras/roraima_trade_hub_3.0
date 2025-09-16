@@ -1,8 +1,6 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'gerenciamento_vender/css/dados_display.css' %}">
-
 <h1>Meus Dados Empresariais</h1>
-
 {% if dados_empresa.status == 'EM_ANALISE' %}
     <div class="status-badge analise">STATUS: EM ANÁLISE</div>
     <p>Seus dados foram recebidos e estão sendo analisados por nossa equipe. Você será notificado sobre qualquer atualização.</p>
@@ -13,8 +11,6 @@
     <div class="status-badge analise">STATUS: EM REAVALIAÇÃO</div>
     <p>Sua solicitação de alteração foi recebida e está sendo analisada por nossa equipe.</p>
 {% endif %}
-
-
 <div class="data-section">
     <h3>Dados da Empresa</h3>
     <div class="data-grid">
@@ -27,7 +23,6 @@
         <div class="data-entry"><span class="data-label">Documento Comprobatório</span><span class="data-value"><a href="{{ dados_empresa.documento_comprobatorio_empresa.url }}" target="_blank">Ver Documento</a></span></div>
     </div>
 </div>
-
 <div class="data-section">
     <h3>Dados do Responsável</h3>
     <div class="data-grid">
@@ -39,7 +34,6 @@
         <div class="data-entry"><span class="data-label">Documento de Vínculo</span><span class="data-value"><a href="{{ dados_empresa.documento_vinculo_responsavel.url }}" target="_blank">Ver Documento</a></span></div>
     </div>
 </div>
-
 <div class="data-section">
     <h3>Dados Complementares</h3>
     <div class="data-grid">
@@ -50,7 +44,6 @@
         <div class="data-entry" style="grid-column: 1 / -1;"><span class="data-label">Apresentação da Empresa</span><span class="data-value">{{ dados_empresa.apresentacao_empresa|default:"Não informado" }}</span></div>
     </div>
 </div>
-
 <div class="actions-container">
     {% if dados_empresa.status == 'APROVADO' %}
         <a href="{% url 'vender:iniciar_alteracao_dados' %}" class="botao-voltar-branco form-button ajax-link">Solicitar Alteração</a>

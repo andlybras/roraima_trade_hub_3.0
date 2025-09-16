@@ -14,7 +14,6 @@
     {% block css_pagina %}{% endblock %}
 </head>
 <body {% if imagem_fundo %} style="background-image: url('{{ imagem_fundo.imagem.url }}');"{% endif %}>
-    
     <div class="container-geral">
         {% block header %}
         <header class="cabecalho-principal">
@@ -38,11 +37,9 @@
             </div>
         </header>
         {% endblock %}
-
         <main class="conteudo-principal">
             {% block conteudo %}{% endblock %}
         </main>
-    
         {% block parceiros %}
         <section class="secao-parceiros">
             <div class="container-parceiros">
@@ -61,7 +58,6 @@
             </div>
         </section>
         {% endblock parceiros %}
-        
     </div> {% block footer %}
     <footer class="rodape-site">
         <div class="rodape-creditos">
@@ -70,16 +66,13 @@
         </div>
     </footer>
     {% endblock footer %}
-
     <a href="{% url 'destino:meu_roteiro' %}" id="roteiro-flutuante-btn" class="roteiro-flutuante">
         <img src="{% static 'gerenciamento_home/icons/roteiro.svg' %}" alt="Ícone do seu roteiro">
         <span id="roteiro-flutuante-contador" class="roteiro-contador">0</span>
     </a>
-
     <script src="{% static 'gerenciamento_home/js/scroller.js' %}"></script>
     <script src="{% static 'gerenciamento_home/js/header.js' %}"></script>
     <script src="{% static 'gerenciamento_destino/js/roteiro.js' %}"></script>
-    
     {% block js_pagina %}{% endblock %}
 </body>
 </html>

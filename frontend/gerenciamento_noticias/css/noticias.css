@@ -125,7 +125,7 @@
     transform: translateY(-50%);
     z-index: 10;
     background-color: rgba(20, 74, 93, 0.6);
-    color: #fff;
+    color: #E4F8FF;
     border: 1px solid rgba(255, 255, 255, 0.3);
     width: 40px;
     height: 40px;
@@ -291,7 +291,7 @@
 }
 
 .painel-noticia {
-    background-color: rgb(228, 248, 255);
+    background-color: #E4F8FF;
     color: var(--cor-principal);
     border-radius: 40px;
     padding: 40px;
@@ -327,7 +327,7 @@
 
 .tag-link {
     display: inline-block;
-    background-color: #e1eef2;
+    background-color: #E4F8FF;
     color: var(--cor-principal);
     padding: 5px 12px;
     border-radius: 15px;
@@ -339,7 +339,7 @@
 }
 
 .tag-link:hover {
-    background-color: #cddce2;
+    background-color: #E4F8FF;
 }
 
 .busca-container {
@@ -486,7 +486,7 @@
     padding: 10px 20px;
     border-radius: 25px;
     text-decoration: none;
-    color: #fff;
+    color: #E4F8FF;
     font-weight: 600;
     font-size: 0.9rem;
     transition: transform 0.2s ease, opacity 0.2s ease;
@@ -520,7 +520,7 @@
 }
 
 .listagem-cabecalho-container h1 strong {
-    color: #fff;
+    color: #E4F8FF;
 }
 
 @media (max-width: 768px) {
@@ -566,7 +566,7 @@
     display: flex;
     flex-direction: column;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: 1px solid #e1eef2;
+    border: 1px solid #E4F8FF;
 }
 
 .relacionada-card:hover {

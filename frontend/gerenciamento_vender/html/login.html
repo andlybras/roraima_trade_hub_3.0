@@ -1,25 +1,19 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block titulo %}Acesso ao Ambiente Empresarial{% endblock %}
-
 {% block css_pagina %}
 <link rel="stylesheet" href="{% static 'gerenciamento_vender/css/autenticacao.css' %}">
 {% endblock %}
-
 {% block header %}{% endblock %}
-
 {% block conteudo %}
 <div class="container-formulario">
     <div class="painel-formulario">
         <h1 class="titulo-pagina">Acesso Empresarial</h1>
-        
         {% if form.errors %}
             <div class="errorlist" style="text-align: center; list-style: none; padding: 0; margin-bottom: 15px;">
                 Por favor, verifique seu e-mail e senha.
             </div>
         {% endif %}
-
         <form method="post" action="{% url 'vender:login' %}">
             {% csrf_token %}
             <div class="form-group">
@@ -30,10 +24,8 @@
                 <label for="{{ form.password.id_for_label }}" class="form-label">{{ form.password.label }}</label>
                 {{ form.password }}
             </div>
-
             <button type="submit" class="botao-acao">Entrar</button>
         </form>
-
         <div style="margin-top: 25px; color: #c0e0eb; font-size: 0.9rem;">
             <p>
                 <a href="{% url 'vender:password_reset' %}" style="color: #E4F8FF;">Esqueceu sua senha?</a>

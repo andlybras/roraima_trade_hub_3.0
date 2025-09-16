@@ -1,5 +1,3 @@
-// frontend/gerenciamento_destino/js/meu_roteiro.js
-
 document.addEventListener('DOMContentLoaded', function() {
     const ROTEIRO_KEY = 'meuRoteiroDestinoRR';
     const slugsSalvos = JSON.parse(localStorage.getItem(ROTEIRO_KEY) || '[]');
@@ -11,7 +9,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const btnLimparRoteiro = document.querySelector('.btn-limpar-roteiro');
     const btnImprimirRoteiro = document.querySelector('.btn-imprimir-roteiro');
 
-    // Função para renderizar o roteiro na tela
     function renderRoteiro(pontos) {
         painelCarregando.style.display = 'none';
         painelConteudo.style.display = 'block';
@@ -26,8 +23,6 @@ document.addEventListener('DOMContentLoaded', function() {
         viewRoteiroVazio.style.display = 'none';
         listaParadasContainer.innerHTML = "";
 
-        // **AQUI ESTÁ A MUDANÇA PRINCIPAL**
-        // O HTML gerado agora inclui a imagem e as coordenadas para a impressão
         pontos.forEach((ponto, index) => {
             const paradaHTML = `
                 <div class="parada-item">
@@ -47,7 +42,6 @@ document.addEventListener('DOMContentLoaded', function() {
             listaParadasContainer.innerHTML += paradaHTML;
         });
 
-        // Lógica para renderizar o mapa (sem alterações)
         const mapa = L.map('mapa-meu-roteiro');
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -77,7 +71,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 200);
     }
 
-    // Lógica para buscar os dados do roteiro (sem alterações)
     if (slugsSalvos.length === 0) {
         painelCarregando.style.display = 'none';
         painelConteudo.style.display = 'block';
@@ -103,7 +96,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Lógica dos botões (sem alterações)
     btnLimparRoteiro.addEventListener('click', function() {
         if (confirm('Você tem certeza que deseja limpar todo o seu roteiro?')) {
             localStorage.removeItem(ROTEIRO_KEY);

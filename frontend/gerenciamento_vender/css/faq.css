@@ -1,6 +1,3 @@
-/* frontend/gerenciamento_vender/css/faq.css */
-
-/* Estilos de Layout Gerais (para independência do módulo) */
 .painel-listagem-cards {
     background-color: rgba(20, 74, 93, 0.3);
     backdrop-filter: blur(10px);
@@ -31,7 +28,7 @@
 }
 
 .botao-voltar-branco:hover {
-    background-color: #c0e0eb;
+    background-color: #E4F8FF;
     transform: translateY(-3px);
 }
 
@@ -55,7 +52,6 @@
     margin: 20px 0;
 }
 
-/* Estilos para o container da busca (agora no cabeçalho) */
 .busca-container {
     flex-grow: 1;
     max-width: 400px;
@@ -101,7 +97,7 @@
 }
 
 .busca-container button:hover {
-    background-color: #c0e0eb;
+    background-color: #E4F8FF;
 }
 
 .resultado-busca-info {
@@ -111,8 +107,6 @@
     text-align: center;
 }
 
-
-/* Estilos específicos para a página de FAQ */
 .secao-letra {
     margin-bottom: 40px;
 }
@@ -157,10 +151,9 @@
     color: #E4F8FF;
 }
 
-/* Estilos para o formulário de envio de pergunta */
 .form-group {
     margin-bottom: 20px;
-    position: relative; /* Necessário para posicionar a mensagem de erro */
+    position: relative;
 }
 
 .form-label {
@@ -204,13 +197,12 @@
     cursor: pointer;
 }
 
-/* === NOVA SEÇÃO: Estilos para Validação de Formulário === */
 .form-error-message {
-    color: #ffc4c4; /* Vermelho claro */
+    color: #ffc4c4;
     font-size: 0.9rem;
     padding-left: 20px;
     margin-top: 5px;
-    display: none; /* Começa escondido */
+    display: none;
 }
 
 .form-button:disabled {

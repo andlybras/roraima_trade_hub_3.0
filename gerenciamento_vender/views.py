@@ -143,16 +143,12 @@ def dashboard_visao_geral(request):
 
 @login_required
 def dashboard_dados_empresariais(request):
-    # Busca ou cria o perfil de dados para o usuário logado
     dados_empresa, created = DadosEmpresariais.objects.get_or_create(usuario=request.user)
     
-    # AQUI ESTÁ A LÓGICA DE DECISÃO:
     if dados_empresa.status == 'PENDENTE':
-        # Se o cadastro está pendente, o usuário precisa preencher o formulário.
         request.session['cadastro_id'] = dados_empresa.id
         return redirect('vender:dados_empresariais_form', etapa=1)
     else:
-        # Se o status for 'EM_ANALISE', 'APROVADO', etc., mostra a página de visualização.
         context = {
             'dados_empresa': dados_empresa
         }
@@ -161,14 +157,10 @@ def dashboard_dados_empresariais(request):
 def iniciar_alteracao_dados_view(request):
     dados_empresa = get_object_or_404(DadosEmpresariais, usuario=request.user)
     
-    # Coloca o ID do cadastro na sessão para o formulário saber qual registro editar
     request.session['cadastro_id'] = dados_empresa.id
     
-    # Redireciona para a primeira etapa do formulário
     return redirect('vender:dados_empresariais_form', etapa=1)
 
-
-# VIEW ATUALIZADA para lidar com a reavaliação
 @login_required
 def dados_empresariais_form_view(request, etapa):
     forms = { 1: DadosEmpresaForm, 2: DadosResponsavelForm, 3: DadosComplementaresForm }
@@ -179,7 +171,7 @@ def dados_empresariais_form_view(request, etapa):
         return redirect('vender:dashboard_dados_empresariais')
         
     cadastro = get_object_or_404(DadosEmpresariais, id=cadastro_id, usuario=request.user)
-    status_original = cadastro.status # Guarda o status antes de qualquer mudança
+    status_original = cadastro.status 
 
     if request.method == 'POST':
         form = form_class(request.POST, request.FILES, instance=cadastro)
@@ -188,7 +180,6 @@ def dados_empresariais_form_view(request, etapa):
 
             proxima_etapa = etapa + 1
             if proxima_etapa > len(forms):
-                # Finalizou a última etapa
                 if status_original == 'APROVADO':
                     cadastro.status = 'REAVALIACAO'
                 else:
@@ -211,13 +202,10 @@ def dados_empresariais_form_view(request, etapa):
 
 class CustomPasswordResetConfirmView(PasswordResetConfirmView):
     def form_valid(self, form):
-        # Pega o usuário antes que a senha seja alterada
         user = form.user
         
-        # Chama a função original do Django para alterar a senha e obter a resposta
         response = super().form_valid(form)
         
-        # Agora, envia o e-mail de notificação
         mail_subject = 'Sua senha no Roraima Trade Hub foi alterada'
         message = render_to_string('gerenciamento_vender/html/emails/password_change_notification_email.html')
         send_mail(mail_subject, message, 'nao-responda@roraimatradehub.com', [user.email])
@@ -232,7 +220,6 @@ def reenviar_ativacao_view(request):
             try:
                 user = User.objects.get(email=email)
                 if not user.is_active:
-                    # Lógica de envio de e-mail (reutilizada do cadastro)
                     current_site = get_current_site(request)
                     mail_subject = 'Ative sua conta no Roraima Trade Hub.'
                     message = render_to_string('gerenciamento_vender/html/emails/confirmacao_cadastro_email.html', {
@@ -243,8 +230,6 @@ def reenviar_ativacao_view(request):
                     })
                     send_mail(mail_subject, message, 'nao-responda@roraimatradehub.com', [email])
             except User.DoesNotExist:
-                # Se o usuário não existe, não fazemos nada, mas fingimos que deu certo
-                # Isso é uma medida de segurança para não revelar quais e-mails estão cadastrados
                 pass
             return redirect('vender:reenviar_ativacao_enviado')
     else:
