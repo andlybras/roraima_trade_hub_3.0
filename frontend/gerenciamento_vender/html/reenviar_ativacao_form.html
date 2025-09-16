@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block titulo %}Reenviar Link de Ativação{% endblock %}
+{% block css_pagina %}<link rel="stylesheet" href="{% static 'gerenciamento_vender/css/autenticacao.css' %}">{% endblock %}
+{% block header %}{% endblock %}
+{% block conteudo %}
+<div class="container-formulario">
+    <div class="painel-formulario">
+        <h1 class="titulo-pagina">Reenviar Ativação</h1>
+        <p style="color: #c0e0eb; margin-top: -20px; margin-bottom: 25px;">
+            Não recebeu o e-mail de ativação? Digite seu e-mail abaixo para enviarmos um novo link.
+        </p>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="{{ form.email.id_for_label }}" class="form-label">{{ form.email.label }}</label>
+                {{ form.email }}
+                {{ form.email.errors }}
+            </div>
+            <button type="submit" class="botao-acao">Reenviar Link</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+{% block parceiros %}{% endblock %}{% block footer %}{% endblock %}

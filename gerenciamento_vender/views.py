@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User 
 from django.contrib.auth.decorators import login_required
 from .models import ConteudoApresentacaoVender, PerguntaFrequente, PerguntaUsuario, DadosEmpresariais
-from .forms import DadosEmpresaForm, DadosResponsavelForm, DadosComplementaresForm, UserRegistrationForm
+from .forms import DadosEmpresaForm, DadosResponsavelForm, DadosComplementaresForm, UserRegistrationForm, UserLoginForm, ResendActivationEmailForm
 from django.contrib.auth.views import PasswordResetConfirmView
 from django.db.models import Q
 from django.core.mail import send_mail
@@ -188,3 +188,34 @@ class CustomPasswordResetConfirmView(PasswordResetConfirmView):
         send_mail(mail_subject, message, 'nao-responda@roraimatradehub.com', [user.email])
         
         return response
+    
+def reenviar_ativacao_view(request):
+    if request.method == 'POST':
+        form = ResendActivationEmailForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            try:
+                user = User.objects.get(email=email)
+                if not user.is_active:
+                    # Lógica de envio de e-mail (reutilizada do cadastro)
+                    current_site = get_current_site(request)
+                    mail_subject = 'Ative sua conta no Roraima Trade Hub.'
+                    message = render_to_string('gerenciamento_vender/html/emails/confirmacao_cadastro_email.html', {
+                        'user': user,
+                        'domain': current_site.domain,
+                        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                        'token': account_activation_token.make_token(user),
+                    })
+                    send_mail(mail_subject, message, 'nao-responda@roraimatradehub.com', [email])
+            except User.DoesNotExist:
+                # Se o usuário não existe, não fazemos nada, mas fingimos que deu certo
+                # Isso é uma medida de segurança para não revelar quais e-mails estão cadastrados
+                pass
+            return redirect('vender:reenviar_ativacao_enviado')
+    else:
+        form = ResendActivationEmailForm()
+    
+    return render(request, 'gerenciamento_vender/html/reenviar_ativacao_form.html', {'form': form})
+
+def reenviar_ativacao_enviado_view(request):
+    return render(request, 'gerenciamento_vender/html/reenviar_ativacao_enviado.html')

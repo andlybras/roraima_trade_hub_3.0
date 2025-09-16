@@ -55,4 +55,7 @@ urlpatterns = [
     path('recuperar-senha/sucesso/', auth_views.PasswordResetCompleteView.as_view(
         template_name='gerenciamento_vender/html/password_reset_complete.html'
     ), name='password_reset_complete'),
+    path('reenviar-ativacao/', views.reenviar_ativacao_view, name='reenviar_ativacao'),
+    path('reenviar-ativacao/enviado/', views.reenviar_ativacao_enviado_view, name='reenviar_ativacao_enviado'),
+
 ]

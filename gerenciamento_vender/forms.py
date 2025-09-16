@@ -107,3 +107,9 @@ class UserLoginForm(AuthenticationForm):
         strip=False,
         widget=forms.PasswordInput(attrs={'class': 'form-input', 'autocomplete': 'current-password'}),
     )
+    
+class ResendActivationEmailForm(forms.Form):
+    email = forms.EmailField(
+        label='E-mail de Cadastro',
+        widget=forms.EmailInput(attrs={'class': 'form-input', 'autofocus': True})
+    )
