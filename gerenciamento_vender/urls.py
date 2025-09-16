@@ -35,6 +35,7 @@ urlpatterns = [
     path('dashboard/visao-geral/', views.dashboard_visao_geral, name='dashboard_visao_geral'),
     path('dashboard/dados-empresariais/', views.dashboard_dados_empresariais, name='dashboard_dados_empresariais'),
     path('dashboard/dados-empresariais/etapa/<int:etapa>/', views.dados_empresariais_form_view, name='dados_empresariais_form'),
+    path('dashboard/dados-empresariais/iniciar-alteracao/', views.iniciar_alteracao_dados_view, name='iniciar_alteracao_dados'),
     path('recuperar-senha/', auth_views.PasswordResetView.as_view(
         template_name='gerenciamento_vender/html/password_reset_form.html',
         email_template_name='gerenciamento_vender/html/emails/password_reset_email.html',

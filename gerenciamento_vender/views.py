@@ -143,35 +143,70 @@ def dashboard_visao_geral(request):
 
 @login_required
 def dashboard_dados_empresariais(request):
+    # Busca ou cria o perfil de dados para o usuário logado
     dados_empresa, created = DadosEmpresariais.objects.get_or_create(usuario=request.user)
+    
+    # AQUI ESTÁ A LÓGICA DE DECISÃO:
+    if dados_empresa.status == 'PENDENTE':
+        # Se o cadastro está pendente, o usuário precisa preencher o formulário.
+        request.session['cadastro_id'] = dados_empresa.id
+        return redirect('vender:dados_empresariais_form', etapa=1)
+    else:
+        # Se o status for 'EM_ANALISE', 'APROVADO', etc., mostra a página de visualização.
+        context = {
+            'dados_empresa': dados_empresa
+        }
+        return render(request, 'gerenciamento_vender/html/dashboard_partials/dados_empresariais_display.html', context)
+@login_required
+def iniciar_alteracao_dados_view(request):
+    dados_empresa = get_object_or_404(DadosEmpresariais, usuario=request.user)
+    
+    # Coloca o ID do cadastro na sessão para o formulário saber qual registro editar
     request.session['cadastro_id'] = dados_empresa.id
+    
+    # Redireciona para a primeira etapa do formulário
     return redirect('vender:dados_empresariais_form', etapa=1)
 
+
+# VIEW ATUALIZADA para lidar com a reavaliação
 @login_required
 def dados_empresariais_form_view(request, etapa):
     forms = { 1: DadosEmpresaForm, 2: DadosResponsavelForm, 3: DadosComplementaresForm }
     form_class = forms.get(etapa)
+    
     cadastro_id = request.session.get('cadastro_id')
     if not cadastro_id:
         return redirect('vender:dashboard_dados_empresariais')
-    cadastro = get_object_or_404(DadosEmpresariais, id=cadastro_id, usuario=request.user) # Mais segurança
+        
+    cadastro = get_object_or_404(DadosEmpresariais, id=cadastro_id, usuario=request.user)
+    status_original = cadastro.status # Guarda o status antes de qualquer mudança
+
     if request.method == 'POST':
         form = form_class(request.POST, request.FILES, instance=cadastro)
         if form.is_valid():
             form.save()
+
             proxima_etapa = etapa + 1
             if proxima_etapa > len(forms):
-                cadastro.status = 'EM_ANALISE'
+                # Finalizou a última etapa
+                if status_original == 'APROVADO':
+                    cadastro.status = 'REAVALIACAO'
+                else:
+                    cadastro.status = 'EM_ANALISE'
+                
                 cadastro.save()
                 del request.session['cadastro_id']
                 return render(request, 'gerenciamento_vender/html/dashboard_partials/dados_empresariais_sucesso.html')
             else:
-                proximo_form = forms.get(proxima_etapa)(instance=cadastro)
-                context = {'form': proximo_form, 'etapa': proxima_etapa, 'total_etapas': len(forms)}
-                return render(request, 'gerenciamento_vender/html/dashboard_partials/dados_empresariais_form.html', context)
+                return redirect('vender:dados_empresariais_form', etapa=proxima_etapa)
     else:
         form = form_class(instance=cadastro)
-    context = {'form': form, 'etapa': etapa, 'total_etapas': len(forms)}
+
+    context = {
+        'form': form,
+        'etapa': etapa,
+        'total_etapas': len(forms),
+    }
     return render(request, 'gerenciamento_vender/html/dashboard_partials/dados_empresariais_form.html', context)
 
 class CustomPasswordResetConfirmView(PasswordResetConfirmView):
