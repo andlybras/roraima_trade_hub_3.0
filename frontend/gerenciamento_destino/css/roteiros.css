@@ -54,6 +54,8 @@
     font-size: 1.4rem;
 }
 
+/* --- ESTILOS ATUALIZADOS E NOVOS --- */
+
 .painel-detalhe-roteiro {
     background-color: #FEFBF5;
     color: #264653;
@@ -61,11 +63,39 @@
     padding: 40px 50px;
 }
 
+/* ATUALIZADO: O cabeçalho agora é flexível para alinhar o título e o botão */
+.roteiro-detalhe-cabecalho {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #e0e0e0;
+}
+
 .roteiro-detalhe-cabecalho h1 {
     font-family: 'Montserrat', sans-serif;
     font-size: 3rem;
     color: #2A9D8F;
-    text-align: center;
+    margin: 0; /* Remove margens para o alinhamento flex funcionar bem */
+}
+
+/* NOVO: Estilo para o botão de imprimir, para ser consistente */
+.btn-imprimir-roteiro {
+    background-color: #2A9D8F; /* Verde do tema "Destino" */
+    color: white;
+    padding: 10px 25px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.btn-imprimir-roteiro:hover {
+    background-color: #217a6f;
 }
 
 .roteiro-detalhe-descricao {
@@ -82,7 +112,6 @@
     gap: 40px;
     align-items: flex-start;
 }
-
 #mapa-roteiro {
     width: 100%;
     height: 60vh;

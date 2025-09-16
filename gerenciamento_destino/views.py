@@ -28,10 +28,33 @@ def lista_roteiros_view(request):
 
 def detalhe_roteiro_view(request, roteiro_slug):
     roteiro = get_object_or_404(Roteiro, slug=roteiro_slug, publicado=True)
-    pontos = roteiro.pontos_de_interesse.all().order_by('ordempontoroteiro__ordem')
-    breadcrumbs = [{'nome': 'Início', 'url': reverse('gerenciamento_home:home')},{'nome': 'Destino Roraima', 'url': reverse('destino:pagina_inicial')},{'nome': 'Roteiros Temáticos', 'url': reverse('destino:lista_roteiros')},{'nome': roteiro.titulo, 'url': ''}]
-    pontos_geojson = {"type": "FeatureCollection", "features": [{"type": "Feature", "geometry": {"type": "Point", "coordinates": [float(str(p.longitude).replace(',', '.')), float(str(p.latitude).replace(',', '.'))]}, "properties": {"titulo": p.titulo, "descricao_curta": p.descricao_curta, "imagem_url": p.imagem_principal.url if p.imagem_principal else '', "detalhe_url": reverse('destino:detalhe_ponto', args=[p.slug]), "slug": p.slug}} for p in pontos]}
-    context = {'roteiro': roteiro, 'pontos': pontos, 'breadcrumbs': breadcrumbs, 'pontos_geojson': pontos_geojson}
+    
+    # CORREÇÃO AQUI: trocando 'roteiro.pontos' por 'roteiro.pontos_de_interesse'
+    pontos_ordenados = roteiro.pontos_de_interesse.order_by('ordempontoroteiro__ordem')
+
+    breadcrumbs = [
+        {'nome': 'Início', 'url': reverse('gerenciamento_home:home')},
+        {'nome': 'Destino Roraima', 'url': reverse('destino:pagina_inicial')},
+        {'nome': 'Roteiros Temáticos', 'url': reverse('destino:lista_roteiros')},
+        {'nome': roteiro.titulo, 'url': ''},
+    ]
+    
+    pontos_geojson = {"type": "FeatureCollection", "features": [
+        {"type": "Feature",
+         "geometry": {"type": "Point", "coordinates": [p.longitude, p.latitude]},
+         "properties": {
+             "titulo": p.titulo,
+             "detalhe_url": reverse('destino:detalhe_ponto', args=[p.slug]),
+         }
+        } for p in pontos_ordenados
+    ]}
+    
+    context = {
+        'roteiro': roteiro,
+        'pontos': pontos_ordenados,
+        'pontos_geojson': pontos_geojson,
+        'breadcrumbs': breadcrumbs
+    }
     return render(request, 'gerenciamento_destino/html/detalhe_roteiro.html', context)
 
 def meu_roteiro_view(request):
