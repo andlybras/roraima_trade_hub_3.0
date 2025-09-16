@@ -1,6 +1,6 @@
 :root {
-    --cor-fundo-destino: #FEFBF5;   
-    --cor-texto-destino: #264653;   
+    --cor-fundo-destino: #FEFBF5;
+    --cor-texto-destino: #264653;
     --cor-principal-destino: #2A9D8F;
 }
 
@@ -11,13 +11,24 @@
     padding: 40px 50px;
 }
 
+.detalhe-cabecalho {
+    text-align: center; 
+}
+
 .detalhe-cabecalho h1 {
     font-family: 'Montserrat', sans-serif;
     font-size: 3rem;
     color: var(--cor-principal-destino);
-    margin: 0 0 20px 0;
+    margin: 0 0 10px 0; 
     line-height: 1.2;
-    text-align: center;
+}
+
+.detalhe-subtitulo {
+    font-size: 1.3rem;
+    color: #4A6E7F;
+    max-width: 700px;
+    margin: 0 auto 30px auto; 
+    line-height: 1.6;
 }
 
 .imagem-principal-container {
@@ -52,7 +63,7 @@
     padding: 25px;
     border-left: 5px solid var(--cor-principal-destino);
     position: sticky;
-    top: 100px; 
+    top: 100px;
 }
 
 .informacoes-praticas h3 {
@@ -94,9 +105,13 @@
     box-shadow: 0 10px 20px rgba(0,0,0,0.15);
 }
 
-.voltar-container {
+.actions-container-bottom {
     text-align: center;
     margin-top: 50px;
+    display: flex; 
+    justify-content: center;
+    gap: 20px; 
+    flex-wrap: wrap;
 }
 
 .botao-voltar {

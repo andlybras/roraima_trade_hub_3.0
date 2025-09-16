@@ -1,21 +1,29 @@
 {% extends 'base.html' %}
 {% load static %}
+
 {% block titulo %}{{ ponto.titulo }} | Destino Roraima{% endblock %}
+
 {% block css_pagina %}
-    <link rel="stylesheet" href="{% static 'gerenciamento_destino/css/destino_shared.css' %}">
-    <link rel="stylesheet" href="{% static 'gerenciamento_destino/css/detalhe_ponto.css' %}">
+<link rel="stylesheet" href="{% static 'gerenciamento_destino/css/destino_shared.css' %}">
+<link rel="stylesheet" href="{% static 'gerenciamento_destino/css/detalhe_ponto.css' %}">
 {% endblock %}
+
 {% block conteudo %}
 <div class="container-conteudo">
     {% include 'gerenciamento_destino/html/partials/breadcrumb.html' %}
     <article class="painel-detalhe">
         <header class="detalhe-cabecalho">
             <h1>{{ ponto.titulo }}</h1>
-            <a href="#" class="btn-add-roteiro" data-slug="{{ ponto.slug }}">Adicionar ao Roteiro</a>
-        </header>
+            {% if ponto.descricao_curta %}
+                <p class="detalhe-subtitulo">{{ ponto.descricao_curta }}</p>
+            {% endif %}
+            
+            </header>
+        
         <section class="imagem-principal-container">
             <img src="{{ ponto.imagem_principal.url }}" alt="Imagem principal de {{ ponto.titulo }}">
         </section>
+
         <div class="conteudo-principal">
             <section class="descricao-completa">
                 {{ ponto.descricao_completa|safe }}
@@ -25,21 +33,26 @@
                 {{ ponto.informacoes_praticas|safe }}
             </aside>
         </div>
+
         {% if ponto.galeria_imagens.all %}
-        <section class="galeria-container">
-            <h2>Galeria de Fotos</h2>
-            <div class="galeria-grid">
-                {% for imagem in ponto.galeria_imagens.all %}
-                    <img class="galeria-imagem" src="{{ imagem.imagem.url }}" alt="{{ imagem.legenda|default:ponto.titulo }}">
-                {% endfor %}
-            </div>
-        </section>
+            <section class="galeria-container">
+                <h2>Galeria de Fotos</h2>
+                <div class="galeria-grid">
+                    {% for imagem in ponto.galeria_imagens.all %}
+                        <img class="galeria-imagem" src="{{ imagem.imagem.url }}" alt="{{ imagem.legenda|default:ponto.titulo }}">
+                    {% endfor %}
+                </div>
+            </section>
         {% endif %}
-        <div class="voltar-container">
+
+        <div class="actions-container-bottom">
+            <a href="#" class="btn-add-roteiro" data-slug="{{ ponto.slug }}">Adicionar ao Roteiro</a>
+
             <a href="javascript:history.back()" class="botao-voltar">Voltar</a>
         </div>
     </article>
 </div>
+
 <div id="lightbox" class="lightbox">
     <span id="lightbox-close" class="lightbox-close">&times;</span>
     <img id="lightbox-image" class="lightbox-content">
@@ -47,7 +60,9 @@
     <a id="lightbox-next" class="lightbox-next">&#10095;</a>
 </div>
 {% endblock %}
+
 {% block parceiros %}{% endblock parceiros %}
+
 {% block js_pagina %}
-    <script src="{% static 'gerenciamento_destino/js/galeria_lightbox.js' %}"></script>
+<script src="{% static 'gerenciamento_destino/js/galeria_lightbox.js' %}"></script>
 {% endblock %}

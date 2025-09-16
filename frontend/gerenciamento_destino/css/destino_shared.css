@@ -47,13 +47,13 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background-color: #2A9D8F; /* Verde Musgo */
+    background-color: #2A9D8F;
     color: white;
-    padding: 8px 16px;
-    border-radius: 20px;
+    padding: 12px 30px; 
+    border-radius: 25px; 
     text-decoration: none;
-    font-weight: 600;
-    font-size: 0.9rem;
+    font-weight: 700; 
+    font-size: 1rem; 
     border: none;
     cursor: pointer;
     transition: background-color 0.2s, transform 0.2s;
@@ -62,6 +62,7 @@
 .btn-add-roteiro:hover {
     background-color: #217a6f;
     transform: scale(1.05);
+    transform: translateY(-3px);
 }
 
 .btn-add-roteiro.active {
@@ -91,7 +92,8 @@
 }
 
 .filtro-mapa-btn:hover {
-    background-color: rgba(228, 248, 255, 0.2);
+    background-color: #E4F8FF;
+    color: #144A5D;
 }
 
 .filtro-mapa-btn.active {
