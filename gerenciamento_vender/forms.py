@@ -2,6 +2,7 @@ from django import forms
 from .models import DadosEmpresariais
 from django.contrib.auth.models import User
 from django_recaptcha.fields import ReCaptchaField
+from django.contrib.auth.forms import AuthenticationForm
 
 class DadosEmpresaForm(forms.ModelForm):
     class Meta:
@@ -95,3 +96,14 @@ class UserRegistrationForm(forms.ModelForm):
         if User.objects.filter(email=email).exists():
             raise forms.ValidationError('Este e-mail já está cadastrado em nosso sistema.')
         return email
+    
+class UserLoginForm(AuthenticationForm):
+    username = forms.EmailField(
+        label='E-mail',
+        widget=forms.EmailInput(attrs={'class': 'form-input', 'autofocus': True})
+    )
+    password = forms.CharField(
+        label='Senha',
+        strip=False,
+        widget=forms.PasswordInput(attrs={'class': 'form-input', 'autocomplete': 'current-password'}),
+    )

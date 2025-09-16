@@ -1,5 +1,9 @@
+# gerenciamento_vender/urls.py
+
 from django.urls import path
 from . import views
+from django.contrib.auth import views as auth_views
+from .forms import UserLoginForm # <--- ADICIONE ESTA LINHA
 
 app_name = 'vender'
 
@@ -11,10 +15,18 @@ urlpatterns = [
     path('minha-pergunta/<uuid:identificador>/', views.ver_resposta_view, name='ver_resposta'),
     path('pergunta-enviada-com-sucesso/', views.submissao_sucesso_view, name='submissao_sucesso'),
     
-    # URL de Cadastro
+    # URLs de Cadastro e Ativação
     path('criar-perfil-empresarial/', views.criar_perfil_empresarial_view, name='criar_perfil_empresarial'),
-    # CORREÇÃO AQUI: Apontando para a view correta.
     path('cadastro-realizado/', views.cadastro_sucesso_view, name='cadastro_sucesso'),
+    path('ativar/<uidb64>/<token>/', views.ativar_conta_view, name='ativar_conta'),
+    
+    # URLs de Autenticação
+    path('acessar/', auth_views.LoginView.as_view(
+        template_name='gerenciamento_vender/html/login.html',
+        authentication_form=UserLoginForm,
+        redirect_authenticated_user=True
+    ), name='login'),
+    path('sair/', auth_views.LogoutView.as_view(next_page='/'), name='logout'),
     
     # URL principal do Dashboard
     path('dashboard/', views.dashboard_view, name='dashboard'),

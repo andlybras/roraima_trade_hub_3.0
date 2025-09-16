@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block titulo %}Link Inválido{% endblock %}
+{% block css_pagina %}<link rel="stylesheet" href="{% static 'gerenciamento_vender/css/autenticacao.css' %}">{% endblock %}
+{% block header %}{% endblock %}
+{% block conteudo %}
+<div class="container-formulario">
+    <div class="painel-formulario">
+        <h1 class="titulo-pagina">❌ Link Inválido</h1>
+        <p style="color: #E4F8FF; font-size: 1.1rem;">
+            Este link de ativação é inválido ou já expirou. Por favor, solicite um novo link ou entre em contato com o suporte.
+        </p>
+    </div>
+</div>
+{% endblock %}
+{% block parceiros %}{% endblock %}{% block footer %}{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block titulo %}Conta Ativada{% endblock %}
+{% block css_pagina %}<link rel="stylesheet" href="{% static 'gerenciamento_vender/css/autenticacao.css' %}">{% endblock %}
+{% block header %}{% endblock %}
+{% block conteudo %}
+<div class="container-formulario">
+    <div class="painel-formulario">
+        <h1 class="titulo-pagina">✅ Conta Ativada com Sucesso!</h1>
+        <p style="color: #E4F8FF; font-size: 1.1rem;">
+            Seu e-mail foi confirmado. Agora você já pode acessar seu ambiente empresarial.
+        </p>
+        <a href="{% url 'vender:login' %}" class="botao-acao" style="margin-top: 30px;">Fazer Login</a>
+    </div>
+</div>
+{% endblock %}
+{% block parceiros %}{% endblock %}{% block footer %}{% endblock %}

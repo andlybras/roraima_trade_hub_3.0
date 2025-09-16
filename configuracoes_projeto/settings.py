@@ -116,3 +116,6 @@ X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 # --- Configurações de E-mail e Sessão ---
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+LOGIN_REDIRECT_URL = '/quero-vender/dashboard/' 
+LOGIN_URL = '/quero-vender/acessar/'
