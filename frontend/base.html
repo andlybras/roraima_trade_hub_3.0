@@ -14,6 +14,7 @@
     {% block css_pagina %}{% endblock %}
 </head>
 <body {% if imagem_fundo %} style="background-image: url('{{ imagem_fundo.imagem.url }}');"{% endif %}>
+    
     <div class="container-geral">
         {% block header %}
         <header class="cabecalho-principal">
@@ -41,16 +42,33 @@
         <main class="conteudo-principal">
             {% block conteudo %}{% endblock %}
         </main>
-    </div>
-
-    {% block parceiros %}
-    <section class="secao-parceiros">
+    
+        {% block parceiros %}
+        <section class="secao-parceiros">
+            <div class="container-parceiros">
+                <h2>Nossos Parceiros</h2>
+                <div class="carrossel-infinito">
+                    <div class="carrossel-infinito-faixa">
+                        {% for logo in partner_logos %}
+                            <div class="parceiro-logo">
+                                <a href="{{ logo.link_url|default:'#' }}" target="_blank" rel="noopener noreferrer">
+                                    <img src="{{ logo.imagem.url }}" alt="{{ logo.nome_parceiro }}">
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
         </section>
-    {% endblock parceiros %}
-
-    {% block footer %}
+        {% endblock parceiros %}
+        
+    </div> {% block footer %}
     <footer class="rodape-site">
-        </footer>
+        <div class="rodape-creditos">
+            <p>© {% now "Y" %} Governo de Roraima. Todos os direitos reservados.</p>
+            <p><strong>Roraima Trade Hub</strong></p>
+        </div>
+    </footer>
     {% endblock footer %}
 
     <a href="{% url 'destino:meu_roteiro' %}" id="roteiro-flutuante-btn" class="roteiro-flutuante">
