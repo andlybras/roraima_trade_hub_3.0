@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}Crie seu Perfil Empresarial{% endblock %}
+
+{% block css_pagina %}
+<link rel="stylesheet" href="{% static 'gerenciamento_vender/css/autenticacao.css' %}">
+{% endblock %}
+
+{% block header %}{% endblock %}
+
+{% block conteudo %}
+<div class="container-formulario">
+    <div class="painel-formulario">
+        <h1 class="titulo-pagina">Crie seu Perfil Empresarial</h1>
+        <form method="post" action="{% url 'vender:criar_perfil_empresarial' %}">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="{{ form.email.id_for_label }}" class="form-label">{{ form.email.label }}</label>
+                {{ form.email }}
+                {{ form.email.errors }}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.email2.id_for_label }}" class="form-label">{{ form.email2.label }}</label>
+                {{ form.email2 }}
+                {{ form.email2.errors }}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.password.id_for_label }}" class="form-label">{{ form.password.label }}</label>
+                {{ form.password }}
+                {{ form.password.errors }}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.password2.id_for_label }}" class="form-label">{{ form.password2.label }}</label>
+                {{ form.password2 }}
+                {{ form.password2.errors }}
+            </div>
+            <div class="form-group">
+                {{ form.captcha.errors }}
+                {{ form.captcha }}
+            </div>
+            <div class="form-group-terms">
+                {{ form.terms }}
+                <label for="{{ form.terms.id_for_label }}">{{ form.terms.label }}</label>
+                {{ form.terms.errors }}
+            </div>
+
+            <button type="submit" class="botao-acao">Criar Conta</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block parceiros %}{% endblock %}
+{% block footer %}{% endblock %}

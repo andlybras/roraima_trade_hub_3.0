@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}Cadastro Realizado com Sucesso{% endblock %}
+
+{% block css_pagina %}
+<link rel="stylesheet" href="{% static 'gerenciamento_vender/css/autenticacao.css' %}">
+{% endblock %}
+
+{% block header %}{% endblock %}
+
+{% block conteudo %}
+<div class="container-formulario">
+    <div class="painel-formulario">
+        <h1 class="titulo-pagina">✅ Quase lá!</h1>
+        <p style="color: #E4F8FF; font-size: 1.1rem; line-height: 1.6;">
+            Seu perfil foi criado com sucesso.
+            <br><br>
+            Enviamos um e-mail de confirmação para você. Por favor, acesse seu e-mail e clique no link para ativar sua conta e poder fazer o login.
+        </p>
+    </div>
+</div>
+{% endblock %}
+
+{% block parceiros %}{% endblock %}
+{% block footer %}{% endblock %}

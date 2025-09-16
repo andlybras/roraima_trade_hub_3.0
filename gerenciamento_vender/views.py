@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
+from django.contrib.auth.models import User 
 from .models import ConteudoApresentacaoVender, PerguntaFrequente, PerguntaUsuario, DadosEmpresariais
-from .forms import DadosEmpresaForm, DadosResponsavelForm, DadosComplementaresForm
+from .forms import DadosEmpresaForm, DadosResponsavelForm, DadosComplementaresForm, UserRegistrationForm
 from django.db.models import Q
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
@@ -74,6 +75,11 @@ def ver_resposta_view(request, identificador):
     context = {'pergunta': pergunta}
     return render(request, 'gerenciamento_vender/html/resposta_privada.html', context)
 
+def cadastro_sucesso_view(request):
+    """
+    Renderiza a página de sucesso após o usuário se cadastrar.
+    """
+    return render(request, 'gerenciamento_vender/html/cadastro_sucesso.html')
 
 def criar_perfil_empresarial_view(request):
     return HttpResponse("<h1>Página para Criação de Perfil Empresarial (Em Construção)</h1>")
@@ -151,5 +157,28 @@ def dados_empresariais_form_view(request, etapa):
     # Retorna o template da ETAPA ATUAL para o AJAX
     return render(request, 'gerenciamento_vender/html/dashboard_partials/dados_empresariais_form.html', context)
 
+
 def criar_perfil_empresarial_view(request):
-    return HttpResponse("<h1>Página para Criação de Perfil Empresarial (Em Construção)</h1>")
+    if request.method == 'POST':
+        form = UserRegistrationForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            # Cria o usuário, mas o mantém inativo
+            novo_usuario = User.objects.create_user(
+                username=cd['email'], # Usaremos o e-mail como username
+                email=cd['email'],
+                password=cd['password']
+            )
+            novo_usuario.is_active = False
+            novo_usuario.save()
+
+            # TODO: Adicionar lógica de envio de e-mail de confirmação aqui.
+            
+            # Cria a instância de DadosEmpresariais ligada ao novo usuário
+            DadosEmpresariais.objects.create(usuario=novo_usuario)
+
+            return redirect('vender:cadastro_sucesso')
+    else:
+        form = UserRegistrationForm()
+        
+    return render(request, 'gerenciamento_vender/html/cadastro.html', {'form': form})

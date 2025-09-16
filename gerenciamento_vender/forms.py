@@ -1,7 +1,7 @@
-# gerenciamento_vender/forms.py
-
 from django import forms
 from .models import DadosEmpresariais
+from django.contrib.auth.models import User
+from django_recaptcha.fields import ReCaptchaField
 
 class DadosEmpresaForm(forms.ModelForm):
     class Meta:
@@ -50,3 +50,48 @@ class DadosComplementaresForm(forms.ModelForm):
             'website': forms.URLInput(attrs={'class': 'form-input'}),
             'apresentacao_empresa': forms.Textarea(attrs={'class': 'form-textarea', 'rows': 5}),
         }
+        
+class UserRegistrationForm(forms.ModelForm):
+    email = forms.EmailField(
+        label='E-mail',
+        widget=forms.EmailInput(attrs={'class': 'form-input'})
+    )
+    email2 = forms.EmailField(
+        label='Confirme o E-mail',
+        widget=forms.EmailInput(attrs={'class': 'form-input'})
+    )
+    password = forms.CharField(
+        label='Senha',
+        widget=forms.PasswordInput(attrs={'class': 'form-input'})
+    )
+    password2 = forms.CharField(
+        label='Confirme a Senha',
+        widget=forms.PasswordInput(attrs={'class': 'form-input'})
+    )
+    terms = forms.BooleanField(
+        label='Eu li e aceito os Termos de Uso e a Política de Privacidade',
+        widget=forms.CheckboxInput(attrs={'class': 'form-check-input'})
+    )
+    captcha = ReCaptchaField()
+
+    class Meta:
+        model = User
+        fields = ('email',)
+
+    def clean_email2(self):
+        cd = self.cleaned_data
+        if cd['email'] != cd['email2']:
+            raise forms.ValidationError('Os e-mails não coincidem.')
+        return cd['email2']
+
+    def clean_password2(self):
+        cd = self.cleaned_data
+        if cd['password'] != cd['password2']:
+            raise forms.ValidationError('As senhas não coincidem.')
+        return cd['password2']
+    
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(email=email).exists():
+            raise forms.ValidationError('Este e-mail já está cadastrado em nosso sistema.')
+        return email
