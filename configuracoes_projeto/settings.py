@@ -1,12 +1,14 @@
+import os
 from pathlib import Path
+from decouple import config
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-25+*s#^81&id&%)m-v+*n_^9*+8$w6)5uv4&8kj20km=#ki@yt'
+SECRET_KEY = config('SECRET_KEY')
 
-DEBUG = True
+DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=lambda v: [s.strip() for s in v.split(',')])
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -28,6 +30,7 @@ INSTALLED_APPS = [
     'taggit',
     'tinymce',
     'django_recaptcha',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -63,8 +66,12 @@ WSGI_APPLICATION = 'configuracoes_projeto.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': config('DB_HOST'),
+        'PORT': config('DB_PORT', cast=int),
     }
 }
 
@@ -91,11 +98,51 @@ STATICFILES_DIRS = [
     BASE_DIR / 'frontend',
 ]
 
-MEDIA_URL = '/media/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-MEDIA_ROOT = BASE_DIR / 'media'
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
+
+AWS_S3_REGION_NAME = config('AWS_S3_REGION_NAME')
+
+AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
+
+AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
+
+AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+
+MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_HOST = 'smtp.gmail.com'
+
+EMAIL_PORT = 587
+
+EMAIL_USE_TLS = True
+
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+
+RECAPTCHA_PUBLIC_KEY = config('RECAPTCHA_PUBLIC_KEY')
+
+RECAPTCHA_PRIVATE_KEY = config('RECAPTCHA_PRIVATE_KEY')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# CSRF_COOKIE_SECURE = True
+
+# SESSION_COOKIE_SECURE = True
+
+# SECURE_SSL_REDIRECT = True
+
+# SECURE_HSTS_SECONDS = 31536000
+
+# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+
+# SECURE_HSTS_PRELOAD = True
 
 TINYMCE_DEFAULT_CONFIG = {
     "height": "320px",
@@ -111,13 +158,9 @@ TINYMCE_DEFAULT_CONFIG = {
     "custom_undo_redo_levels": 10,
 }
 
-SILENCED_SYSTEM_CHECKS = ['django_recaptcha.recaptcha_test_key_error']
-
 TAGGIT_STRIP_UNICODE_WHEN_SLUGIFYING = True
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
-
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 LOGIN_REDIRECT_URL = '/quero-vender/dashboard/' 
 
